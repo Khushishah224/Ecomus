@@ -1,0 +1,197 @@
+/* Global Styles */
+.admin-login-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff5f1;
+  padding: 20px;
+}
+
+.admin-brand-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.brand-title {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.brand-tagline {
+  color: #666;
+  font-size: 1rem;
+}
+
+.admin-form-container {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+}
+
+.admin-login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.admin-login-header h2 {
+  color: #2c3e50;
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.login-subtitle {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.admin-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.admin-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.admin-input-group:focus-within {
+  border-color: #ffd5c2;
+  box-shadow: 0 0 0 3px rgba(255, 213, 194, 0.2);
+}
+
+.admin-input-icon {
+  padding: 0 15px;
+  color: #999;
+}
+
+.admin-input {
+  flex: 1;
+  padding: 12px 15px;
+  border: none;
+  background: none;
+  font-size: 0.95rem;
+  color: #2c3e50;
+}
+
+.admin-input:focus {
+  outline: none;
+}
+
+.admin-input::placeholder {
+  color: #999;
+}
+
+.admin-forgot-password {
+  text-align: right;
+  margin: 1rem 0 1.5rem;
+}
+
+.admin-forgot-password a {
+  color: #666;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.admin-forgot-password a:hover {
+  color: #2c3e50;
+}
+
+.admin-submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(45deg, #ffd5c2, #ffb599);
+  border: none;
+  border-radius: 8px;
+  color: #2c3e50;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.admin-submit-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 213, 194, 0.3);
+}
+
+.admin-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.admin-submit-btn.submitting {
+  background: #e1e1e1;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .admin-form-container {
+    padding: 2rem 1.5rem;
+  }
+
+  .brand-title {
+    font-size: 2rem;
+  }
+
+  .admin-login-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .admin-input {
+    font-size: 0.9rem;
+  }
+
+  .admin-forgot-password {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-form-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .brand-title {
+    font-size: 1.8rem;
+  }
+
+  .login-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .admin-input {
+    font-size: 0.85rem;
+    padding: 10px 12px;
+  }
+
+  .admin-submit-btn {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .brand-title {
+    font-size: 1.6rem;
+  }
+
+  .admin-login-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .login-subtitle {
+    font-size: 0.8rem;
+  }
+}

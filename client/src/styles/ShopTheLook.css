@@ -1,0 +1,106 @@
+#shop-the-look {
+  overflow-x: hidden;
+}
+
+#shop-the-look .shop-look-container {
+  position: relative;
+}
+
+#shop-the-look .look-image {
+  position: relative;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#shop-the-look .look-image-content {
+  width: 100%;
+  height: auto;
+}
+
+#shop-the-look .dot {
+  position: absolute;
+  height: 15px;
+  width: 15px;
+  background-color: #000;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.custom-tooltip {
+  background-color: white !important; 
+  padding: 10px;
+  border-radius: 8px;
+  width: 200px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+  color: black; 
+  border: 1px solid #ddd; 
+}
+
+.tooltip-inner {
+  background-color: white !important;
+}
+
+.tooltip-card {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tooltip-product-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px; 
+  border: 1px solid white !important;
+}
+
+.tooltip-product-details {
+  text-align: left;
+}
+
+.tooltip-product-name {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+.tooltip-product-price {
+  font-size: 12px;
+  color: #555; 
+  margin: 0;
+}
+
+.mySwiper {
+  width: 100%;
+  height: auto;
+}
+
+.swiper-pagination {
+  bottom: 10px; /* Adjusts the vertical position */
+}
+
+.swiper-pagination-bullet {
+  background: black;
+  border-radius: 50%;
+  width: 12px; /* Adjust bullet size */
+  height: 12px; /* Adjust bullet size */
+  margin: 0 4px; /* Space between bullets */
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1; /* Active bullet */
+}
+
+.swiper-pagination-bullet:hover {
+  opacity: 0.6; /* Change opacity on hover */
+}
+
+.show-product-detail-eye-icon{
+
+  color:#000;
+  
+}

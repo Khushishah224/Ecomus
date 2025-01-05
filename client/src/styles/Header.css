@@ -1,0 +1,94 @@
+/* Social Media Icons */
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5; /* Light gray background */
+    color: #000;
+    border-radius: 50%; /* Circle */
+    width: 36px;
+    height: 36px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .social-icon:hover {
+    background-color: #e0e0e0;
+    color:darkslategrey;
+  }
+  
+  .icons{
+    font-size: 1.75rem;
+  }
+  /* Navbar Text */
+  .text-danger {
+    text-decoration: underline;
+    font-weight: 600;
+  }
+  .dropdown-toggle::after {
+    display: none; /* Hides the default caret icon */
+  }
+  
+  /* Dropdown Buttons */
+  .dropdown button {
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000;
+  }
+  
+  .dropdown-item {
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .scrolled {
+    top:-61px;
+    background-color: #ffffff !important;
+    transition: background-color 0.3s ease-in-out, padding 0.3s ease-in-out;
+  }
+
+  @media (max-width: 991px) { 
+   
+    .social-icon {
+        display: none;
+    }
+
+    .header-left, .header-right {
+        display: none;
+    }   
+}
+
+/* Header Text - Visibility */
+.desktop-text {
+  display: block; /* Visible on large screens */
+}
+
+.tablet-text,
+.mobile-text {
+  display: none;
+}
+
+/* Tablet and Mobile - Center Content */
+@media (max-width: 768px) {
+  .desktop-text {
+    display: none;
+  }
+  .tablet-text {
+    display: block;
+    text-align: center; /* Center text on tablets */
+  }
+  
+}
+
+/* Mobile Screen (less than 576px) */
+@media (max-width: 576px) {
+  .tablet-text {
+    display: none;
+  }
+  .mobile-text {
+    display: block;
+    text-align: center; /* Center text on mobile */
+  }
+ 
+}

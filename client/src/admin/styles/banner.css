@@ -1,0 +1,279 @@
+.admin-banner-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.banner-content {
+    flex: 1;
+    padding: 2rem;
+    margin-left: 280px;
+}
+
+.banner-header {
+    margin-bottom: 2rem;
+}
+
+.banner-header h1 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.banner-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Form Styles */
+.add-banner-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.add-banner-form h3 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+}
+
+.error-message {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 0.75rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+    font-weight: 500;
+}
+
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input[type="text"]:focus {
+    outline: none;
+    border-color: #ffd5c2;
+    box-shadow: 0 0 0 3px rgba(255, 213, 194, 0.2);
+}
+
+.image-upload-container {
+    position: relative;
+}
+
+.image-upload-input {
+    display: none;
+}
+
+.image-upload-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: #ffd5c2;
+    color: #2c3e50;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.image-upload-label:hover {
+    background: #ffb599;
+    transform: translateY(-1px);
+}
+
+.image-preview {
+    margin-top: 1rem;
+    max-width: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+
+.image-preview img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.primary-button,
+.secondary-button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.primary-button {
+    background: #ffd5c2;
+    color: #2c3e50;
+    border: none;
+}
+
+.primary-button:hover {
+    background: #ffb599;
+    transform: translateY(-1px);
+}
+
+.secondary-button {
+    background: #e2e8f0;
+    color: #4a5568;
+    border: none;
+}
+
+.secondary-button:hover {
+    background: #cbd5e1;
+}
+
+/* Banner Grid Styles */
+.existing-banners-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.existing-banners-section h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+}
+
+.banner-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.banner-card {
+    background: #f8fafc;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.banner-card.inactive {
+    opacity: 0.7;
+}
+
+.banner-image-container {
+    position: relative;
+    padding-top: 56.25%; /* 16:9 aspect ratio */
+}
+
+.banner-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.banner-status {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 4px;
+    font-size: 0.875rem;
+    cursor: pointer;
+}
+
+.banner-details {
+    padding: 1rem;
+}
+
+.banner-details h4 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.banner-details p {
+    color: #4a5568;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.banner-actions {
+    display: flex;
+    padding: 1rem;
+    gap: 0.75rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.edit-button,
+.delete-button {
+    flex: 1;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.edit-button {
+    background: #e2e8f0;
+    color: #4a5568;
+    border: none;
+}
+
+.delete-button {
+    background: #fee2e2;
+    color: #dc2626;
+    border: none;
+}
+
+.edit-button:hover {
+    background: #cbd5e1;
+}
+
+.delete-button:hover {
+    background: #fecaca;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .banner-content {
+        margin-left: 200px;
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .banner-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+
+}

@@ -1,0 +1,149 @@
+#carousel_item .slide-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh + 128px); /* Full viewport height */
+}
+
+/* Slide Image */
+#carousel_item .slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Keeps image proportionate and covers container */
+}
+
+/* Slide Content */
+#carousel_item .slide-content {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  transform: translateY(-50%);
+  font-family: 'Poppins', sans-serif;
+  color: black;
+  text-align: left;
+}
+
+#carousel_item .slide-content h5 {
+  font-size: 3rem; /* Default size for large screens */
+  margin: 0;
+  line-height: 1.2;
+}
+
+#carousel_item .slide-content p {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+}
+
+#carousel_item .slide-content button {
+  background-color: black;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0;
+  margin-top: 1.5rem;
+}
+
+#carousel_item .slide-content button:hover {
+  background-color: #333;
+}
+
+#carousel_item .custom-pagination-bullet{
+  background-color: #000;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+}
+
+#carousel_item .custom-pagination-bullet-active{
+  background-color: #ccc;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+}
+
+/* Yellow Banner */
+#carousel_item .yellow-banner {
+  background-color: #fcffb2; /* Yellow Background */
+  text-align: center;
+  padding: 15px 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #000;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#carousel_item .yellow-banner p {
+  display: inline-block;
+  margin: 0;
+  animation: marquee 10s linear infinite;
+}
+
+
+/* Marquee Animation */
+@keyframes marquee {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+
+  #carousel_item .slide-container {
+     height: calc(75vh + 128px);/* Adjust container height for tablets */
+  }
+  #carousel_item .slide-content{
+    width:400px;
+  }
+  #carousel_item .slide-content h5 {
+    font-size: 2rem; /* Reduce heading size */
+  }
+
+  #carousel_item .slide-content p {
+    font-size: 1.2rem; /* Reduce paragraph size */
+  }
+
+  #carousel_item .slide-content button {
+    font-size: 0.9rem;
+    padding: 0.6rem 1.2rem;
+  }
+}
+
+@media (max-width: 576px) {
+
+  #carousel_item .slide-image {
+   
+    object-position: right -15em bottom 0;
+  }
+
+  #carousel_item .slide-container {
+    top: 2.5rem;
+    height: calc(75vh + 128px); /* Adjust container height for small screens */
+  }
+
+  #carousel_item .slide-content{
+    top:65%;
+    width:200px;
+  }
+
+  #carousel_item .slide-content h5 {
+    font-size: 1.5rem; /* Smaller headings */
+  }
+
+  #carousel_item .slide-content p {
+    font-size: 1rem;
+  }
+
+  #carousel_item .slide-content button {
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+  }
+
+  #carousel_item .yellow-banner {
+    font-size: 1rem; /* Reduce banner text size */
+  }
+}

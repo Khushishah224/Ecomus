@@ -1,0 +1,56 @@
+#brand-name-logos {
+  padding: 20px;
+}
+
+#brand-name-logos .mySwiper {
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+  padding-bottom: 2.25rem;
+  margin-top: 1.5rem;
+}
+
+
+
+#brand-name-logos .logo-container-image{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid lightgray; /* Light gray border */
+  padding: 10px; /* Space inside the border */
+  height: 100%; /* Ensures logos are vertically centered */
+  background-color: white; /* Background for the logo container */
+  flex: 1; /* Allow the logos to grow equally */
+  margin: 0; /* Remove any margin to eliminate gaps */
+}
+#brand-name-logos .brand-logo {
+  max-width: 100%;
+  height: auto;
+}
+
+#brand-name-logos .brand-logos-header {
+  margin-bottom: 20px;
+} 
+
+/* Styles for Swiper pagination */
+/* .swiper-pagination {
+  bottom: 10px; 
+  text-align: center; 
+} */
+
+#brand-name-logos .swiper-pagination-bullet {
+  
+  background: #fff;
+  border: 1px solid #000;
+  width: 10px;
+  height: 10px;
+  /* display: inline-block; */
+  border-radius: 10px;
+  margin: 0 8px;
+  opacity: 1;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+#brand-name-logos .swiper-pagination-bullet-active {
+  background: #000;
+}

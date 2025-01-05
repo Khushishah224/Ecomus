@@ -1,0 +1,23 @@
+#our-services .our-services-container{
+  width: 100%;
+    padding: 2rem 2rem;
+}
+
+#our-services .mySwiper{
+  padding-bottom: 1.5rem;
+}
+
+
+#our-services .service-card {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  transition: all 0.3s;
+}
+
+#our-services .service-icon {
+  font-size: 2rem;
+  color: #000;
+  
+}

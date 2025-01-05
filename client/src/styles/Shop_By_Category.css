@@ -1,0 +1,19 @@
+
+
+   #shop-by-look .shop-container .btn {
+    font-size: 1.5rem;
+    color: #000;
+
+  }
+  
+  #shop-by-look  .card-container img {
+    border-radius: 8px;
+  }
+  
+  #shop-by-look  .card-container {
+    transition: transform 0.3s ease-in-out;
+  } 
+  
+  #shop-by-look  .card-container:hover {
+    transform: scale(1.05);
+  }

@@ -1,0 +1,163 @@
+.admin-sidebar {
+    width: 280px;
+    height: 100vh;
+    background: #fff5f1;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: all 0.3s ease;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .admin-sidebar.collapsed {
+    width: 80px;
+  }
+  
+  .admin-sidebar-header {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ffb599;
+  }
+  
+  .admin-brand {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0;
+  }
+  
+  .admin-sidebar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+  
+  .admin-sidebar-nav {
+    padding: 1rem 0;
+  }
+  
+  .admin-sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1.5rem;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+  }
+  
+  .admin-sidebar-link:hover {
+    background: #ffd5c2;
+  }
+  
+  .admin-sidebar-icon {
+    font-size: 1.2rem;
+    margin-right: 1rem;
+    min-width: 20px;
+  }
+  
+  .admin-dropdown-icon {
+    margin-left: auto;
+    transition: transform 0.3s ease;
+  }
+  
+  .admin-dropdown-icon.open {
+    transform: rotate(180deg);
+  }
+  
+  .admin-dropdown-menu {
+    background: #fff;
+    padding: 0.5rem 0;
+  }
+  
+  .admin-dropdown-item {
+    display: block;
+    padding: 0.5rem 1.5rem 0.5rem 3.5rem;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .admin-dropdown-item:hover {
+    background: #ffd5c2;
+  }
+  
+  .admin-logout-btn {
+    margin-top: auto;
+    color: #e74c3c;
+  }
+  
+  .admin-dashboard-container {
+    margin-left: 280px;
+    padding: 2rem;
+    background: #fff;
+    min-height: 100vh;
+    transition: all 0.3s ease;
+  }
+  
+  .admin-welcome-section {
+    background: #fff5f1;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+  }
+  
+  .admin-welcome-section h1 {
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .admin-welcome-section p {
+    color: #666;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .admin-sidebar {
+      width: 80px;
+    }
+  
+    .admin-sidebar.collapsed {
+      width: 0;
+      overflow: hidden;
+    }
+  
+    .admin-sidebar-toggle {
+      display: block;
+    }
+  
+    .admin-sidebar-text {
+      display: none;
+    }
+  
+    .admin-brand {
+      display: none;
+    }
+  
+    .admin-dashboard-container {
+      margin-left: 80px;
+    }
+  
+    .admin-sidebar.collapsed + .admin-dashboard-container {
+      margin-left: 0;
+    }
+  
+    .admin-dropdown-menu {
+      position: absolute;
+      left: 80px;
+      background: #fff5f1;
+      border-radius: 0 4px 4px 0;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+  }
+
+  
