@@ -62,24 +62,29 @@
 }
 
 /* Yellow Banner */
-#carousel_item .yellow-banner {
+.custom-yellow-banner {
   background-color: #fcffb2; /* Yellow Background */
   text-align: center;
-  padding: 15px 10px;
+  padding: 10px 15px; /* Adjust padding for better layout */
   font-size: 1rem;
   font-weight: 600;
   color: #000;
   text-transform: uppercase;
-  white-space: nowrap;
+  white-space: normal; /* Allow text to wrap */
   overflow: hidden;
+  display: flex;
+  justify-content: center; /* Center the content */
 }
 
-#carousel_item .yellow-banner p {
-  display: inline-block;
+.custom-yellow-banner p {
   margin: 0;
+  padding: 0;
+  display: inline-block;
   animation: marquee 10s linear infinite;
+  white-space: normal; /* Allow wrapping */
+  word-wrap: break-word; /* Ensure word break if necessary */
+  max-width: 100%; /* Ensure text doesn't overflow */
 }
-
 
 /* Marquee Animation */
 @keyframes marquee {
@@ -90,6 +95,19 @@
     transform: translateX(-100%);
   }
 }
+
+.custom-error-message {
+  color: red;
+  font-weight: bold;
+}
+
+.custom-loading-text {
+  font-weight: 600;
+  color: #000;
+  font-size: 1rem;
+}
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
 

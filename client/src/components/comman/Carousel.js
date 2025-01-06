@@ -108,25 +108,25 @@ const YellowBanner = () => {
   }, []);
 
   return (
-    <div className="yellow-banner">
+    <div className="custom-yellow-banner">
       {error ? (
-        <p className="error-message">{error}</p>
+        <p className="custom-error-message">{error}</p>
       ) : bannerData ? (
         bannerData.map((item, index) => (
-          <p key={index}>
+          <p key={index} className="custom-marquee-text">
             <span>
               <BsFillLightningChargeFill />
             </span>{' '}
             {item.text}{' '}
-        
           </p>
         ))
       ) : (
-        <p>Loading...</p>
+        <p className="custom-loading-text">Loading...</p>
       )}
     </div>
   );
 };
+
 
 function Carousel_item() {
   const [bannerData, setBannerData] = useState(null); // To store banner data from the backend
