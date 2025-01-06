@@ -2,53 +2,19 @@ import React, { useState } from "react";
 import "../styles/shopcategories.css";
 import Sidebar from "../components/Sidebar.js";
 import { FaTrash, FaEdit, FaImage, FaPlus } from 'react-icons/fa';
-import api from "../../api.js";
+import api from "../../api.js"; // Your API setup
 
 const ShopCategories = () => {
     const [categories, setCategories] = useState([
-        { 
-            id: 1, 
-            image: "https://via.placeholder.com/300x300", 
-            name: "Clothing",
-            active: true 
-        },
-        { 
-            id: 2, 
-            image: "https://via.placeholder.com/300x300", 
-            name: "Sunglasses",
-            active: true 
-        },
-        {
-            id: 3,
-            image: "https://via.placeholder.com/300x300",
-            name: "Bags",
-            active: true
-        },
-        {
-            id: 4,
-            image: "https://via.placeholder.com/300x300",
-            name: "Shoes",
-            active: true
-        },
-        {
-            id: 5,
-            image: "https://via.placeholder.com/300x300",
-            name: "Accessories",
-            active: true
-        },
-        {
-            id: 6,
-            image: "https://via.placeholder.com/300x300",
-            name: "Jewellery",
-            active: true
-        }
+        { id: 1, image: "https://via.placeholder.com/300x300", name: "Clothing", active: true },
+        { id: 2, image: "https://via.placeholder.com/300x300", name: "Sunglasses", active: true },
+        { id: 3, image: "https://via.placeholder.com/300x300", name: "Bags", active: true },
+        { id: 4, image: "https://via.placeholder.com/300x300", name: "Shoes", active: true },
+        { id: 5, image: "https://via.placeholder.com/300x300", name: "Accessories", active: true },
+        { id: 6, image: "https://via.placeholder.com/300x300", name: "Jewellery", active: true }
     ]);
 
-    const [newCategory, setNewCategory] = useState({ 
-        image: "", 
-        name: "", 
-        active: true 
-    });
+    const [newCategory, setNewCategory] = useState({ image: "", name: "", active: true });
     const [editingCategory, setEditingCategory] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
     const [error, setError] = useState("");
@@ -62,37 +28,49 @@ const ShopCategories = () => {
         return true;
     };
 
-    const handleAddCategory = () => {
+    const handleAddCategory = async () => {
         if (!validateForm()) return;
 
         const newId = categories.length > 0 ? Math.max(...categories.map(cat => cat.id)) + 1 : 1;
-        setCategories([...categories, { id: newId, ...newCategory }]);
-        resetForm();
+        
+        try {
+            const { data } = await api.post("/api/admin/create_category", newCategory); // Create category in DB via API
+            setCategories([...categories, { id: newId, ...data }]);
+            resetForm();
+        } catch (error) {
+            setError("Failed to add category.");
+        }
     };
 
-    const handleDeleteCategory = (id) => {
+    const handleDeleteCategory = async (id) => {
         if (window.confirm("Are you sure you want to delete this category?")) {
-            setCategories(categories.filter((cat) => cat.id !== id));
+            try {
+                await api.delete(`/api/admin/delete_category/${id}`); // API call for deleting category
+                setCategories(categories.filter((cat) => cat.id !== id));
+            } catch (error) {
+                setError("Failed to delete category.");
+            }
         }
     };
 
     const handleEditCategory = (category) => {
         setEditingCategory(category);
-        setNewCategory({ 
-            image: category.image, 
-            name: category.name,
-            active: category.active 
-        });
+        setNewCategory({ image: category.image, name: category.name, active: category.active });
         setImagePreview(category.image);
     };
 
-    const handleSaveEdit = () => {
+    const handleSaveEdit = async () => {
         if (!validateForm()) return;
 
-        setCategories(categories.map((category) =>
-            category.id === editingCategory.id ? { ...category, ...newCategory } : category
-        ));
-        resetForm();
+        try {
+            const { data } = await api.put(`/api/admin/update_category/${editingCategory.id}`, newCategory); // API call for update
+            setCategories(categories.map((category) =>
+                category.id === editingCategory.id ? { ...category, ...data } : category
+            ));
+            resetForm();
+        } catch (error) {
+            setError("Failed to save category.");
+        }
     };
 
     const handleImageChange = (e) => {
@@ -123,10 +101,18 @@ const ShopCategories = () => {
         setError("");
     };
 
-    const toggleCategoryStatus = (id) => {
-        setCategories(categories.map(category =>
-            category.id === id ? { ...category, active: !category.active } : category
-        ));
+    const toggleCategoryStatus = async (id) => {
+        try {
+            const category = categories.find(cat => cat.id === id);
+            const updatedCategory = { ...category, active: !category.active };
+
+            await api.put(`/api/admin/update_category_status/${id}`, { active: updatedCategory.active }); // API call for status update
+            setCategories(categories.map(category =>
+                category.id === id ? updatedCategory : category
+            ));
+        } catch (error) {
+            setError("Failed to update status.");
+        }
     };
 
     return (
@@ -138,11 +124,10 @@ const ShopCategories = () => {
                     <p>Add, edit, or remove shopping categories for your website</p>
                 </div>
 
-                {/* Add or Edit Category Form */}
                 <div className="add-category-form">
                     <h3>{editingCategory ? "Edit Category" : "Add New Category"}</h3>
                     {error && <div className="error-message">{error}</div>}
-                    
+
                     <div className="form-group">
                         <label>Category Name</label>
                         <input
@@ -175,11 +160,7 @@ const ShopCategories = () => {
                     </div>
 
                     <div className="form-actions">
-                        <button
-                            className="secondary-button"
-                            onClick={resetForm}
-                            type="button"
-                        >
+                        <button className="secondary-button" onClick={resetForm} type="button">
                             Cancel
                         </button>
                         <button
@@ -192,7 +173,6 @@ const ShopCategories = () => {
                     </div>
                 </div>
 
-                {/* Existing Categories */}
                 <div className="existing-categories-section">
                     <h2>Existing Categories</h2>
                     <div className="categories-grid">

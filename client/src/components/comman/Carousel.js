@@ -112,20 +112,23 @@ const YellowBanner = () => {
       {error ? (
         <p className="custom-error-message">{error}</p>
       ) : bannerData ? (
-        bannerData.map((item, index) => (
-          <p key={index} className="custom-marquee-text">
-            <span>
-              <BsFillLightningChargeFill />
-            </span>{' '}
-            {item.text}{' '}
-          </p>
-        ))
+        <div className="marquee-wrapper">
+          {bannerData.map((item, index) => (
+            <p key={index}>
+              <span>
+                <BsFillLightningChargeFill />
+              </span>{' '}
+              {item.text}{' '}
+            </p>
+          ))}
+        </div>
       ) : (
         <p className="custom-loading-text">Loading...</p>
       )}
     </div>
   );
 };
+
 
 
 function Carousel_item() {
