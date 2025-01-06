@@ -87,7 +87,7 @@ import fashionSlideshow03 from "../../assets/IMAGES/fashion-slideshow-03.jpg";
 import "../../styles/Carousel.css";
 import { IoIosArrowForward } from "react-icons/io";
 import {Pagination} from "swiper/modules"
-
+import api from "../../api.js"
 // import required modules
 const YellowBanner = () => {
   const [bannerData, setBannerData] = useState(null);
@@ -96,10 +96,10 @@ const YellowBanner = () => {
   useEffect(() => {
     const fetchBannerData = async () => {
       try {
-        const response = await axios.get('/api/users/get_taglines');
-        console.log(response.data)
-        setBannerData(response.data);
+        const response = await api.get('/api/users/get_taglines');
+        setBannerData(response.data); // Assume response.data is an array
       } catch (err) {
+        console.error(err);
         setError('Failed to fetch banner data.');
       }
     };
@@ -112,26 +112,22 @@ const YellowBanner = () => {
       {error ? (
         <p className="error-message">{error}</p>
       ) : bannerData ? (
-        <p>
-          <span>
-            <BsFillLightningChargeFill />
-          </span>{' '}
-          {bannerData.message}{' '}
-          <span>
-            <BsFillLightningChargeFill />
-          </span>{' '}
-          {bannerData.message}{' '}
-          <span>
-            <BsFillLightningChargeFill />
-          </span>
-        </p>
+        bannerData.map((item, index) => (
+          <p key={index}>
+            <span>
+              <BsFillLightningChargeFill />
+            </span>{' '}
+            {item.text}{' '}
+        
+          </p>
+        ))
       ) : (
         <p>Loading...</p>
       )}
     </div>
   );
 };
-// adfasd
+
 function Carousel_item() {
   const [bannerData, setBannerData] = useState(null); // To store banner data from the backend
   const [error, setError] = useState(null); // To handle any errors
