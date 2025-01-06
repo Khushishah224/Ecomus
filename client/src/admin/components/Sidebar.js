@@ -56,8 +56,7 @@ const Sidebar = () => {
           
           {isFrontendOpen && (
             <div className="admin-dropdown-menu">
-              <Link to="/admin/banner" className="admin-dropdown-item">Banner</Link>
-              <Link to="/admin/carousel" className="admin-dropdown-item">Hero Section Carousel</Link>
+              <Link to="/admin/banner" className="admin-dropdown-item">Hero Section</Link>
               <Link to="/admin/marquee" className="admin-dropdown-item">Marquee</Link>
               <Link to="/admin/categories" className="admin-dropdown-item">Shop by Categories</Link>
               <Link to="/admin/bestseller" className="admin-dropdown-item">Best Seller</Link>
