@@ -72,9 +72,10 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
 const createBanner = asyncHandler(async (req, res) => {
   
-  const { img,title,description} = req.body;
+  const { title,description} = req.body;
+  const imageUrl = req.file ? req.file.path : null;
 
-  const banner = await Banner.create({ img,title,description });
+  const banner = await Banner.create({ img:imageUrl,title,description });
 
   if (banner) {
     res.status(201).json({

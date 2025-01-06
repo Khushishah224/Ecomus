@@ -13,11 +13,14 @@ import {
   getBanners
 } from '../controllers/adminController.js';
 import { admin, protect } from '../middlewares/authMiddleware.js';
+import upload from '../Cloudinary/storage.js';
+
 const router = express.Router();
 
 router.post('/login', login);
 router.get('/get_users', protect, admin, getUsers);
 router.put('/update_user_profile', protect,admin, updateUserProfile);
+
 router.post('/create_banner', protect, admin, createBanner);
 router.get('/get_banners', protect, admin, getBanners);
 router.delete('/delete_banner/:id', protect, admin, deleteBanner);
