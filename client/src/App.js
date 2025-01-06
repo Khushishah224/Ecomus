@@ -6,6 +6,7 @@ import Admin from './admin/pages/Dashboard.js';
 import Login from './admin/pages/Login.js';
 import Banner from './admin/components/Banner.js';
 import Marquee from './admin/components/Marquee.js';
+import ShopCategories from './admin/components/ShopCategories.js';
 
 
 function App() {
@@ -26,6 +27,10 @@ function App() {
                     <ProtectedRoute>
                         <Marquee />
                     </ProtectedRoute>} />
+                <Route path="/admin/shopcategories" element={
+                    <ProtectedRoute>
+                        <ShopCategories />
+                    </ProtectedRoute>} />    
                 <Route path="/admin" element={<Login />} />
                 <Route path="*" element={<h1>Not Found</h1>} />
             </Routes>
