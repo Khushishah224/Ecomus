@@ -58,7 +58,7 @@
 //         </Carousel.Caption>
 //       </Carousel.Item>
 //     </Carousel>
-    
+
 //      {/* Yellow Banner */}
 //      <div className="yellow-banner">
 //         <p>
@@ -72,28 +72,71 @@
 
 // export default Carousel_item;
 
-
-import React from 'react';
+import React, { useEffect, useState } from "react";
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { BsFillLightningChargeFill } from "react-icons/bs"; 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { BsFillLightningChargeFill } from "react-icons/bs";
+import axios from "axios";
 
 // Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import fashionSlideshow01 from '../../assets/IMAGES/fashion-slideshow-01.jpg';
-import fashionSlideshow02 from '../../assets/IMAGES/fashion-slideshow-02.jpg';
-import fashionSlideshow03 from '../../assets/IMAGES/fashion-slideshow-03.jpg';
-
-import '../../styles/Carousel.css';
+import "swiper/css";
+import "swiper/css/pagination";
+import fashionSlideshow01 from "../../assets/IMAGES/fashion-slideshow-01.jpg";
+import fashionSlideshow02 from "../../assets/IMAGES/fashion-slideshow-02.jpg";
+import fashionSlideshow03 from "../../assets/IMAGES/fashion-slideshow-03.jpg";
+import "../../styles/Carousel.css";
 import { IoIosArrowForward } from "react-icons/io";
+import {Pagination} from "swiper/modules"
 
 // import required modules
-import { Pagination } from 'swiper/modules';
+const YellowBanner = () => {
+  const [bannerData, setBannerData] = useState(null);
+  const [error, setError] = useState(null);
 
-export default function Carousel_item() {
-  return ( 
-    <section id='carousel_item'>
+  useEffect(() => {
+    const fetchBannerData = async () => {
+      try {
+        const response = await axios.get('/api/users/get_taglines');
+        console.log(response.data)
+        setBannerData(response.data);
+      } catch (err) {
+        setError('Failed to fetch banner data.');
+      }
+    };
+
+    fetchBannerData();
+  }, []);
+
+  return (
+    <div className="yellow-banner">
+      {error ? (
+        <p className="error-message">{error}</p>
+      ) : bannerData ? (
+        <p>
+          <span>
+            <BsFillLightningChargeFill />
+          </span>{' '}
+          {bannerData.message}{' '}
+          <span>
+            <BsFillLightningChargeFill />
+          </span>{' '}
+          {bannerData.message}{' '}
+          <span>
+            <BsFillLightningChargeFill />
+          </span>
+        </p>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
+  );
+};
+
+function Carousel_item() {
+  const [bannerData, setBannerData] = useState(null); // To store banner data from the backend
+  const [error, setError] = useState(null); // To handle any errors
+  return (
+    <section id="carousel_item">
       <Swiper
         pagination={{
           clickable: true,
@@ -150,13 +193,8 @@ export default function Carousel_item() {
       </Swiper>
 
       {/* Yellow Banner */}
-      <div className="yellow-banner">
-        <p>
-          <span><BsFillLightningChargeFill/></span> Spring Clearance Event: Save Up to 70% <span><BsFillLightningChargeFill/></span> Spring Clearance Event: Save Up to 70% <span><BsFillLightningChargeFill/></span>
-        </p>
-      </div>
+        <YellowBanner/>
     </section>
   );
 }
-
-
+export default Carousel_item;
