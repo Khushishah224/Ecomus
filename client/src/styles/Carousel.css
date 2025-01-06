@@ -62,46 +62,28 @@
 }
 
 /* Yellow Banner */
-.yellow-banner {
+.custom-yellow-banner {
   background-color: #fcffb2; /* Yellow Background */
   text-align: center;
-  padding: 10px 5px; /* Reduced padding */
-  font-size: 0.9rem; /* Slightly smaller font size */
+  padding: 10px 15px; /* Adjust padding for better layout */
+  font-size: 1rem;
   font-weight: 600;
   color: #000;
   text-transform: uppercase;
+  white-space: normal; /* Allow text to wrap */
   overflow: hidden;
-  position: relative;
-  white-space: nowrap;
-  height: 40px; /* Reduced banner height */
-  display: flex; /* Center items vertically */
-  align-items: center;
-}
-
-/* Marquee Wrapper */
-.marquee-wrapper {
-  overflow: hidden;
-  width: 100%;
-  position: relative;
   display: flex;
-  align-items: center;
-  height: 100%; /* Match the banner height */
+  justify-content: center; /* Center the content */
 }
 
-/* Marquee Content */
-.marquee-content {
-  display: inline-flex;
-  animation: marquee 15s linear infinite;
-  white-space: nowrap;
-  gap: 30px; /* Adjusted spacing between items */
-  align-items: center;
-}
-
-/* Marquee Items */
-.marquee-item {
+.custom-yellow-banner p {
+  margin: 0;
+  padding: 0;
   display: inline-block;
-  padding: 0 8px; /* Adjusted padding for better spacing */
-  font-size: 0.85rem; /* Slightly smaller text for better fit */
+  animation: marquee 10s linear infinite;
+  white-space: normal; /* Allow wrapping */
+  word-wrap: break-word; /* Ensure word break if necessary */
+  max-width: 100%; /* Ensure text doesn't overflow */
 }
 
 /* Marquee Animation */
@@ -111,8 +93,21 @@
   }
   to {
     transform: translateX(-100%);
+  }
 }
+
+.custom-error-message {
+  color: red;
+  font-weight: bold;
 }
+
+.custom-loading-text {
+  font-weight: 600;
+  color: #000;
+  font-size: 1rem;
+}
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
 
