@@ -1,3 +1,4 @@
+//admin routes
 import express from 'express';
 import {
   getUsers,
@@ -10,7 +11,11 @@ import {
   getTaglines,
   updateTagline,
   deleteTagline,
-  getBanners
+  getBanners,
+  createCategory,
+  updateCategory,
+  deleteCategory,
+  updateCategoryStatus,
 } from '../controllers/adminController.js';
 import { admin, protect } from '../middlewares/authMiddleware.js';
 const router = express.Router();
@@ -28,6 +33,12 @@ router.post('/create_taglines', protect, admin, createTagline);
 router.get('/get_taglines', protect, admin, getTaglines);
 router.put('/update_taglines/:id', protect, admin, updateTagline);
 router.delete('/delete_taglines/:id', protect, admin, deleteTagline);
+
+// Category Management Routes
+router.post('/create_category', protect, admin, createCategory);
+router.put('/update_category/:id', protect, admin, updateCategory);
+router.delete('/delete_category/:id', protect, admin, deleteCategory);
+router.put('/update_category_status/:id', protect, admin, updateCategoryStatus)
 
 export default router;
  
