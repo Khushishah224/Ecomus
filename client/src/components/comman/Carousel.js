@@ -131,7 +131,7 @@ const YellowBanner = () => {
     </div>
   );
 };
-
+// adfasd
 function Carousel_item() {
   const [bannerData, setBannerData] = useState(null); // To store banner data from the backend
   const [error, setError] = useState(null); // To handle any errors
@@ -187,7 +187,6 @@ function Carousel_item() {
                 Shop Collection
                 <IoIosArrowForward className="ms-2" />
               </button>
-              {/* dsfds */}
             </div>
           </div>
         </SwiperSlide>
