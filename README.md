@@ -8,7 +8,7 @@ Ecomus is a MERN (MongoDB, Express, React, Node.js) stack-based e-commerce appli
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/your-username/Ecomus.git
+git clone https://github.com/Khushishah224/Ecomus.git
 cd Ecomus
 ```
 
