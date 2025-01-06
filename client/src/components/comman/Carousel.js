@@ -90,14 +90,14 @@ import {Pagination} from "swiper/modules"
 import api from "../../api.js"
 // import required modules
 const YellowBanner = () => {
-  const [bannerData, setBannerData] = useState([]);
+  const [bannerData, setBannerData] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchBannerData = async () => {
       try {
         const response = await api.get('/api/users/get_taglines');
-        setBannerData(response.data); 
+        setBannerData(response.data); // Assume response.data is an array
       } catch (err) {
         console.error(err);
         setError('Failed to fetch banner data.');
@@ -108,26 +108,25 @@ const YellowBanner = () => {
   }, []);
 
   return (
-    <div className="yellow-banner">
+    <div className="custom-yellow-banner">
       {error ? (
-        <p className="error-message">{error}</p>
+        <p className="custom-error-message">{error}</p>
+      ) : bannerData ? (
+        bannerData.map((item, index) => (
+          <p key={index} className="custom-marquee-text">
+            <span>
+              <BsFillLightningChargeFill />
+            </span>{' '}
+            {item.text}{' '}
+          </p>
+        ))
       ) : (
-        <div className="marquee-wrapper">
-          <div className="marquee-content">
-            {bannerData.map((item, index) => (
-              <p key={index} className="marquee-item">
-                <span>
-                  <BsFillLightningChargeFill />
-                </span>{' '}
-                {item.text}{' '}
-              </p>
-            ))}
-          </div>
-        </div>
+        <p className="custom-loading-text">Loading...</p>
       )}
     </div>
   );
 };
+
 
 function Carousel_item() {
   const [bannerData, setBannerData] = useState(null); // To store banner data from the backend
