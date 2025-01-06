@@ -62,24 +62,47 @@
 }
 
 /* Yellow Banner */
-#carousel_item .yellow-banner {
+.yellow-banner {
   background-color: #fcffb2; /* Yellow Background */
   text-align: center;
-  padding: 15px 10px;
-  font-size: 1rem;
+  padding: 10px 5px; /* Reduced padding */
+  font-size: 0.9rem; /* Slightly smaller font size */
   font-weight: 600;
   color: #000;
   text-transform: uppercase;
-  white-space: nowrap;
   overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+  height: 40px; /* Reduced banner height */
+  display: flex; /* Center items vertically */
+  align-items: center;
 }
 
-#carousel_item .yellow-banner p {
+/* Marquee Wrapper */
+.marquee-wrapper {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%; /* Match the banner height */
+}
+
+/* Marquee Content */
+.marquee-content {
+  display: inline-flex;
+  animation: marquee 15s linear infinite;
+  white-space: nowrap;
+  gap: 30px; /* Adjusted spacing between items */
+  align-items: center;
+}
+
+/* Marquee Items */
+.marquee-item {
   display: inline-block;
-  margin: 0;
-  animation: marquee 10s linear infinite;
+  padding: 0 8px; /* Adjusted padding for better spacing */
+  font-size: 0.85rem; /* Slightly smaller text for better fit */
 }
-
 
 /* Marquee Animation */
 @keyframes marquee {
@@ -88,7 +111,7 @@
   }
   to {
     transform: translateX(-100%);
-  }
+}
 }
 /* Responsive Design */
 @media (max-width: 768px) {

@@ -90,14 +90,14 @@ import {Pagination} from "swiper/modules"
 import api from "../../api.js"
 // import required modules
 const YellowBanner = () => {
-  const [bannerData, setBannerData] = useState(null);
+  const [bannerData, setBannerData] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchBannerData = async () => {
       try {
         const response = await api.get('/api/users/get_taglines');
-        setBannerData(response.data); // Assume response.data is an array
+        setBannerData(response.data); 
       } catch (err) {
         console.error(err);
         setError('Failed to fetch banner data.');
@@ -111,18 +111,19 @@ const YellowBanner = () => {
     <div className="yellow-banner">
       {error ? (
         <p className="error-message">{error}</p>
-      ) : bannerData ? (
-        bannerData.map((item, index) => (
-          <p key={index}>
-            <span>
-              <BsFillLightningChargeFill />
-            </span>{' '}
-            {item.text}{' '}
-        
-          </p>
-        ))
       ) : (
-        <p>Loading...</p>
+        <div className="marquee-wrapper">
+          <div className="marquee-content">
+            {bannerData.map((item, index) => (
+              <p key={index} className="marquee-item">
+                <span>
+                  <BsFillLightningChargeFill />
+                </span>{' '}
+                {item.text}{' '}
+              </p>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );
