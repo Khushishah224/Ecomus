@@ -1,0 +1,277 @@
+.admin-categories-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.categories-content {
+    flex: 1;
+    padding: 2rem;
+    margin-left: 280px;
+}
+
+.categories-header {
+    margin-bottom: 2rem;
+}
+
+.categories-header h1 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.categories-header p {
+    color: #666;
+}
+
+/* Form Styles */
+.add-category-form {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.add-category-form h3 {
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.error-message {
+    color: #dc3545;
+    background-color: #ffe6e6;
+    padding: 0.75rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.image-upload-container {
+    margin-bottom: 1rem;
+}
+
+.image-upload-input {
+    display: none;
+}
+
+.image-upload-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background-color: #f8f9fa;
+    border: 1px dashed #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.image-upload-label:hover {
+    background-color: #e9ecef;
+}
+
+.image-upload-label svg {
+    margin-right: 0.5rem;
+}
+
+.image-preview {
+    margin-top: 1rem;
+}
+
+.image-preview img {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* Button Styles */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.primary-button, .secondary-button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.primary-button {
+    background-color: #ffd5c2;
+    color: #333;
+}
+
+.primary-button:hover {
+    background-color: #ffb599;
+}
+
+.secondary-button {
+    background-color: #e1e1e1;
+    color: #333;
+}
+
+.secondary-button:hover {
+    background-color: #d4d4d4;
+}
+
+.primary-button svg, .secondary-button svg {
+    margin-right: 0.5rem;
+}
+
+/* Categories Grid */
+.existing-categories-section {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.existing-categories-section h2 {
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.category-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+}
+
+.category-card.inactive {
+    opacity: 0.7;
+}
+
+.category-image-container {
+    position: relative;
+    padding-top: 100%; /* 1:1 Aspect Ratio */
+}
+
+.category-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.category-status {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.category-details {
+    padding: 1rem;
+}
+
+.category-details h4 {
+    margin: 0;
+    color: #333;
+    text-align: center;
+}
+
+.category-actions {
+    display: flex;
+    padding: 1rem;
+    gap: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.edit-button, .delete-button {
+    flex: 1;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.edit-button {
+    background-color: #ffd5c2;
+    color: #333;
+}
+
+.edit-button:hover {
+    background-color: #ffb599;
+}
+
+.delete-button {
+    background-color: #ffe6e6;
+    color: #dc3545;
+}
+
+.delete-button:hover {
+    background-color: #ffcccc;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .categories-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .add-category-form,
+    .existing-categories-section {
+        padding: 1rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions button {
+        width: 100%;
+    }
+}
