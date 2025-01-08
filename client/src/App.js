@@ -11,7 +11,6 @@ import BestSeller from './admin/components/BestSeller.js';
 import Header from './admin/components/Header.js';
 import SizePicker from './admin/components/sizepicker.js';
 import ColorPicker from './admin/components/Colorpicker.js';
-
 function App() {
     return (
 
