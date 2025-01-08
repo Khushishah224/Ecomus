@@ -75,7 +75,7 @@ const createBanner = asyncHandler(async (req, res) => {
   const { img, title, description } = req.body;
 
   const banner = await Banner.create({ img, title, description });
-
+  try{
     if (banner) {
       res.status(201).json({
         _id: banner._id,
@@ -188,137 +188,137 @@ const deleteTagline = asyncHandler(async (req, res) => {
 //Category Section
 
 // Create a new Category
-const createCategory = asyncHandler(async (req, res) => {
-  const { image, name, active } = req.body;
+// const createCategory = asyncHandler(async (req, res) => {
+//   const { image, name, active } = req.body;
 
-  const category = await Category.create({
-    image,
-    name,
-    active,
-  });
+//   const category = await Category.create({
+//     image,
+//     name,
+//     active,
+//   });
 
-  if (category) {
-    res.status(201).json(category);
-  } else {
-    res.status(400);
-    throw new Error("Invalid Category Data");
-  }
-});
+//   if (category) {
+//     res.status(201).json(category);
+//   } else {
+//     res.status(400);
+//     throw new Error("Invalid Category Data");
+//   }
+// });
 
 // Update a Category's details
-const updateCategory = asyncHandler(async (req, res) => {
-  const category = await Category.findById(req.params.id);
+// const updateCategory = asyncHandler(async (req, res) => {
+//   const category = await Category.findById(req.params.id);
 
-  if (category) {
-    category.name = req.body.name || category.name;
-    category.image = req.body.image || category.image;
-    category.active = req.body.active ?? category.active;
+//   if (category) {
+//     category.name = req.body.name || category.name;
+//     category.image = req.body.image || category.image;
+//     category.active = req.body.active ?? category.active;
 
-    const updatedCategory = await category.save();
-    res.json(updatedCategory);
-  } else {
-    res.status(404);
-    throw new Error("Category not Found");
-  }
-});
+//     const updatedCategory = await category.save();
+//     res.json(updatedCategory);
+//   } else {
+//     res.status(404);
+//     throw new Error("Category not Found");
+//   }
+// });
 
 // Delete a Category
-const deleteCategory = asyncHandler(async (req, res) => {
-  const category = await Category.findById(req.params.id);
+// const deleteCategory = asyncHandler(async (req, res) => {
+//   const category = await Category.findById(req.params.id);
 
-  if (category) {
-    await category.remove();
-    res.json({ message: "Category removed" });
-  } else {
-    res.status(404);
-    throw new Error("Category not Found");
-  }
-});
+//   if (category) {
+//     await category.remove();
+//     res.json({ message: "Category removed" });
+//   } else {
+//     res.status(404);
+//     throw new Error("Category not Found");
+//   }
+// });
 
 // Toggle category status
-const updateCategoryStatus = asyncHandler(async (req, res) => {
-  const category = await Category.findById(req.params.id);
+// const updateCategoryStatus = asyncHandler(async (req, res) => {
+//   const category = await Category.findById(req.params.id);
 
-  if (category) {
-    category.active = req.body.active;
-    const updatedCategory = await category.save();
-    res.json(updatedCategory);
-  } else {
-    res.status(404);
-    throw new Error("Category not Found");
-  }
-});
+//   if (category) {
+//     category.active = req.body.active;
+//     const updatedCategory = await category.save();
+//     res.json(updatedCategory);
+//   } else {
+//     res.status(404);
+//     throw new Error("Category not Found");
+//   }
+// });
 
 // Category operations
-const getCategories = asyncHandler(async (req, res) => {
-  const categories = await Category.find({});
-  res.json(categories);
-});
+// const getCategories = asyncHandler(async (req, res) => {
+//   const categories = await Category.find({});
+//   res.json(categories);
+// });
 
-const createCategory = asyncHandler(async (req, res) => {
-  const { name } = req.body;
+// const createCategory = asyncHandler(async (req, res) => {
+//   const { name } = req.body;
 
-  if (!req.file) {
-    res.status(400);
-    throw new Error('Please upload an image');
-  }
+//   if (!req.file) {
+//     res.status(400);
+//     throw new Error('Please upload an image');
+//   }
 
-  const category = await Category.create({
-    name,
-    image: `/uploads/categories/${req.file.filename}`,
-    active: true
-  });
+//   const category = await Category.create({
+//     name,
+//     image: `/uploads/categories/${req.file.filename}`,
+//     active: true
+//   });
 
-  if (category) {
-    res.status(201).json(category);
-  } else {
-    res.status(400);
-    throw new Error('Invalid category data');
-  }
-});
+//   if (category) {
+//     res.status(201).json(category);
+//   } else {
+//     res.status(400);
+//     throw new Error('Invalid category data');
+//   }
+// });
 
-const updateCategory = asyncHandler(async (req, res) => {
-  const category = await Category.findById(req.params.id);
+// const updateCategory = asyncHandler(async (req, res) => {
+//   const category = await Category.findById(req.params.id);
 
-  if (category) {
-    // Handle image update if new file is uploaded
-    if (req.file) {
-      // Delete old image if it exists
-      const oldImagePath = path.join(process.cwd(), category.image);
-      if (fs.existsSync(oldImagePath)) {
-        fs.unlinkSync(oldImagePath);
-      }
-      category.image = `/uploads/categories/${req.file.filename}`;
-    }
+//   if (category) {
+//     // Handle image update if new file is uploaded
+//     if (req.file) {
+//       // Delete old image if it exists
+//       const oldImagePath = path.join(process.cwd(), category.image);
+//       if (fs.existsSync(oldImagePath)) {
+//         fs.unlinkSync(oldImagePath);
+//       }
+//       category.image = `/uploads/categories/${req.file.filename}`;
+//     }
 
-    category.name = req.body.name || category.name;
-    category.active = req.body.active !== undefined ? req.body.active : category.active;
+//     category.name = req.body.name || category.name;
+//     category.active = req.body.active !== undefined ? req.body.active : category.active;
 
-    const updatedCategory = await category.save();
-    res.json(updatedCategory);
-  } else {
-    res.status(404);
-    throw new Error('Category not found');
-  }
-});
+//     const updatedCategory = await category.save();
+//     res.json(updatedCategory);
+//   } else {
+//     res.status(404);
+//     throw new Error('Category not found');
+//   }
+// });
 
-const deleteCategory = asyncHandler(async (req, res) => {
-  const category = await Category.findById(req.params.id);
+// const deleteCategory = asyncHandler(async (req, res) => {
+//   const category = await Category.findById(req.params.id);
 
-  if (category) {
-    // Delete the image file
-    const imagePath = path.join(process.cwd(), category.image);
-    if (fs.existsSync(imagePath)) {
-      fs.unlinkSync(imagePath);
-    }
+//   if (category) {
+//     // Delete the image file
+//     const imagePath = path.join(process.cwd(), category.image);
+//     if (fs.existsSync(imagePath)) {
+//       fs.unlinkSync(imagePath);
+//     }
 
-    await category.deleteOne();
-    res.json({ message: 'Category removed' });
-  } else {
-    res.status(404);
-    throw new Error('Category not found');
-  }
-});
+//     await category.deleteOne();
+//     res.json({ message: 'Category removed' });
+//   } else {
+//     res.status(404);
+//     throw new Error('Category not found');
+//   }
+// });
 
 export {
   login,
@@ -332,8 +332,8 @@ export {
   getTaglines,
   updateTagline,
   deleteTagline,
-  getCategories,
-  createCategory,
-  updateCategory,
-  deleteCategory,
+  // getCategories,
+  // createCategory,
+  // updateCategory,
+  // deleteCategory,
 };

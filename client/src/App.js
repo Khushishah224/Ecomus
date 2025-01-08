@@ -8,6 +8,8 @@ import Banner from './admin/components/Banner.js';
 import Marquee from './admin/components/Marquee.js';
 import ShopCategories from './admin/components/ShopCategories.js';
 import BestSeller from './admin/components/BestSeller.js';
+import SizePicker from './admin/components/sizepicker.js';
+import ColorPicker from './admin/components/colorpicker.js';
 
 function App() {
     return (
@@ -34,7 +36,15 @@ function App() {
                 <Route path="/admin/bestseller" element={
                     <ProtectedRoute>
                         <BestSeller />
-                    </ProtectedRoute>} />        
+                    </ProtectedRoute>} />       
+                    <Route path="/admin/size-picker" element={
+                    <ProtectedRoute>
+                        <SizePicker />
+                    </ProtectedRoute>} /> 
+                    <Route path="/admin/color-picker" element={
+                    <ProtectedRoute>
+                        <ColorPicker />
+                    </ProtectedRoute>} />
                 <Route path="/admin" element={<Login />} />
                 <Route path="*" element={<h1>Not Found</h1>} />
             </Routes>
