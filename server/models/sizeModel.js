@@ -1,12 +1,23 @@
 import mongoose from 'mongoose';
 
-const sizeSchema = new mongoose.Schema({
+const sizeSchema = mongoose.Schema(
+  {
     name: {
       type: String,
       required: true,
-      unique: true,
+      uppercase: true,
+      trim: true,
     },
-  });
+    isActive: {
+      type: Boolean,
+      default: true,
+    }
+  },
+  {
+    timestamps: true,
+  }
+);
 
 const Size = mongoose.model('Size', sizeSchema);
+
 export default Size;

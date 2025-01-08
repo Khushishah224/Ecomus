@@ -1,20 +1,19 @@
-//Admin Controller
-import User from "../models/userModel.js";
-import asyncHandler from "express-async-handler";
-import generateToken from "../utils/generateToken.js";
-import Banner from "../models/bannerModel.js";
-import Tagline from "../models/marqueeModel.js";
-import Category from "../models/categoryModel.js";
+import User from '../models/userModel.js';
+import asyncHandler from 'express-async-handler';
+import generateToken from '../utils/generateToken.js';
+import Banner from '../models/bannerModel.js';
+import Tagline from '../models/marquee.js';
+import Category from '../models/categoryModel.js';
+import path from 'path';
+import fs from 'fs';
 
-
-
-//@desc     Auth User & Get Token
-//@route    POST api/users/login
-//@access   Private
+// @desc     Auth User & Get Token
+// @route    POST api/users/login
+// @access   Private
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if (user && user.isAdmin) {
+  if(user && user.isAdmin) {
     if (user && (await user.matchPassword(password))) {
       return res.json({
         _id: user._id,
@@ -26,25 +25,25 @@ const login = asyncHandler(async (req, res) => {
       });
     } else {
       res.status(401);
-      throw new Error("Invalid email or Password");
+      throw new Error('Invalid email or Password');
     }
   } else {
     res.status(401);
-    throw new Error("User is not an Admin");
+    throw new Error('User is not an Admin');
   }
 });
 
-//@desc     Get all Users
-//@route    GET api/users
-//@access   Private/Admin
+// @desc     Get all Users
+// @route    GET api/users
+// @access   Private/Admin
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find({});
   res.json(users);
 });
 
-//@desc     Update User Profile
-//@route    PUT api/users/profile/:id
-//@access   Private
+// @desc     Update User Profile
+// @route    PUT api/users/profile/:id
+// @access   Private
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
@@ -71,23 +70,11 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-
+// Banner operations
 const createBanner = asyncHandler(async (req, res) => {
-  const { caption, description } = req.body;
-  console.log(req.body);
-  console.log(req.file);
-  
-  if (!req.file) {
-    res.status(400);
-    throw new Error('Image upload is required');
-  }
+  const { img, title, description } = req.body;
 
-  const banner = await Banner.create({
-    image: req.file.path, // Cloudinary URL
-    caption,
-    description,
-    active: true, // Default status
-  });
+  const banner = await Banner.create({ img, title, description });
 
   if (banner) {
     res.status(201).json(banner);
@@ -143,10 +130,7 @@ const deleteBanner = asyncHandler(async (req, res) => {
   }
 });
 
-
-// @desc     Create a Tagline
-// @route    POST /api/admin/taglines
-// @access   Private/Admin
+// Tagline operations
 const createTagline = asyncHandler(async (req, res) => {
   const { text } = req.body;
 
@@ -160,17 +144,11 @@ const createTagline = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc     Get all Taglines
-// @route    GET /api/admin/taglines
-// @access   Private/Admin
 const getTaglines = asyncHandler(async (req, res) => {
   const taglines = await Tagline.find({});
   res.json(taglines);
 });
 
-// @desc     Update a Tagline
-// @route    PUT /api/admin/taglines/:id
-// @access   Private/Admin
 const updateTagline = asyncHandler(async (req, res) => {
   const { text } = req.body;
   const tagline = await Tagline.findById(req.params.id);
@@ -185,9 +163,6 @@ const updateTagline = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc     Delete a Tagline
-// @route    DELETE /api/admin/taglines/:id
-// @access   Private/Admin
 const deleteTagline = asyncHandler(async (req, res) => {
   const tagline = await Tagline.findById(req.params.id);
 
@@ -264,20 +239,91 @@ const updateCategoryStatus = asyncHandler(async (req, res) => {
   }
 });
 
+// Category operations
+const getCategories = asyncHandler(async (req, res) => {
+  const categories = await Category.find({});
+  res.json(categories);
+});
+
+const createCategory = asyncHandler(async (req, res) => {
+  const { name } = req.body;
+
+  if (!req.file) {
+    res.status(400);
+    throw new Error('Please upload an image');
+  }
+
+  const category = await Category.create({
+    name,
+    image: `/uploads/categories/${req.file.filename}`,
+    active: true
+  });
+
+  if (category) {
+    res.status(201).json(category);
+  } else {
+    res.status(400);
+    throw new Error('Invalid category data');
+  }
+});
+
+const updateCategory = asyncHandler(async (req, res) => {
+  const category = await Category.findById(req.params.id);
+
+  if (category) {
+    // Handle image update if new file is uploaded
+    if (req.file) {
+      // Delete old image if it exists
+      const oldImagePath = path.join(process.cwd(), category.image);
+      if (fs.existsSync(oldImagePath)) {
+        fs.unlinkSync(oldImagePath);
+      }
+      category.image = `/uploads/categories/${req.file.filename}`;
+    }
+
+    category.name = req.body.name || category.name;
+    category.active = req.body.active !== undefined ? req.body.active : category.active;
+
+    const updatedCategory = await category.save();
+    res.json(updatedCategory);
+  } else {
+    res.status(404);
+    throw new Error('Category not found');
+  }
+});
+
+const deleteCategory = asyncHandler(async (req, res) => {
+  const category = await Category.findById(req.params.id);
+
+  if (category) {
+    // Delete the image file
+    const imagePath = path.join(process.cwd(), category.image);
+    if (fs.existsSync(imagePath)) {
+      fs.unlinkSync(imagePath);
+    }
+
+    await category.deleteOne();
+    res.json({ message: 'Category removed' });
+  } else {
+    res.status(404);
+    throw new Error('Category not found');
+  }
+});
+
 export {
   login,
+  updateUserProfile,
   getUsers,
   createBanner,
   getBanners,
-  updateUserProfile,
   updateBanner,
   deleteBanner,
   createTagline,
   getTaglines,
   updateTagline,
   deleteTagline,
+  getCategories,
   createCategory,
   updateCategory,
   deleteCategory,
-  updateCategoryStatus,
 };

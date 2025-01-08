@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "../styles/banner.css";
-import Sidebar from "../components/Sidebar.js";
+import Sidebar from "./Sidebar.js";
 import { FaTrash, FaEdit, FaImage, FaPlus } from 'react-icons/fa';
 import api from "../../api.js";
-import { toast , Toaster }from 'react-hot-toast'; // Import toast
+import { toast } from "react-hot-toast";
+
 
 const Banner = () => {
     const [banners, setBanners] = useState([]);
-    const [newBanner, setNewBanner] = useState({ image: null, caption: "", description: "", active: true });
+    const [newBanner, setNewBanner] = useState({ image: "", caption: "", text: "", active: true });
     const [editingBanner, setEditingBanner] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
     const [error, setError] = useState("");
@@ -18,12 +19,10 @@ const Banner = () => {
 
     const fetchBanners = async () => {
         try {
-            const response = await api.get("/api/admin/get_banners");
-            const data = await response.data; // Assuming the API returns JSON directly
-            setBanners(data);
+            const response = await api.get("/banners");
+            setBanners(response.data);
         } catch (error) {
             console.error("Error fetching banners:", error);
-            toast.error("Failed to fetch banners.");
         }
     };
 
@@ -36,100 +35,76 @@ const Banner = () => {
         return true;
     };
 
+    const handleDeleteBanner = async (id) => {
+        if (window.confirm("Are you sure you want to delete this banner?")) {
+            try {
+                await api.delete(`/banners/delete_banner/${id}`);
+                setBanners(banners.filter((banner) => banner._id !== id));
+            } catch (error) {
+                console.error("Error deleting banner:", error);
+            }
+        }
+    };
+   
     const handleAddBanner = async () => {
         if (!validateForm()) return;
     
-        const newId = banners.length > 0 ? Math.max(...banners.map(banner => banner.id)) + 1 : 1;
-        const bannerData = { ...newBanner, id: newId }; // Prepare the banner data
-    
-        // Create FormData
         const formData = new FormData();
-        formData.append("image", newBanner.image); // Add image file
+        formData.append("image", newBanner.image);
         formData.append("caption", newBanner.caption);
-        formData.append("description", newBanner.description);
-        formData.append("active", newBanner.active);
-    
-        // Show loading toast
-        const loadingToast = toast.loading("Adding banner...");
+        formData.append("text", newBanner.text);
     
         try {
-            console.log("FormData contents:", formData);
-
-            const response = await api.post("/api/admin/create_banner", formData, {
+            await api.post("/banners", formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data', // Set correct headers for file upload
-                }
+                    "Content-Type": "multipart/form-data",
+                },
             });
-            if (response.status === 201) {
-                setBanners([...banners, { ...bannerData, image: response.data.image }]); // Update local state with uploaded image URL
-                toast.success("Banner added successfully!");
-            } else {
-                toast.error("Failed to add banner.");
-            }
+    
+            await fetchBanners();
+            resetForm();
+            toast.success("Banner added successfully");
         } catch (error) {
             console.error("Error adding banner:", error);
-            toast.error("Failed to add banner.");
-        } finally {
-            toast.dismiss(loadingToast); // Dismiss loading toast
-        }
-    
-        resetForm();
-    };
-    
-
-    const handleDeleteBanner = (id) => {
-        if (window.confirm("Are you sure you want to delete this banner?")) {
-            setBanners(banners.filter(banner => banner.id !== id));
+            toast.error("Failed to add banner");
         }
     };
-
+    
     const handleEditBanner = (banner) => {
         setEditingBanner(banner);
-        setNewBanner({ image: banner.image, caption: banner.caption, description: banner.description, active: banner.active });
-        setImagePreview(banner.image);
+        setNewBanner({ image: banner.image, caption: banner.caption, text: banner.text, active: banner.active });
+        setImagePreview(`http://localhost:5000${banner.image}`);
+        document.querySelector('.add-banner-form').scrollIntoView({ behavior: 'smooth' });
     };
 
+    
     const handleSaveEdit = async () => {
         if (!validateForm()) return;
     
-        const updatedBanner = { ...editingBanner, ...newBanner };
-    
-        // Create FormData for the edit
         const formData = new FormData();
         formData.append("caption", newBanner.caption);
-        formData.append("description", newBanner.description); // Add the description
-        formData.append("active", newBanner.active);
-        if (newBanner.image) {
-            formData.append("image", newBanner.image); // Add new image if it exists
-        }
+        formData.append("text", newBanner.text);
+        formData.append("active", newBanner.active); 
     
-        // Show loading toast
-        const loadingToast = toast.loading("Saving changes...");
+        if (newBanner.image instanceof File) {
+            formData.append("image", newBanner.image);
+        }
     
         try {
-            const response = await api.put(`/admin/update_banner/${editingBanner.id}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data', // Set correct headers for file upload
-                }
+            await api.put(`/banners/${editingBanner._id}`, formData, {
+                headers: { "Content-Type": "multipart/form-data" },
             });
-            if (response.status === 200) {
-                setBanners(banners.map(banner => banner.id === editingBanner.id ? updatedBanner : banner));
-                toast.success("Banner updated successfully!");
-            } else {
-                toast.error("Failed to update banner.");
-            }
+    
+            await fetchBanners(); 
+            resetForm();
+            toast.success("Banner updated successfully");
         } catch (error) {
             console.error("Error updating banner:", error);
-            toast.error("Failed to update banner.");
-        } finally {
-            toast.dismiss(loadingToast); // Dismiss loading toast
+            toast.error("Failed to update banner");
         }
-    
-        resetForm();
     };
     
-
-    const handleImageChange = (e) => {
+    const handleImageChange = async (e) => {
         const file = e.target.files[0];
         if (file) {
             if (file.size > 5000000) {
@@ -142,14 +117,13 @@ const Banner = () => {
                 setError("Please upload a valid image file (JPEG, PNG, or GIF)");
                 return;
             }
-    
-            const imageUrl = URL.createObjectURL(file); // Create a preview URL
-            setImagePreview(imageUrl);
-            setNewBanner({ ...newBanner, image: file }); // Store the actual file in state
+
+            setImagePreview(URL.createObjectURL(file));
+            setNewBanner({ ...newBanner, image: file });
             setError("");
         }
     };
-    
+
 
     const resetForm = () => {
         setEditingBanner(null);
@@ -158,8 +132,18 @@ const Banner = () => {
         setError("");
     };
 
-    const toggleBannerStatus = (id) => {
-        setBanners(banners.map(banner => banner.id === id ? { ...banner, active: !banner.active } : banner));
+    const toggleBannerStatus = async (id) => {
+        try {
+            const updatedBanner = banners.find((banner) => banner._id === id);
+            updatedBanner.active = !updatedBanner.active;
+
+            await api.put(`/banners/${id}`, updatedBanner);
+            setBanners([...banners]);
+            toast.success(`Banner marked as ${updatedBanner.active ? "Active" : "Inactive"}`);
+        } catch (error) {
+            console.error("Error updating banner status:", error);
+            toast.error("Failed to update banner status");
+        }
     };
 
     return (
@@ -177,7 +161,7 @@ const Banner = () => {
                 <div className="add-banner-form">
                     <h3>{editingBanner ? "Edit Banner" : "Add New Banner"}</h3>
                     {error && <div className="error-message">{error}</div>}
-                    
+
                     <div className="form-group">
                         <label>Banner Caption</label>
                         <input
@@ -220,18 +204,10 @@ const Banner = () => {
                     </div>
 
                     <div className="form-actions">
-                        <button
-                            className="secondary-button"
-                            onClick={resetForm}
-                            type="button"
-                        >
+                        <button className="secondary-button" onClick={resetForm} type="button">
                             Cancel
                         </button>
-                        <button
-                            className="primary-button"
-                            onClick={editingBanner ? handleSaveEdit : handleAddBanner}
-                            type="button"
-                        >
+                        <button className="primary-button" onClick={editingBanner ? handleSaveEdit : handleAddBanner} type="button">
                             {editingBanner ? <><FaEdit /> Save Changes</> : <><FaPlus /> Add Banner</>}
                         </button>
                     </div>
@@ -242,10 +218,10 @@ const Banner = () => {
                     <h2>Existing Banners</h2>
                     <div className="banner-grid">
                         {banners.map((banner) => (
-                            <div key={banner.id} className={`banner-card ${!banner.active ? 'inactive' : ''}`}>
+                            <div key={banner._id} className={`banner-card ${!banner.active ? 'inactive' : ''}`}>
                                 <div className="banner-image-container">
-                                    <img src={banner.image} alt={banner.caption} className="banner-image" />
-                                    <div className="banner-status" onClick={() => toggleBannerStatus(banner.id)}>
+                                    <img src={`http://localhost:5000${banner.image}`} alt={banner.caption} className="banner-image" />
+                                    <div className="banner-status" onClick={() => toggleBannerStatus(banner._id)}>
                                         {banner.active ? "Active" : "Inactive"}
                                     </div>
                                 </div>
@@ -257,7 +233,7 @@ const Banner = () => {
                                     <button className="edit-button" onClick={() => handleEditBanner(banner)}>
                                         <FaEdit /> Edit
                                     </button>
-                                    <button className="delete-button" onClick={() => handleDeleteBanner(banner.id)}>
+                                    <button className="delete-button" onClick={() => handleDeleteBanner(banner._id)}>
                                         <FaTrash /> Delete
                                     </button>
                                 </div>
@@ -270,4 +246,4 @@ const Banner = () => {
     );
 };
 
-export default Banner; 
+export default Banner;

@@ -10,14 +10,14 @@ const bannerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    description: {
+    text: {
       type: String,
       required: true,
     },
-    active: {
+    active: { 
       type: Boolean,
-      default: true,
-    },
+       default: true, 
+    }
   },
   {
     timestamps: true,
