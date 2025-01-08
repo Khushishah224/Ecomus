@@ -7,7 +7,7 @@ import Login from './admin/pages/Login.js';
 import Banner from './admin/components/Banner.js';
 import Marquee from './admin/components/Marquee.js';
 import ShopCategories from './admin/components/ShopCategories.js';
-
+import BestSeller from './admin/components/BestSeller.js';
 
 function App() {
     return (
@@ -30,7 +30,11 @@ function App() {
                 <Route path="/admin/shopcategories" element={
                     <ProtectedRoute>
                         <ShopCategories />
-                    </ProtectedRoute>} />    
+                    </ProtectedRoute>} /> 
+                <Route path="/admin/bestseller" element={
+                    <ProtectedRoute>
+                        <BestSeller />
+                    </ProtectedRoute>} />        
                 <Route path="/admin" element={<Login />} />
                 <Route path="*" element={<h1>Not Found</h1>} />
             </Routes>

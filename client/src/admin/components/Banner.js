@@ -1,46 +1,30 @@
 import React, { useEffect, useState } from "react";
 import "../styles/banner.css";
-import Sidebar from "../components/Sidebar.js";
+import Sidebar from "./Sidebar.js";
 import { FaTrash, FaEdit, FaImage, FaPlus } from 'react-icons/fa';
 import api from "../../api.js";
+import { toast } from "react-hot-toast";
+
 
 const Banner = () => {
-
-    // useEffect(()=>{
-    //     fetchBanners();
-    // });
-
-    const fetchBanners = async () => {
-        const response = await api.get("/admin/get_banners");
-        const data = await response.json();
-        console.log(data);
-    }
-    const [banners, setBanners] = useState([
-        { 
-            id: 1, 
-            image: "https://via.placeholder.com/300x150", 
-            caption: "Welcome to Our Store", 
-            text: "Enjoy the best deals!",
-            active: true 
-        },
-        { 
-            id: 2, 
-            image: "https://via.placeholder.com/300x150", 
-            caption: "Shop the Latest Trends", 
-            text: "Fashion at your fingertips!",
-            active: true
-        },
-    ]);
-
-    const [newBanner, setNewBanner] = useState({ 
-        image: "", 
-        caption: "", 
-        text: "", 
-        active: true 
-    });
+    const [banners, setBanners] = useState([]);
+    const [newBanner, setNewBanner] = useState({ image: "", caption: "", text: "", active: true });
     const [editingBanner, setEditingBanner] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
     const [error, setError] = useState("");
+
+    useEffect(() => {
+        fetchBanners();
+    }, []);
+
+    const fetchBanners = async () => {
+        try {
+            const response = await api.get("/banners");
+            setBanners(response.data);
+        } catch (error) {
+            console.error("Error fetching banners:", error);
+        }
+    };
 
     const validateForm = () => {
         if (!newBanner.image || !newBanner.caption || !newBanner.text) {
@@ -51,44 +35,79 @@ const Banner = () => {
         return true;
     };
 
-    const handleAddBanner = () => {
-        if (!validateForm()) return;
-
-        const newId = banners.length > 0 ? Math.max(...banners.map(banner => banner.id)) + 1 : 1;
-        setBanners([...banners, { id: newId, ...newBanner }]);
-        resetForm();
-    };
-
-    const handleDeleteBanner = (id) => {
+    const handleDeleteBanner = async (id) => {
         if (window.confirm("Are you sure you want to delete this banner?")) {
-            setBanners(banners.filter((banner) => banner.id !== id));
+            try {
+                await api.delete(`/banners/delete_banner/${id}`);
+                setBanners(banners.filter((banner) => banner._id !== id));
+            } catch (error) {
+                console.error("Error deleting banner:", error);
+            }
         }
     };
-
+   
+    const handleAddBanner = async () => {
+        if (!validateForm()) return;
+    
+        const formData = new FormData();
+        formData.append("image", newBanner.image);
+        formData.append("caption", newBanner.caption);
+        formData.append("text", newBanner.text);
+    
+        try {
+            await api.post("/banners", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+    
+            await fetchBanners();
+            resetForm();
+            toast.success("Banner added successfully");
+        } catch (error) {
+            console.error("Error adding banner:", error);
+            toast.error("Failed to add banner");
+        }
+    };
+    
     const handleEditBanner = (banner) => {
         setEditingBanner(banner);
-        setNewBanner({ 
-            image: banner.image, 
-            caption: banner.caption, 
-            text: banner.text,
-            active: banner.active 
-        });
-        setImagePreview(banner.image);
+        setNewBanner({ image: banner.image, caption: banner.caption, text: banner.text, active: banner.active });
+        setImagePreview(`http://localhost:5000${banner.image}`);
+        document.querySelector('.add-banner-form').scrollIntoView({ behavior: 'smooth' });
     };
 
-    const handleSaveEdit = () => {
+    
+    const handleSaveEdit = async () => {
         if (!validateForm()) return;
-
-        setBanners(banners.map((banner) =>
-            banner.id === editingBanner.id ? { ...banner, ...newBanner } : banner
-        ));
-        resetForm();
+    
+        const formData = new FormData();
+        formData.append("caption", newBanner.caption);
+        formData.append("text", newBanner.text);
+        formData.append("active", newBanner.active); 
+    
+        if (newBanner.image instanceof File) {
+            formData.append("image", newBanner.image);
+        }
+    
+        try {
+            await api.put(`/banners/${editingBanner._id}`, formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+    
+            await fetchBanners(); 
+            resetForm();
+            toast.success("Banner updated successfully");
+        } catch (error) {
+            console.error("Error updating banner:", error);
+            toast.error("Failed to update banner");
+        }
     };
-
-    const handleImageChange = (e) => {
+    
+    const handleImageChange = async (e) => {
         const file = e.target.files[0];
         if (file) {
-            if (file.size > 5000000) { // 5MB limit
+            if (file.size > 5000000) {
                 setError("Image size should be less than 5MB");
                 return;
             }
@@ -99,12 +118,12 @@ const Banner = () => {
                 return;
             }
 
-            const imageUrl = URL.createObjectURL(file);
-            setImagePreview(imageUrl);
-            setNewBanner({ ...newBanner, image: imageUrl });
+            setImagePreview(URL.createObjectURL(file));
+            setNewBanner({ ...newBanner, image: file });
             setError("");
         }
     };
+
 
     const resetForm = () => {
         setEditingBanner(null);
@@ -113,10 +132,18 @@ const Banner = () => {
         setError("");
     };
 
-    const toggleBannerStatus = (id) => {
-        setBanners(banners.map(banner =>
-            banner.id === id ? { ...banner, active: !banner.active } : banner
-        ));
+    const toggleBannerStatus = async (id) => {
+        try {
+            const updatedBanner = banners.find((banner) => banner._id === id);
+            updatedBanner.active = !updatedBanner.active;
+
+            await api.put(`/banners/${id}`, updatedBanner);
+            setBanners([...banners]);
+            toast.success(`Banner marked as ${updatedBanner.active ? "Active" : "Inactive"}`);
+        } catch (error) {
+            console.error("Error updating banner status:", error);
+            toast.error("Failed to update banner status");
+        }
     };
 
     return (
@@ -132,7 +159,7 @@ const Banner = () => {
                 <div className="add-banner-form">
                     <h3>{editingBanner ? "Edit Banner" : "Add New Banner"}</h3>
                     {error && <div className="error-message">{error}</div>}
-                    
+
                     <div className="form-group">
                         <label>Banner Caption</label>
                         <input
@@ -175,18 +202,10 @@ const Banner = () => {
                     </div>
 
                     <div className="form-actions">
-                        <button
-                            className="secondary-button"
-                            onClick={resetForm}
-                            type="button"
-                        >
+                        <button className="secondary-button" onClick={resetForm} type="button">
                             Cancel
                         </button>
-                        <button
-                            className="primary-button"
-                            onClick={editingBanner ? handleSaveEdit : handleAddBanner}
-                            type="button"
-                        >
+                        <button className="primary-button" onClick={editingBanner ? handleSaveEdit : handleAddBanner} type="button">
                             {editingBanner ? <><FaEdit /> Save Changes</> : <><FaPlus /> Add Banner</>}
                         </button>
                     </div>
@@ -197,10 +216,10 @@ const Banner = () => {
                     <h2>Existing Banners</h2>
                     <div className="banner-grid">
                         {banners.map((banner) => (
-                            <div key={banner.id} className={`banner-card ${!banner.active ? 'inactive' : ''}`}>
+                            <div key={banner._id} className={`banner-card ${!banner.active ? 'inactive' : ''}`}>
                                 <div className="banner-image-container">
-                                    <img src={banner.image} alt={banner.caption} className="banner-image" />
-                                    <div className="banner-status" onClick={() => toggleBannerStatus(banner.id)}>
+                                    <img src={`http://localhost:5000${banner.image}`} alt={banner.caption} className="banner-image" />
+                                    <div className="banner-status" onClick={() => toggleBannerStatus(banner._id)}>
                                         {banner.active ? "Active" : "Inactive"}
                                     </div>
                                 </div>
@@ -209,16 +228,10 @@ const Banner = () => {
                                     <p>{banner.text}</p>
                                 </div>
                                 <div className="banner-actions">
-                                    <button 
-                                        className="edit-button" 
-                                        onClick={() => handleEditBanner(banner)}
-                                    >
+                                    <button className="edit-button" onClick={() => handleEditBanner(banner)}>
                                         <FaEdit /> Edit
                                     </button>
-                                    <button 
-                                        className="delete-button" 
-                                        onClick={() => handleDeleteBanner(banner.id)}
-                                    >
+                                    <button className="delete-button" onClick={() => handleDeleteBanner(banner._id)}>
                                         <FaTrash /> Delete
                                     </button>
                                 </div>

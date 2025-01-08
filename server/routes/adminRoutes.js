@@ -10,10 +10,11 @@ import {
   getTaglines,
   updateTagline,
   deleteTagline,
-  getBanners
+  getBanners,
 } from '../controllers/adminController.js';
 import { admin, protect } from '../middlewares/authMiddleware.js';
 const router = express.Router();
+
 
 router.post('/login', login);
 router.get('/get_users', protect, admin, getUsers);
@@ -28,6 +29,7 @@ router.post('/create_taglines', protect, admin, createTagline);
 router.get('/get_taglines', protect, admin, getTaglines);
 router.put('/update_taglines/:id', protect, admin, updateTagline);
 router.delete('/delete_taglines/:id', protect, admin, deleteTagline);
+
 
 export default router;
  
