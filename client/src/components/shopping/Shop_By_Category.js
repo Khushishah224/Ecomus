@@ -6,40 +6,55 @@ import "swiper/css/navigation";
 import { CgArrowTopRightO } from "react-icons/cg";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import MediaQuery from 'react-responsive';
+import api from "../../api.js";
+import { toast } from "react-hot-toast";
 
-// Import images
-import Img1 from "../../assets/IMAGES/collection-1.jpg";
-import Img2 from "../../assets/IMAGES/collection-2.jpg";
-import Img3 from "../../assets/IMAGES/collection-14.jpg";
-import Img4 from "../../assets/IMAGES/collection-20.jpg";
-import Img5 from "../../assets/IMAGES/collection-17.jpg";
-import Img6 from "../../assets/IMAGES/collection-18.jpg";
 
 const ShopCard = () => {
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
+  const [categories, setCategories] = useState([]);
 
-  const categories = [
-    { id: 1, name: "Clothing", image: Img1 },
-    { id: 2, name: "Sunglasses", image: Img2 },
-    { id: 3, name: "Bags", image: Img3 },
-    { id: 4, name: "Shoes", image: Img4 },
-    { id: 5, name: "Accessories", image: Img5 },
-    { id: 6, name: "Jewelry", image: Img6 },
-  ];
+  useEffect(() => {
+    const fetchCategories = async () => {
+    try {
+      const response = await api.get("/categories");
+      setCategories(response.data);
+  } catch (error) {
+      console.error("Error fetching categories:", error);
+      toast.error("Failed to fetch categories");
+  }};
+  fetchCategories();
+   
+  }, []);
+useEffect(() => {
+        fetchCategories();
+    }, []);
 
+    const fetchCategories = async () => {
+        try {
+            const response = await api.get("/categories");
+            setCategories(response.data);
+        } catch (error) {
+            console.error("Error fetching categories:", error);
+            toast.error("Failed to fetch categories");
+        }
+    };
+    
   useEffect(() => {
     const swiper = swiperRef.current?.swiper;
     if (swiper) {
+      swiper.update(); // Ensure Swiper updates after categories are set
       setIsBeginning(swiper.isBeginning);
       setIsEnd(swiper.isEnd);
+      
       swiper.on("slideChange", () => {
         setIsBeginning(swiper.isBeginning);
         setIsEnd(swiper.isEnd);
       });
     }
-  }, []);
+  }, [categories]); // <- Re-run effect when categories change
 
   const handlePrev = () => {
     if (!isBeginning && swiperRef.current) {
@@ -62,11 +77,11 @@ const ShopCard = () => {
           <button
             className="btn"
             style={{
-              border: isBeginning ? "1px solid #ccc":"1px solid black",
+              border: isBeginning ? "1px solid #ccc" : "1px solid black",
               borderRadius: "50%",
               backgroundColor: isBeginning ? "#fff" : "white",
               pointerEvents: isBeginning ? "none" : "auto",
-              color:isBeginning ? "#ccc":"#000"
+              color: isBeginning ? "#ccc" : "#000"
             }}
             onClick={handlePrev}
             aria-label="Previous"
@@ -76,11 +91,11 @@ const ShopCard = () => {
           <button
             className="btn"
             style={{
-              border: isEnd ? "1px solid #ccc":"1px solid black",
+              border: isEnd ? "1px solid #ccc" : "1px solid black",
               borderRadius: "50%",
               backgroundColor: isEnd ? "#fff" : "white",
               pointerEvents: isEnd ? "none" : "auto",
-              color:isEnd ? "#ccc":"#000"
+              color: isEnd ? "#ccc" : "#000"
             }}
             onClick={handleNext}
             aria-label="Next"
@@ -108,12 +123,12 @@ const ShopCard = () => {
               loop={false}
               className="flex-grow-1"
             >
-              {categories.map((category) => (
-                <SwiperSlide key={category.id}>
+              {categories.filter(category => category.active).map((category) => (
+                <SwiperSlide key={category._id}>
                   <div className="card-container">
                     <div className="position-relative overflow-hidden shadow-sm rounded">
                       <img
-                        src={category.image}
+                        src={`http://localhost:5000${category.image}`} // Ensure image is correct
                         className="img-fluid w-100"
                         alt={category.name}
                       />
@@ -160,11 +175,11 @@ const ShopCard = () => {
                 loop={false}
               >
                 {categories.map((category) => (
-                  <SwiperSlide key={category.id}>
+                  <SwiperSlide key={category._id}>
                     <div className="card-container">
                       <div className="position-relative overflow-hidden shadow-sm rounded-2">
                         <img
-                          src={category.image}
+                          src={`http://localhost:5000${category.image}`} // Ensure full image path
                           className="img-fluid w-100"
                           alt={category.name}
                         />

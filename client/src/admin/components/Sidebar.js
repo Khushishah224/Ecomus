@@ -1,39 +1,45 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { 
-  FaHome, 
-  FaShoppingCart, 
-  FaBox, 
-  FaChartLine, 
-  FaUsers, 
-  FaCog, 
-  FaSignOutAlt,
-  FaUserCircle,
-  FaGlobe,
-  FaChevronDown,
-  FaBars
+  FaHome, FaShoppingCart, FaBox, FaChartLine, FaUsers, FaCog, 
+  FaSignOutAlt, FaUserCircle, FaGlobe, FaChevronDown, FaBars 
 } from 'react-icons/fa';
 import '../styles/sidebar.css';
-import {logout} from '../../api.js';
+import { logout } from '../../api.js';
 
 const Sidebar = () => {
-  const [isFrontendOpen, setIsFrontendOpen] = useState(false);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Load dropdown states from localStorage or default to closed
+  const [dropdowns, setDropdowns] = useState(() => {
+    return JSON.parse(localStorage.getItem("sidebarDropdowns")) || {
+      frontend: false,
+      products: false,
+    };
+  });
+
+  useEffect(() => {
+    // Save dropdown state to localStorage
+    localStorage.setItem("sidebarDropdowns", JSON.stringify(dropdowns));
+  }, [dropdowns]);
+
+  const toggleDropdown = (key) => {
+    setDropdowns((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
 
   const handleLogout = () => {
     logout();
   };
 
-  const toggleSidebar = () => {
-    setIsSidebarCollapsed(!isSidebarCollapsed);
-  };
-
   return (
-    <div className={`admin-sidebar ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+    <div className="admin-sidebar">
       <div className="admin-sidebar-header">
         <h1 className="admin-brand">ecomus</h1>
-        <button className="admin-sidebar-toggle" onClick={toggleSidebar}>
+        <button className="admin-sidebar-toggle">
           <FaBars />
         </button>
       </div>
@@ -44,38 +50,55 @@ const Sidebar = () => {
           <span className="admin-sidebar-text">Dashboard</span>
         </Link>
 
+        {/* Frontend Dropdown */}
         <div className="admin-sidebar-dropdown">
           <button 
             className="admin-sidebar-link"
-            onClick={() => setIsFrontendOpen(!isFrontendOpen)}
+            onClick={() => toggleDropdown("frontend")}
           >
             <FaGlobe className="admin-sidebar-icon" />
             <span className="admin-sidebar-text">Frontend</span>
-            <FaChevronDown className={`admin-dropdown-icon ${isFrontendOpen ? 'open' : ''}`} />
+            <FaChevronDown className={`admin-dropdown-icon ${dropdowns.frontend ? 'open' : ''}`} />
           </button>
           
-          {isFrontendOpen && (
+          {dropdowns.frontend && (
             <div className="admin-dropdown-menu">
               <Link to="/admin/banner" className="admin-dropdown-item">Hero Section</Link>
               <Link to="/admin/marquee" className="admin-dropdown-item">Marquee</Link>
               <Link to="/admin/shopcategories" className="admin-dropdown-item">Shop by Categories</Link>
-              <Link to="/admin/bestseller" className="admin-dropdown-item">Best Seller</Link>
+              {/* <Link to="/admin/bestseller" className="admin-dropdown-item">Best Seller</Link> */}
               <Link to="/admin/shop-look" className="admin-dropdown-item">Shop the Look</Link>
-              <Link to="/admin/shopgram" className="admin-dropdown-item">Shop gram</Link>
+              <Link to="/admin/shopgram" className="admin-dropdown-item">Shop Gram</Link>
             </div>
           )}
         </div>
 
+        {/* Orders Link */}
         <Link to="/admin/orders" className="admin-sidebar-link">
           <FaShoppingCart className="admin-sidebar-icon" />
           <span className="admin-sidebar-text">Orders</span>
         </Link>
 
-        <Link to="/admin/products" className="admin-sidebar-link">
-          <FaBox className="admin-sidebar-icon" />
-          <span className="admin-sidebar-text">Products</span>
-        </Link>
+        {/* Products Dropdown */}
+        <div className="admin-sidebar-dropdown">
+          <button 
+            className="admin-sidebar-link"
+            onClick={() => toggleDropdown("products")}
+          >
+            <FaBox className="admin-sidebar-icon" />
+            <span className="admin-sidebar-text">Products</span>
+            <FaChevronDown className={`admin-dropdown-icon ${dropdowns.products ? 'open' : ''}`} />
+          </button>
 
+          {dropdowns.products && (
+            <div className="admin-dropdown-menu">
+              <Link to="/admin/color-picker" className="admin-dropdown-item">Color Picker</Link>
+              <Link to="/admin/size-picker" className="admin-dropdown-item">Size Picker</Link>
+            </div>
+          )}
+        </div>
+
+        {/* Other Links */}
         <Link to="/admin/sales" className="admin-sidebar-link">
           <FaChartLine className="admin-sidebar-icon" />
           <span className="admin-sidebar-text">Sales</span>
@@ -104,6 +127,5 @@ const Sidebar = () => {
     </div>
   );
 };
-
 
 export default Sidebar;
