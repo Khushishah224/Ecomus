@@ -1,7 +1,7 @@
 import User from '../models/userModel.js';
 import asyncHandler from 'express-async-handler';
 import generateToken from '../utils/generateToken.js';
-
+import Tagline from '../models/marquee.js';
 //@desc     Auth User & Get Token
 //@route    POST api/users/login
 //@access   Public
@@ -100,4 +100,12 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-export { login, register, getUser, updateUserProfile };
+// @desc     Get all Taglines
+// @route    GET /api/users/get_taglines
+// @access   Private/users
+const getTaglines = asyncHandler(async (req, res) => {
+  const taglines = await Tagline.find({});
+  res.json(taglines);
+});
+
+export { login, register, getUser, updateUserProfile,getTaglines };

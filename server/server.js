@@ -12,6 +12,7 @@ import adminRoutes from './routes/adminRoutes.js';
 connectDb();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // For form URL-encoded data
 app.use(morgan('dev'));
 app.use(cors());
 // hello 

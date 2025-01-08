@@ -6,10 +6,6 @@ import api from "../../api.js";
 
 const Banner = () => {
 
-    // useEffect(()=>{
-    //     fetchBanners();
-    // });
-
     const fetchBanners = async () => {
         const response = await api.get("/admin/get_banners");
         const data = await response.json();

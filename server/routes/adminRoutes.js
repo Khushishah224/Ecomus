@@ -1,3 +1,4 @@
+//admin routes
 import express from 'express';
 import {
   getUsers,
@@ -10,24 +11,42 @@ import {
   getTaglines,
   updateTagline,
   deleteTagline,
-  getBanners
+  getBanners,
+  createCategory,
+  updateCategory,
+  deleteCategory,
+  updateCategoryStatus,
 } from '../controllers/adminController.js';
 import { admin, protect } from '../middlewares/authMiddleware.js';
+import upload from '../middlewares/multerMiddleware.js';
+
 const router = express.Router();
 
 router.post('/login', login);
 router.get('/get_users', protect, admin, getUsers);
 router.put('/update_user_profile', protect,admin, updateUserProfile);
-router.post('/create_banner', protect, admin, createBanner);
+
+// router.post('/create_banner', protect, admin, upload.single('img'), createBanner);
+router.post('/create_banner', protect, admin, upload.single('img'), (req, res, next) => {
+  console.log("File received by Multer:", req.file);
+  next();
+}, createBanner);
+
 router.get('/get_banners', protect, admin, getBanners);
 router.delete('/delete_banner/:id', protect, admin, deleteBanner);
-router.put('/update_banner/:id', protect, admin, updateBanner);
+router.put('/update_banner/:id', protect, admin, upload.single('img'), updateBanner);
 
 // Tagline Management Routes
 router.post('/create_taglines', protect, admin, createTagline);
 router.get('/get_taglines', protect, admin, getTaglines);
 router.put('/update_taglines/:id', protect, admin, updateTagline);
 router.delete('/delete_taglines/:id', protect, admin, deleteTagline);
+
+// Category Management Routes
+router.post('/create_category', protect, admin, createCategory);
+router.put('/update_category/:id', protect, admin, updateCategory);
+router.delete('/delete_category/:id', protect, admin, deleteCategory);
+router.put('/update_category_status/:id', protect, admin, updateCategoryStatus)
 
 export default router;
  

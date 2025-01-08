@@ -60,36 +60,71 @@
   width: 10px;
   height: 10px;
 }
-
-/* Yellow Banner */
-#carousel_item .yellow-banner {
+/* Custom Yellow Banner */
+.custom-yellow-banner {
   background-color: #fcffb2; /* Yellow Background */
   text-align: center;
-  padding: 15px 10px;
+  padding: 10px 15px; /* Adjust padding for better layout */
   font-size: 1rem;
   font-weight: 600;
   color: #000;
   text-transform: uppercase;
-  white-space: nowrap;
   overflow: hidden;
+  display: flex;
+  justify-content: center; /* Center the content */
+  position: relative;
+  white-space: nowrap; /* Prevent wrapping of text */
 }
 
-#carousel_item .yellow-banner p {
-  display: inline-block;
+/* Container for Marquee Text */
+.custom-yellow-banner .marquee-wrapper {
+  display: inline-flex;
+  animation: marquee 15s linear infinite;
+}
+
+/* Each text element in the banner */
+.custom-yellow-banner .marquee-wrapper p {
   margin: 0;
-  animation: marquee 10s linear infinite;
+  padding: 0 15px; /* Add space between the texts */
+  display: inline-block;
+  white-space: nowrap; /* Ensure text doesn't wrap */
 }
-
 
 /* Marquee Animation */
 @keyframes marquee {
-  from {
-    transform: translateX(100%);
+  0% {
+    transform: translateX(100%); /* Start from outside the right */
   }
-  to {
-    transform: translateX(-100%);
+  100% {
+    transform: translateX(-100%); /* Move all the way to the left */
   }
 }
+
+/* Styling for error and loading message */
+.custom-error-message {
+  color: red;
+  font-weight: bold;
+}
+
+.custom-loading-text {
+  font-weight: 600;
+  color: #000;
+  font-size: 1rem;
+}
+
+/* Styling for error and loading message */
+.custom-error-message {
+  color: red;
+  font-weight: bold;
+}
+
+.custom-loading-text {
+  font-weight: 600;
+  color: #000;
+  font-size: 1rem;
+}
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
 
