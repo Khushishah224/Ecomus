@@ -80,8 +80,8 @@ const Sidebar = () => {
           <span className="admin-sidebar-text">Orders</span>
         </Link>
 
-        {/* Products Dropdown */}
-        <div className="admin-sidebar-dropdown">
+            {/* Products Dropdown */}
+            <div className="admin-sidebar-dropdown">
           <button 
             className="admin-sidebar-link"
             onClick={() => toggleDropdown("products")}
@@ -98,6 +98,7 @@ const Sidebar = () => {
             </div>
           )}
         </div>
+
 
         {/* Other Links */}
         <Link to="/admin/sales" className="admin-sidebar-link">
