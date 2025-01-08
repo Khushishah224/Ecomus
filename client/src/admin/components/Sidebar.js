@@ -63,6 +63,7 @@ const Sidebar = () => {
           
           {dropdowns.frontend && (
             <div className="admin-dropdown-menu">
+               <Link to="/admin/Header" className="admin-dropdown-item">Header</Link>
               <Link to="/admin/banner" className="admin-dropdown-item">Hero Section</Link>
               <Link to="/admin/marquee" className="admin-dropdown-item">Marquee</Link>
               <Link to="/admin/shopcategories" className="admin-dropdown-item">Shop by Categories</Link>
