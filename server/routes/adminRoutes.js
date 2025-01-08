@@ -18,7 +18,7 @@ import {
   updateCategoryStatus,
 } from '../controllers/adminController.js';
 import { admin, protect } from '../middlewares/authMiddleware.js';
-import upload from '../middlewares/multerMiddleware.js';
+import upload from '../config/multer.js';
 
 const router = express.Router();
 
@@ -26,15 +26,10 @@ router.post('/login', login);
 router.get('/get_users', protect, admin, getUsers);
 router.put('/update_user_profile', protect,admin, updateUserProfile);
 
-// router.post('/create_banner', protect, admin, upload.single('img'), createBanner);
-router.post('/create_banner', protect, admin, upload.single('img'), (req, res, next) => {
-  console.log("File received by Multer:", req.file);
-  next();
-}, createBanner);
-
+router.post('/create_banner', protect, admin, upload.single('image'), createBanner);
 router.get('/get_banners', protect, admin, getBanners);
 router.delete('/delete_banner/:id', protect, admin, deleteBanner);
-router.put('/update_banner/:id', protect, admin, upload.single('img'), updateBanner);
+router.put('/update_banner/:id', protect, admin, updateBanner);
 
 // Tagline Management Routes
 router.post('/create_taglines', protect, admin, createTagline);

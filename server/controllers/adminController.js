@@ -3,10 +3,11 @@ import User from "../models/userModel.js";
 import asyncHandler from "express-async-handler";
 import generateToken from "../utils/generateToken.js";
 import Banner from "../models/bannerModel.js";
-import Tagline from "../models/marquee.js";
-import Category from "../models/shopByCategory.js";
-import cloudinary from "../utils/cloudinaryConfig.js";
-import fs from "fs";
+import Tagline from "../models/marqueeModel.js";
+import Category from "../models/categoryModel.js";
+
+
+
 //@desc     Auth User & Get Token
 //@route    POST api/users/login
 //@access   Private
@@ -70,42 +71,33 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-const createBanner = asyncHandler(async (req, res) => {
-  const { title, description } = req.body;
-  console.log("File:", req.file);
-  console.log("Body:", req.body);
 
+const createBanner = asyncHandler(async (req, res) => {
+  const { caption, description } = req.body;
+  console.log(req.body);
+  console.log(req.file);
+  
   if (!req.file) {
     res.status(400);
-    throw new Error('Image file is required');
+    throw new Error('Image upload is required');
   }
 
-  try {
-    const banner = await Banner.create({
-      img: req.file.path, // URL automatically set by multer-storage-cloudinary
-      title,
-      description,
-    });
+  const banner = await Banner.create({
+    image: req.file.path, // Cloudinary URL
+    caption,
+    description,
+    active: true, // Default status
+  });
 
-    if (banner) {
-      res.status(201).json({
-        _id: banner._id,
-        img: banner.img,
-        title: banner.title,
-        description: banner.description,
-      });
-    } else {
-      res.status(400);
-      throw new Error('Invalid Banner Data');
-    }
-  } catch (err) {
-    console.error("Error creating banner:", err);
-    res.status(500).json({ message: "Internal server error" });
+  if (banner) {
+    res.status(201).json(banner);
+  } else {
+    res.status(400);
+    throw new Error('Failed to create banner');
   }
 });
 
-
-
+// Get All Banners
 const getBanners = asyncHandler(async (req, res) => {
   const banners = await Banner.find({});
   res.json(banners);
@@ -117,10 +109,10 @@ const updateBanner = asyncHandler(async (req, res) => {
   if (banner) {
     if (req.file) {
       // Delete old image from Cloudinary
-      const publicId = banner.img.split('/').pop().split('.')[0]; // Extract public ID
+      const publicId = banner.image.split('/').pop().split('.')[0]; // Extract public ID
       await cloudinary.uploader.destroy(`banners/${publicId}`);
 
-      banner.img = req.file.path;
+      banner.image = req.file.path;
     }
 
     banner.title = req.body.title || banner.title;
@@ -140,7 +132,7 @@ const deleteBanner = asyncHandler(async (req, res) => {
 
   if (banner) {
     // Delete image from Cloudinary
-    const publicId = banner.img.split('/').pop().split('.')[0]; // Extract public ID
+    const publicId = banner.image.split('/').pop().split('.')[0]; // Extract public ID
     await cloudinary.uploader.destroy(`banners/${publicId}`);
 
     await banner.remove();

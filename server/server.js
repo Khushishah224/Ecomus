@@ -3,7 +3,9 @@ const app = express();
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import connectDb from './db.js';
+import bodyParser from 'body-parser';
 import cors from 'cors';
+
 dotenv.config();
 
 import userRoutes from './routes/userRoutes.js';
@@ -11,8 +13,11 @@ import adminRoutes from './routes/adminRoutes.js';
 
 connectDb();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // For form URL-encoded data
+app.use(bodyParser.json());
+
+
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false })); // For form URL-encoded data
 app.use(morgan('dev'));
 app.use(cors());
 

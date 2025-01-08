@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 
 const bannerSchema = new mongoose.Schema(
   {
-    img: {
+    image: {
       type: String,
       required: true,
     },
-    title: {
+    caption: {
       type: String,
       required: true,
     },
@@ -14,8 +14,14 @@ const bannerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    active: {
+      type: Boolean,
+      default: true,
+    },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
 const Banner = mongoose.model('Banner', bannerSchema);
