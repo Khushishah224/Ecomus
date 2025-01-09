@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { toast } from "react-hot-toast";
+import { toast ,Toaster} from "react-hot-toast";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import Sidebar from "../components/Sidebar.js";
 import api from "../../api";
@@ -35,15 +35,15 @@ const Header = () => {
       toast.error("Please enter a header");
       return;
     }
-
+  
     setIsLoading(true);
     try {
       const response = await api.post("/api/admin/create_header", {
         text: newHeader,
       });
-      setHeaders([...headers, response.data]);
-      setNewHeader("");
       toast.success("Header added successfully");
+      setNewHeader(""); // Reset input field
+      fetchHeaders(); // Fetch updated headers
     } catch (error) {
       toast.error("Failed to add header. Please try again.");
     } finally {
@@ -94,6 +94,7 @@ const Header = () => {
       <Sidebar />
 
       <div className="header-content">
+        <Toaster/>
         <div className="header-header">
           <h1>Manage Headers</h1>
           <p>Create and manage headers for your site</p>
