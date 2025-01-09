@@ -45,7 +45,7 @@ function Header() {
 
   return (
     <section id="header" className={`header ${isScrolled ? 'scrolled' : 'bg-white'}`}>
-      <nav className="navbar bg-white py-1">
+      <nav className="navbar bg-white py-2">
         <div className="header-left container-fluid d-flex flex-wrap justify-content-between align-items-center px-3 px-md-5">
 
           {/* Social Media Icons */}

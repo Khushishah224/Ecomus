@@ -93,7 +93,7 @@
 }
 
 /* Tablet and Mobile - Center Content */
-@media (max-width: 768px) {
+@media (max-width: 298px) {
   .desktop-text {
     display: none;
   }

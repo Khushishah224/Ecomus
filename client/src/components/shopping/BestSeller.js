@@ -14,10 +14,10 @@ import img7 from "../../assets/IMAGES/black-4.jpg";
 import simg7 from "../../assets/IMAGES/black-5.jpg";
 import img8 from "../../assets/IMAGES/white-8.jpg";
 
-import ComparisonPopup from "../modals/ComparisonPopup"; 
+import ComparisonPopup from "../modals/ComparisonPopup";
 import ShoppingBagPopup from "../modals/ShoppingBagPopup";
 import ShowProductPopup from "../modals/ShowProductPopup"; // Import the new popup
-
+import { Whishlist } from "../comman/MainNavbar.js";
 import { RiShoppingBag2Line } from "react-icons/ri";
 import { FaRegHeart } from "react-icons/fa";
 import { TbArrowsCross } from "react-icons/tb";
@@ -30,16 +30,16 @@ const BestSeller = () => {
   const [isComparisonPopupVisible, setIsComparisonPopupVisible] = useState(false);  // New state for ShowProductPopup
   const [selectedColors, setSelectedColors] = useState({});
   const [hoveredProduct, setHoveredProduct] = useState(null);
-
+  const [showWhishlist, setShowWhishlist] = useState(false);
   const products = [
-    { id: 1, name: "Ribbed Tank Top", price: "$16.95", image: img1, subimage:"" , size: ['S', 'L', 'XL'], colors: ["orange","white"] , colorImages: [img1, img1w] },
-    { id: 2, name: "Ribbed modal T-shirt", price: "$18.95", image: img2, subimage:"", size: ['S', 'L', 'XL'], colors: ["white", "pink", "green"], saleTime: "11d : 15h : 50m : 02s" },
+    { id: 1, name: "Ribbed Tank Top", price: "$16.95", image: img1, subimage: "", size: ['S', 'L', 'XL'], colors: ["orange", "white"], colorImages: [img1, img1w] },
+    { id: 2, name: "Ribbed modal T-shirt", price: "$18.95", image: img2, subimage: "", size: ['S', 'L', 'XL'], colors: ["white", "pink", "green"], saleTime: "11d : 15h : 50m : 02s" },
     { id: 3, name: "Oversized Printed T-shirt", price: "$10.00", image: img3, subimage: simg3, size: ['S', 'L', 'XL'], colors: ["black", "pink", "white"] },
-    { id: 4, name: "Oversized Printed T-shirt", price: "$16.95", image: img4, subimage:"", size: ['S', 'L', 'XL'], colors: ["black", "pink", "white"] },
+    { id: 4, name: "Oversized Printed T-shirt", price: "$16.95", image: img4, subimage: "", size: ['S', 'L', 'XL'], colors: ["black", "pink", "white"] },
     { id: 5, name: "Oversized Printed T-shirt", price: "$16.95", image: img5, subimage: simg5, size: ['S', 'L', 'XL'], colors: ["white", "pink", "black"] },
     { id: 6, name: "Oversized Printed T-shirt", price: "$16.95", image: img6, subimage: simg6, size: ['S', 'L', 'XL'], colors: ["black", "pink", "white"] },
     { id: 7, name: "Oversized Printed T-shirt", price: "$16.95", image: img7, subimage: simg7, size: ['S', 'L', 'XL'], colors: ["black", "pink", "white"] },
-    { id: 8, name: "Oversized Printed T-shirt", price: "$16.95", image: img8, subimage:"", size: ['S', 'L', 'XL'], colors: ["black", "pink", "white"] },
+    { id: 8, name: "Oversized Printed T-shirt", price: "$16.95", image: img8, subimage: "", size: ['S', 'L', 'XL'], colors: ["black", "pink", "white"] },
   ];
 
   const handleOpenShoppingBagPopup = (product) => {
@@ -93,7 +93,7 @@ const BestSeller = () => {
                 <img
                   src={hoveredProduct === product.id && product.subimage ? product.subimage : product.image}
                   className="product-image"
-                  
+
                   alt={product.name}
                 />
 
@@ -105,10 +105,15 @@ const BestSeller = () => {
                   <button className="icon-btn" onClick={() => handleOpenShoppingBagPopup(product)}>
                     <RiShoppingBag2Line />
                   </button>
-                  <button className="icon-btn icon-hide">
-                    <FaRegHeart />
+                  {/* Add to Wishlist */}
+                  <button
+                    className="icon-btn"
+                    onClick={() => setShowWhishlist(true)}
+                    type="button"
+                  >
+                    <FaRegHeart /> 
                   </button>
-                  <button className="icon-btn icon-hide" onClick={()=>handleOpenComparisonPopup(product)}>
+                  <button className="icon-btn icon-hide" onClick={() => handleOpenComparisonPopup(product)}>
                     <TbArrowsCross />
                   </button>
                   <button className="icon-btn" onClick={() => handleOpenShowProductPopup(product)}>
@@ -161,12 +166,13 @@ const BestSeller = () => {
       {isShowProductPopupVisible && selectedProduct && (
         <ShowProductPopup products={products} initialProductIndex={selectedProduct.id} onClose={closeAllPopups} />
       )}
-       {isComparisonPopupVisible && selectedProduct && (
+      {isComparisonPopupVisible && selectedProduct && (
         <ComparisonPopup
           product={selectedProduct}
           onClose={closeAllPopups}
         />
       )}
+       <Whishlist show={showWhishlist} onClose={() => setShowWhishlist(false)} />
     </section>
   );
 };
