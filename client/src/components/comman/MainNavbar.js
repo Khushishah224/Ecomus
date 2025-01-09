@@ -607,4 +607,4 @@ function MainNavbar() {
 }
 
 export default MainNavbar;
-export { SearchSidebar, Sidebar, Popup };
+export { SearchSidebar, Sidebar, Popup ,Whishlist};
