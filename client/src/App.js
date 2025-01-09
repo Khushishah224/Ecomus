@@ -11,7 +11,7 @@ import BestSeller from './admin/components/BestSeller.js';
 import ShopTheLook from './admin/components/ShopTheLook.js';
 
 import SizePicker from './admin/components/SizePicker.js';
-import ColorPicker from './admin/components/ColorPicker.js';
+import ColorPicker from './admin/components/Colorpicker.js';
 import Header from './admin/components/Header.js';
 import ShopGramAdmin from './admin/components/ShopGram.js';
 function App() {
