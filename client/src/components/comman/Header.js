@@ -74,7 +74,7 @@ const fetchHeaderData = async () => {
           </div>
 
           {/* Country and Language Dropdown */}
-          <div className=" d-flex gap-4 justify-content-end align-items-center mb-2 mb-lg-0">
+          <div className=" d-flex gap-1 justify-content-end align-items-center mb-2 mb-lg-0">
 
             {/* Country Dropdown */}
             <Dropdown className='header-right'>
