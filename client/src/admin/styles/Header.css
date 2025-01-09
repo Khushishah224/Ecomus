@@ -1,0 +1,213 @@
+.header-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.header-content {
+    flex: 1;
+    padding: 2rem;
+    margin-left: 280px; /* Adjust based on your sidebar width */
+}
+
+.header-header {
+    margin-bottom: 2rem;
+}
+
+.header-header h1 {
+    color: #2c3e50;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.header-header p {
+    color: #666;
+    font-size: 1rem;
+}
+
+.header-form {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.input-group {
+    display: flex;
+    gap: 1rem;
+}
+
+.header-input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #2c3e50;
+    transition: all 0.3s ease;
+}
+
+.header-input:focus {
+    outline: none;
+    border-color: #ffd5c2;
+    box-shadow: 0 0 0 3px rgba(255, 213, 194, 0.2);
+}
+
+.add-button {
+    padding: 0 1.5rem;
+    background: linear-gradient(45deg, #ffd5c2, #ffb599);
+    border: none;
+    border-radius: 8px;
+    color: #2c3e50;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.add-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 213, 194, 0.3);
+}
+
+.add-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.headers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.header-item {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-content-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-text {
+    color: #2c3e50;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.header-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.edit-button,
+.delete-button {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.edit-button {
+    background: #f0f0f0;
+    color: #2c3e50;
+}
+
+.delete-button {
+    background: #ffe5e5;
+    color: #e74c3c;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+    transform: translateY(-1px);
+}
+
+.edit-group {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+}
+
+.edit-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+    font-size: 0.95rem;
+}
+
+.edit-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.save-button,
+.cancel-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.save-button {
+    background: #2ecc71;
+    color: white;
+}
+
+.cancel-button {
+    background: #e1e1e1;
+    color: #666;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .header-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+
+    .input-group {
+        flex-direction: column;
+    }
+
+    .add-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .header-content-item {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .edit-group {
+        flex-direction: column;
+    }
+}
+
+.header-item.inactive {
+    opacity: 0.6;
+}
+
+.header-status {
+    cursor: pointer;
+    color: #007bff;
+}
