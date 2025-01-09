@@ -13,6 +13,12 @@ import {
   getBanners,
 } from '../controllers/adminController.js';
 import {
+  createHeader,
+  getHeaders,
+  updateHeader,
+  deleteHeader
+} from '../controllers/headerController.js';
+import {
   getColors,
   addColor,
   updateColor,
@@ -24,12 +30,12 @@ import {
   updateSize,
   deleteSize,
 } from '../controllers/sizeController.js';  // Import size controller
+
 import { admin, protect } from '../middlewares/authMiddleware.js';
 import upload from '../middlewares/multerMiddleware.js';
 
 const router = express.Router();
 
-// Admin Authentication and User Management Routes
 router.post('/login', login);
 router.get('/get_users', protect, admin, getUsers);
 router.put('/update_user_profile', protect, admin, updateUserProfile);
@@ -49,6 +55,11 @@ router.get('/get_taglines', protect, admin, getTaglines);
 router.put('/update_taglines/:id', protect, admin, updateTagline);
 router.delete('/delete_taglines/:id', protect, admin, deleteTagline);
 
+// Header Management Routes
+router.post('/create_header', protect, admin, createHeader);
+router.get('/get_headers', protect, admin, getHeaders);
+router.put('/update_header/:id', protect, admin, updateHeader);
+router.delete('/delete_header/:id', protect, admin, deleteHeader);
 // Color Management Routes
 router.get('/get_colors', protect, admin, getColors); // Fetch all colors
 router.post('/add_color', protect, admin, addColor); // Add a new color

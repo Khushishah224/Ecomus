@@ -8,9 +8,9 @@ import Banner from './admin/components/Banner.js';
 import Marquee from './admin/components/Marquee.js';
 import ShopCategories from './admin/components/ShopCategories.js';
 import BestSeller from './admin/components/BestSeller.js';
-import SizePicker from './admin/components/sizepicker.js';
-import ColorPicker from './admin/components/colorpicker.js';
-
+import SizePicker from './admin/components/SizePicker.js';
+import ColorPicker from './admin/components/Colorpicker.js';
+import Header from './admin/components/Header.js';
 function App() {
     return (
 
@@ -25,6 +25,10 @@ function App() {
                     <ProtectedRoute>
                         <Banner />
                     </ProtectedRoute>} />
+                    <Route path="/admin/Header" element={
+                    <ProtectedRoute>
+                        <Header/>
+                    </ProtectedRoute>} />
                 <Route path="/admin/marquee" element={
                     <ProtectedRoute>
                         <Marquee />
@@ -36,7 +40,7 @@ function App() {
                 <Route path="/admin/bestseller" element={
                     <ProtectedRoute>
                         <BestSeller />
-                    </ProtectedRoute>} />       
+                    </ProtectedRoute>} />  
                     <Route path="/admin/size-picker" element={
                     <ProtectedRoute>
                         <SizePicker />
@@ -44,6 +48,10 @@ function App() {
                     <Route path="/admin/color-picker" element={
                     <ProtectedRoute>
                         <ColorPicker />
+                    </ProtectedRoute>} />
+                    <Route path="/admin/header" element={
+                    <ProtectedRoute>
+                        <Header />
                     </ProtectedRoute>} />
                 <Route path="/admin" element={<Login />} />
                 <Route path="*" element={<h1>Not Found</h1>} />
