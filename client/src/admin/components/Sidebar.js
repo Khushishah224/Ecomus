@@ -5,6 +5,7 @@ import {
   FaSignOutAlt, FaUserCircle, FaGlobe, FaChevronDown, FaBars 
 } from 'react-icons/fa';
 import '../styles/sidebar.css';
+import ShopGram from '../../components/shopping/ShopGram.js';
 import { logout } from '../../api.js';
 
 const Sidebar = () => {

@@ -13,6 +13,7 @@ import ShopTheLook from './admin/components/ShopTheLook.js';
 import SizePicker from './admin/components/SizePicker.js';
 import ColorPicker from './admin/components/ColorPicker.js';
 import Header from './admin/components/Header.js';
+import ShopGramAdmin from './admin/components/ShopGram.js';
 function App() {
     return (
 
@@ -58,6 +59,10 @@ function App() {
                     <Route path="/admin/header" element={
                     <ProtectedRoute>
                         <Header />
+                    </ProtectedRoute>} />
+                    <Route path="/admin/shopgram" element={
+                    <ProtectedRoute>
+                        <ShopGramAdmin />
                     </ProtectedRoute>} />
                 <Route path="/admin" element={<Login />} />
                 <Route path="*" element={<h1>Not Found</h1>} />
