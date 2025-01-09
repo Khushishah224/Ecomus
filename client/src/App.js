@@ -8,9 +8,10 @@ import Banner from './admin/components/Banner.js';
 import Marquee from './admin/components/Marquee.js';
 import ShopCategories from './admin/components/ShopCategories.js';
 import BestSeller from './admin/components/BestSeller.js';
-import SizePicker from './admin/components/SizePicker.js';
+import SizePicker from './admin/components/sizepicker.js';
 import ColorPicker from './admin/components/Colorpicker.js';
 import Header from './admin/components/Header.js';
+import ShopGramAdmin from './admin/components/ShopGram.js';
 function App() {
     return (
 
@@ -52,6 +53,10 @@ function App() {
                     <Route path="/admin/header" element={
                     <ProtectedRoute>
                         <Header />
+                    </ProtectedRoute>} />
+                    <Route path="/admin/shopgram" element={
+                    <ProtectedRoute>
+                        <ShopGramAdmin />
                     </ProtectedRoute>} />
                 <Route path="/admin" element={<Login />} />
                 <Route path="*" element={<h1>Not Found</h1>} />

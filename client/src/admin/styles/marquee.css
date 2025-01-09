@@ -251,7 +251,18 @@
   background: #ffe5e5;
   color: #e74c3c;
 }
+.color-picker-wrapper {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+}
 
+@media (max-width: 768px) {
+  .color-picker-wrapper {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
 .edit-button:hover,
 .delete-button:hover {
   transform: translateY(-2px);

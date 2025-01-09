@@ -14,6 +14,7 @@ const Marquee = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [marqueeColor, setMarqueeColor] = useState("#fff9e6");
+  const [textColor, setTextColor] = useState("#2c3e50"); // New state for text color
 
   useEffect(() => {
     fetchTaglines();
@@ -24,8 +25,13 @@ const Marquee = () => {
     try {
       const response = await api.get("/api/admin/get_taglines");
       setTaglines(response.data);
-      if (response.data.length > 0 && response.data[0].backgroundColor) {
-        setMarqueeColor(response.data[0].backgroundColor);
+      if (response.data.length > 0) {
+        if (response.data[0].backgroundColor) {
+          setMarqueeColor(response.data[0].backgroundColor);
+        }
+        if (response.data[0].textColor) {
+          setTextColor(response.data[0].textColor);
+        }
       }
     } catch (error) {
       toast.error("Failed to fetch taglines. Please try again later.");
@@ -46,6 +52,7 @@ const Marquee = () => {
       const response = await api.post("/api/admin/create_taglines", {
         text: newTagline,
         backgroundColor: marqueeColor,
+        textColor: textColor,
       });
       setTaglines([...taglines, response.data]);
       setNewTagline("");
@@ -57,15 +64,21 @@ const Marquee = () => {
     }
   };
 
-  const handleColorChange = async (color) => {
-    setMarqueeColor(color);
+  const handleColorChange = async (color, type) => {
+    if (type === 'background') {
+      setMarqueeColor(color);
+    } else {
+      setTextColor(color);
+    }
+    
     try {
       await api.put("/api/admin/update_marquee_color", {
-        backgroundColor: color,
+        backgroundColor: type === 'background' ? color : marqueeColor,
+        textColor: type === 'text' ? color : textColor,
       });
-      toast.success("Marquee color updated successfully");
+      toast.success("Marquee colors updated successfully");
     } catch (error) {
-      toast.error("Failed to update marquee color. Please try again.");
+      toast.error("Failed to update marquee colors. Please try again.");
     }
   };
 
@@ -84,6 +97,7 @@ const Marquee = () => {
       const response = await api.put(`/api/admin/update_taglines/${id}`, {
         text: editText,
         backgroundColor: marqueeColor,
+        textColor: textColor,
       });
       setTaglines(taglines.map((t) => (t._id === id ? { ...t, text: editText } : t)));
       setEditingId(null);
@@ -114,8 +128,8 @@ const Marquee = () => {
       <div className="custom-yellow-banner" style={{ background: marqueeColor }}>
         <div className="marquee-wrapper">
           {taglines.map((tagline, index) => (
-            <p key={tagline._id || index}>
-              <span className="lightning-icon">
+            <p key={tagline._id || index} style={{ color: textColor }}>
+              <span className="lightning-icon" style={{ color: textColor }}>
                 <BsFillLightningChargeFill />
               </span>{' '}
               {tagline.text}{' '}
@@ -148,16 +162,29 @@ const Marquee = () => {
                 className="marquee-input"
                 aria-label="New tagline input"
               />
-              <div className="color-picker-containerr">
-                <label htmlFor="marqueeColor">Marquee Color:</label>
-                <input
-                  type="color"
-                  id="marqueeColor"
-                  value={marqueeColor}
-                  onChange={(e) => handleColorChange(e.target.value)}
-                  className="color-picker"
-                  aria-label="Marquee color picker"
-                />
+              <div className="color-picker-wrapper">
+                <div className="color-picker-containerr">
+                  <label htmlFor="marqueeColor">Background Color:</label>
+                  <input
+                    type="color"
+                    id="marqueeColor"
+                    value={marqueeColor}
+                    onChange={(e) => handleColorChange(e.target.value, 'background')}
+                    className="color-picker"
+                    aria-label="Marquee background color picker"
+                  />
+                </div>
+                <div className="color-picker-containerr">
+                  <label htmlFor="textColor">Text Color:</label>
+                  <input
+                    type="color"
+                    id="textColor"
+                    value={textColor}
+                    onChange={(e) => handleColorChange(e.target.value, 'text')}
+                    className="color-picker"
+                    aria-label="Marquee text color picker"
+                  />
+                </div>
               </div>
             </div>
             <div className="button-container">
