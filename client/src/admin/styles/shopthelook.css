@@ -1,0 +1,164 @@
+
+.admin-shoplook-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+  }
+  
+  .admin-shoplook-content {
+    flex: 1;
+    padding: 2rem;
+    margin-left: 280px; /* Width of sidebar */
+  }
+  
+  .admin-shoplook-title {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 1rem;
+  }
+  
+  .admin-shoplook-instruction {
+    color: #666;
+    margin-bottom: 2rem;
+  }
+  
+  .admin-shoplook-images-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    margin-bottom: 2rem;
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 2px;
+  }
+  
+  .admin-shoplook-image-wrapper {
+    position: relative;
+    aspect-ratio: 3/4;
+    background-color: #e1e1e1;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  
+  .admin-shoplook-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+  }
+
+  .admin-shoplook-inputs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    gap: 1rem;
+    background-color:#fff;
+    padding:1rem;
+  }
+  
+  .admin-shoplook-inputs label {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #f0f0f0;
+    border: 1px dashed #999;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 45%;
+    transition: all 0.3s ease;
+  }
+  
+  .admin-shoplook-inputs label i {
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  .admin-shoplook-input {
+    position: absolute;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -1;
+  }
+  
+  .admin-shoplook-inputs label:hover {
+    background-color: #f8f8f8;
+    border-color: #ccc;
+  }
+  
+  .admin-shoplook-inputs label:hover i {
+    color: #333;
+  }
+  
+  .admin-shoplook-inputs label:active {
+    background-color: #e8e8e8;
+  }
+  
+  .admin-shoplook-dot {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: #000;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    cursor: move;
+    z-index: 10;
+  }
+  
+  .admin-shoplook-dot:hover {
+    background-color: #333;
+  }
+  
+  .admin-shoplook-dot-remove {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 12px;
+    height: 12px;
+    background-color: #ff4444;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  
+  .admin-shoplook-dot:hover .admin-shoplook-dot-remove {
+    opacity: 1;
+  }
+  
+  .admin-shoplook-save-btn {
+    background-color: #ffd5c2;
+    color: #000;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+  }
+  
+  .admin-shoplook-save-btn:hover {
+    background-color: #ffb599;
+  }
+  
+
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .admin-shoplook-content {
+      margin-left: 0;
+      padding: 1rem;
+    }
+  
+    .admin-shoplook-images-container {
+      grid-template-columns: 1fr;
+    }
+  }

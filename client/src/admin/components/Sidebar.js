@@ -67,7 +67,7 @@ const Sidebar = () => {
               <Link to="/admin/marquee" className="admin-dropdown-item">Marquee</Link>
               <Link to="/admin/shopcategories" className="admin-dropdown-item">Shop by Categories</Link>
               {/* <Link to="/admin/bestseller" className="admin-dropdown-item">Best Seller</Link> */}
-              <Link to="/admin/shop-look" className="admin-dropdown-item">Shop the Look</Link>
+              <Link to="/admin/shopthelook" className="admin-dropdown-item">Shop the Look</Link>
               <Link to="/admin/shopgram" className="admin-dropdown-item">Shop Gram</Link>
             </div>
           )}

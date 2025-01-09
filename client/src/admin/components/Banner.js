@@ -27,7 +27,7 @@ const Banner = () => {
     };
 
     const validateForm = () => {
-        if (!newBanner.image || !newBanner.caption || !newBanner.description) {
+        if (!newBanner.image || !newBanner.caption || !newBanner.text) {
             setError("All fields are required!");
             return false;
         }
@@ -111,7 +111,7 @@ const Banner = () => {
                 setError("Image size should be less than 5MB");
                 return;
             }
-    
+
             const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
             if (!validTypes.includes(file.type)) {
                 setError("Please upload a valid image file (JPEG, PNG, or GIF)");
@@ -127,7 +127,7 @@ const Banner = () => {
 
     const resetForm = () => {
         setEditingBanner(null);
-        setNewBanner({ image: "", caption: "", description: "", active: true });
+        setNewBanner({ image: "", caption: "", text: "", active: true });
         setImagePreview(null);
         setError("");
     };
@@ -148,9 +148,7 @@ const Banner = () => {
 
     return (
         <div className="admin-banner-container">
-
             <Sidebar />
-            <Toaster/>
             <div className="banner-content">
                 <div className="banner-header">
                     <h1>Manage Carousel Banners</h1>
@@ -173,12 +171,12 @@ const Banner = () => {
                     </div>
 
                     <div className="form-group">
-                        <label>Banner description</label>
+                        <label>Banner Text</label>
                         <input
                             type="text"
-                            placeholder="Enter banner description"
-                            value={newBanner.description}
-                            onChange={(e) => setNewBanner({ ...newBanner, description: e.target.value })}
+                            placeholder="Enter banner text"
+                            value={newBanner.text}
+                            onChange={(e) => setNewBanner({ ...newBanner, text: e.target.value })}
                         />
                     </div>
 
@@ -227,7 +225,7 @@ const Banner = () => {
                                 </div>
                                 <div className="banner-details">
                                     <h4>{banner.caption}</h4>
-                                    <p>{banner.description}</p>
+                                    <p>{banner.text}</p>
                                 </div>
                                 <div className="banner-actions">
                                     <button className="edit-button" onClick={() => handleEditBanner(banner)}>

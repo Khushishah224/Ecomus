@@ -1,11 +1,8 @@
 import User from '../models/userModel.js';
 import asyncHandler from 'express-async-handler';
 import generateToken from '../utils/generateToken.js';
-import Banner from '../models/bannerModel.js';
-import Tagline from '../models/marquee.js';
-import Category from '../models/categoryModel.js';
-import path from 'path';
-import fs from 'fs';
+import Tagline from '../models/marqueeModel.js';
+
 
 // @desc     Auth User & Get Token
 // @route    POST api/users/login
@@ -70,66 +67,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-// Banner operations
-const createBanner = asyncHandler(async (req, res) => {
-  const { img, title, description } = req.body;
-
-  const banner = await Banner.create({ img, title, description });
-
-  if (banner) {
-    res.status(201).json(banner);
-  } else {
-    res.status(400);
-    throw new Error('Failed to create banner');
-  }
-});
-
-// Get All Banners
-const getBanners = asyncHandler(async (req, res) => {
-  const banners = await Banner.find({});
-  res.json(banners);
-});
-
-const updateBanner = asyncHandler(async (req, res) => {
-  const banner = await Banner.findById(req.params.id);
-
-  if (banner) {
-    if (req.file) {
-      // Delete old image from Cloudinary
-      const publicId = banner.image.split('/').pop().split('.')[0]; // Extract public ID
-      await cloudinary.uploader.destroy(`banners/${publicId}`);
-
-      banner.image = req.file.path;
-    }
-
-    banner.title = req.body.title || banner.title;
-    banner.description = req.body.description || banner.description;
-
-    const updatedBanner = await banner.save();
-    res.json(updatedBanner);
-  } else {
-    res.status(404);
-    throw new Error('Banner not found');
-  }
-});
-
-
-const deleteBanner = asyncHandler(async (req, res) => {
-  const banner = await Banner.findById(req.params.id);
-
-  if (banner) {
-    // Delete image from Cloudinary
-    const publicId = banner.image.split('/').pop().split('.')[0]; // Extract public ID
-    await cloudinary.uploader.destroy(`banners/${publicId}`);
-
-    await banner.remove();
-    res.json({ message: 'Banner removed' });
-  } else {
-    res.status(404);
-    throw new Error('Banner not found');
-  }
-});
-
 // Tagline operations
 const createTagline = asyncHandler(async (req, res) => {
   const { text } = req.body;
@@ -175,155 +112,13 @@ const deleteTagline = asyncHandler(async (req, res) => {
   }
 });
 
-//Category Section
-
-// Create a new Category
-const createCategory = asyncHandler(async (req, res) => {
-  const { image, name, active } = req.body;
-
-  const category = await Category.create({
-    image,
-    name,
-    active,
-  });
-
-  if (category) {
-    res.status(201).json(category);
-  } else {
-    res.status(400);
-    throw new Error("Invalid Category Data");
-  }
-});
-
-// Update a Category's details
-const updateCategory = asyncHandler(async (req, res) => {
-  const category = await Category.findById(req.params.id);
-
-  if (category) {
-    category.name = req.body.name || category.name;
-    category.image = req.body.image || category.image;
-    category.active = req.body.active ?? category.active;
-
-    const updatedCategory = await category.save();
-    res.json(updatedCategory);
-  } else {
-    res.status(404);
-    throw new Error("Category not Found");
-  }
-});
-
-// Delete a Category
-const deleteCategory = asyncHandler(async (req, res) => {
-  const category = await Category.findById(req.params.id);
-
-  if (category) {
-    await category.remove();
-    res.json({ message: "Category removed" });
-  } else {
-    res.status(404);
-    throw new Error("Category not Found");
-  }
-});
-
-// Toggle category status
-const updateCategoryStatus = asyncHandler(async (req, res) => {
-  const category = await Category.findById(req.params.id);
-
-  if (category) {
-    category.active = req.body.active;
-    const updatedCategory = await category.save();
-    res.json(updatedCategory);
-  } else {
-    res.status(404);
-    throw new Error("Category not Found");
-  }
-});
-
-// Category operations
-const getCategories = asyncHandler(async (req, res) => {
-  const categories = await Category.find({});
-  res.json(categories);
-});
-
-const createCategory = asyncHandler(async (req, res) => {
-  const { name } = req.body;
-
-  if (!req.file) {
-    res.status(400);
-    throw new Error('Please upload an image');
-  }
-
-  const category = await Category.create({
-    name,
-    image: `/uploads/categories/${req.file.filename}`,
-    active: true
-  });
-
-  if (category) {
-    res.status(201).json(category);
-  } else {
-    res.status(400);
-    throw new Error('Invalid category data');
-  }
-});
-
-const updateCategory = asyncHandler(async (req, res) => {
-  const category = await Category.findById(req.params.id);
-
-  if (category) {
-    // Handle image update if new file is uploaded
-    if (req.file) {
-      // Delete old image if it exists
-      const oldImagePath = path.join(process.cwd(), category.image);
-      if (fs.existsSync(oldImagePath)) {
-        fs.unlinkSync(oldImagePath);
-      }
-      category.image = `/uploads/categories/${req.file.filename}`;
-    }
-
-    category.name = req.body.name || category.name;
-    category.active = req.body.active !== undefined ? req.body.active : category.active;
-
-    const updatedCategory = await category.save();
-    res.json(updatedCategory);
-  } else {
-    res.status(404);
-    throw new Error('Category not found');
-  }
-});
-
-const deleteCategory = asyncHandler(async (req, res) => {
-  const category = await Category.findById(req.params.id);
-
-  if (category) {
-    // Delete the image file
-    const imagePath = path.join(process.cwd(), category.image);
-    if (fs.existsSync(imagePath)) {
-      fs.unlinkSync(imagePath);
-    }
-
-    await category.deleteOne();
-    res.json({ message: 'Category removed' });
-  } else {
-    res.status(404);
-    throw new Error('Category not found');
-  }
-});
 
 export {
   login,
   updateUserProfile,
   getUsers,
-  createBanner,
-  getBanners,
-  updateBanner,
-  deleteBanner,
   createTagline,
   getTaglines,
   updateTagline,
-  deleteTagline,
-  getCategories,
-  createCategory,
-  updateCategory,
-  deleteCategory,
+  deleteTagline
 };
