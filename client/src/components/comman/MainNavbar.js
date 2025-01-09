@@ -533,7 +533,7 @@ function MainNavbar() {
           </Nav.Link>
         </div>
         <Navbar.Brand href="#home" className="fw-bold fs-3 mx-auto px-4">
-          <img src={logo} alt="Logo" className="logo me-2" />
+          <img src={logo} alt="Logo" className="logo mx-auto" />
         </Navbar.Brand>
 
         <Navbar.Collapse id="main_icon_navbar" className="justify-content-between">
@@ -578,16 +578,16 @@ function MainNavbar() {
 
         {/* Right Icons */}
         <div className="d-flex align-items-center icon_set">
-          <a className="nav-link" onClick={() => setShowSearchSidebar(true)}><FaSearch /></a>
+          <a className="nav-link hd_icon px-2" onClick={() => setShowSearchSidebar(true)}><FaSearch /></a>
 
-          <a className="nav-link hd_icon px-md-2 px-sm-1" onClick={() => setShowPopup(true)}>
+          <a className="nav-link hd_icon  px-2" onClick={() => setShowPopup(true)}>
             <FaUser />
           </a>
           <a className="nav-link hd_icon px-2" href="#favorites" onClick={() => setShowWhishlist(true)}>
             <FaRegHeart />
           </a>
           <a
-            className="nav-link position-relative"
+            className="nav-link hd_icon px-2 me-4"
             onClick={() => setShowSidebar(true)}
           >
             <RiShoppingBag2Line />

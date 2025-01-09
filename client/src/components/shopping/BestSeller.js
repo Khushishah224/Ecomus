@@ -14,7 +14,7 @@ import img7 from "../../assets/IMAGES/black-4.jpg";
 import simg7 from "../../assets/IMAGES/black-5.jpg";
 import img8 from "../../assets/IMAGES/white-8.jpg";
 
-
+import ComparisonPopup from "../modals/ComparisonPopup"; 
 import ShoppingBagPopup from "../modals/ShoppingBagPopup";
 import ShowProductPopup from "../modals/ShowProductPopup"; // Import the new popup
 
@@ -26,7 +26,8 @@ import { IoEyeOutline } from "react-icons/io5";
 const BestSeller = () => {
   const [selectedProduct, setSelectedProduct] = useState(null); // Store the selected product
   const [isShoppingBagPopupVisible, setIsShoppingBagPopupVisible] = useState(false);
-  const [isShowProductPopupVisible, setIsShowProductPopupVisible] = useState(false); // New state for ShowProductPopup
+  const [isShowProductPopupVisible, setIsShowProductPopupVisible] = useState(false);
+  const [isComparisonPopupVisible, setIsComparisonPopupVisible] = useState(false);  // New state for ShowProductPopup
   const [selectedColors, setSelectedColors] = useState({});
   const [hoveredProduct, setHoveredProduct] = useState(null);
 
@@ -52,10 +53,14 @@ const BestSeller = () => {
     setSelectedProduct(product);
     setIsShowProductPopupVisible(true);
   };
-
+  const handleOpenComparisonPopup = (product) => {
+    setSelectedProduct(product);
+    setIsComparisonPopupVisible(true);
+  };
   const closeAllPopups = () => {
     setIsShoppingBagPopupVisible(false);
     setIsShowProductPopupVisible(false);
+    setIsComparisonPopupVisible(false);
     setSelectedProduct(null);
   };
 
@@ -103,7 +108,7 @@ const BestSeller = () => {
                   <button className="icon-btn icon-hide">
                     <FaRegHeart />
                   </button>
-                  <button className="icon-btn icon-hide">
+                  <button className="icon-btn icon-hide" onClick={()=>handleOpenComparisonPopup(product)}>
                     <TbArrowsCross />
                   </button>
                   <button className="icon-btn" onClick={() => handleOpenShowProductPopup(product)}>
@@ -155,6 +160,12 @@ const BestSeller = () => {
       )}
       {isShowProductPopupVisible && selectedProduct && (
         <ShowProductPopup products={products} initialProductIndex={selectedProduct.id} onClose={closeAllPopups} />
+      )}
+       {isComparisonPopupVisible && selectedProduct && (
+        <ComparisonPopup
+          product={selectedProduct}
+          onClose={closeAllPopups}
+        />
       )}
     </section>
   );
