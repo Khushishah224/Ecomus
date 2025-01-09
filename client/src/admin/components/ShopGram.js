@@ -57,34 +57,38 @@ const ShopGramAdmin = () => {
   };
 
   return (
-    <div className="shopgram-container flex min-h-screen">
-      <Sidebar />
-      <div className="flex-1 p-8 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Shop Gram Admin</h1>
-          <p className="text-gray-600 mb-8">Manage your product catalog</p>
+    <div className="flex h-screen bg-gray-100 overflow-hidden">
+      <Sidebar className="flex-shrink-0 w-64 bg-white shadow-lg" />
+      
+      <main className="flex-1 overflow-y-auto">
+        <div className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-gray-900">Shop Gram Admin</h1>
+            <p className="mt-2 text-gray-600">Manage your product catalog</p>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {products.map((product, index) => (
-              <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                <div className="relative aspect-square">
+              <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:shadow-lg">
+                <div className="aspect-w-1 aspect-h-1">
                   <img
                     src={product.image}
                     alt={product.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
+                
                 <div className="p-4">
                   {!product.isEditing ? (
-                    <div className="space-y-4">
+                    <div className="space-y-3">
                       <div>
-                        <h3 className="font-semibold text-lg">{product.name}</h3>
-                        <p className="text-gray-600">${product.price}</p>
+                        <h3 className="font-semibold text-lg text-gray-900">{product.name}</h3>
+                        <p className="text-gray-600 font-medium">${product.price}</p>
                         <p className="text-sm text-gray-500">{product.category}</p>
                       </div>
                       <button 
                         onClick={() => toggleEdit(index)}
-                        className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        className="w-full inline-flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
                       >
                         <Edit className="w-4 h-4 mr-2" />
                         Edit Product
@@ -92,10 +96,10 @@ const ShopGramAdmin = () => {
                     </div>
                   ) : (
                     <div className="space-y-4">
-                      <div className="space-y-2">
+                      <div className="space-y-3">
                         <label className="block">
                           <button
-                            className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            className="w-full inline-flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
                             onClick={() => document.getElementById(`file-${index}`).click()}
                           >
                             <Upload className="w-4 h-4 mr-2" />
@@ -142,14 +146,14 @@ const ShopGramAdmin = () => {
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleSave(index)}
-                          className="flex-1 flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                          className="flex-1 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
                         >
                           <Save className="w-4 h-4 mr-2" />
                           Save
                         </button>
                         <button
                           onClick={() => toggleEdit(index)}
-                          className="flex-1 flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                          className="flex-1 inline-flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
                         >
                           <X className="w-4 h-4 mr-2" />
                           Cancel
@@ -162,7 +166,7 @@ const ShopGramAdmin = () => {
             ))}
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 };
