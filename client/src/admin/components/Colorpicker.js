@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from "react";
 import "../styles/colorpicker.css";
 import Sidebar from "./Sidebar";
 import api from "../../api";
 
-const Colorpicker= () => {
+const ColorPicker = () => {
   const [colorName, setColorName] = useState(""); // Local state for color name
   const [colorCode, setColorCode] = useState("#000000"); // Local state for color code
   const [colors, setColors] = useState([]); // State to store the list of colors
@@ -116,4 +115,4 @@ const Colorpicker= () => {
   );
 };
 
-export default Colorpicker;
+export default ColorPicker;
