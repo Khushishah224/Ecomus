@@ -533,7 +533,7 @@ function MainNavbar() {
           </Nav.Link>
         </div>
         <Navbar.Brand href="#home" className="fw-bold fs-3 mx-auto px-4">
-          <img src={logo} alt="Logo" className="logo mx-auto" />
+          <img src={logo} alt="Logo" className="logo" />
         </Navbar.Brand>
 
         <Navbar.Collapse id="main_icon_navbar" className="justify-content-between">
