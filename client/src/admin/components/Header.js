@@ -157,7 +157,7 @@ const Header = () => {
                     </div>
                   </div>
                 ) : (
-                  <div className="header-content">
+                  <div className="header-content-list">
                     <p className="header-text">{header.text}</p>
                     <div className="header-actions">
                       <button
