@@ -1,7 +1,7 @@
 import User from '../models/userModel.js';
 import asyncHandler from 'express-async-handler';
 import generateToken from '../utils/generateToken.js';
-import Tagline from '../models/marquee.js';
+import Tagline from '../models/marqueeModel.js';
 //@desc     Auth User & Get Token
 //@route    POST api/users/login
 //@access   Public

@@ -19,7 +19,9 @@ const bannerSchema = new mongoose.Schema(
        default: true, 
     }
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
 const Banner = mongoose.model('Banner', bannerSchema);

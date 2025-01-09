@@ -1,11 +1,8 @@
 import User from '../models/userModel.js';
 import asyncHandler from 'express-async-handler';
 import generateToken from '../utils/generateToken.js';
-import Banner from '../models/bannerModel.js';
-import Tagline from '../models/marquee.js';
-import Category from '../models/categoryModel.js';
-import path from 'path';
-import fs from 'fs';
+import Tagline from '../models/marqueeModel.js';
+
 
 // @desc     Auth User & Get Token
 // @route    POST api/users/login
@@ -70,75 +67,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-// Banner operations
-const createBanner = asyncHandler(async (req, res) => {
-  const { img, title, description } = req.body;
-
-  const banner = await Banner.create({ img, title, description });
-  try{
-    if (banner) {
-      res.status(201).json({
-        _id: banner._id,
-        img: banner.img,
-        title: banner.title,
-        description: banner.description,
-      });
-    } else {
-      res.status(400);
-      throw new Error('Invalid Banner Data');
-    }
-  } catch(err){
-    console.log(err);
-  }
-});
-
-
-
-const getBanners = asyncHandler(async (req, res) => {
-  const banners = await Banner.find({});
-  res.json(banners);
-});
-
-const updateBanner = asyncHandler(async (req, res) => {
-  const banner = await Banner.findById(req.params.id);
-
-  if (banner) {
-    if (req.file) {
-      // Delete old image from Cloudinary
-      const publicId = banner.img.split('/').pop().split('.')[0]; // Extract public ID
-      await cloudinary.uploader.destroy(`banners/${publicId}`);
-
-      banner.img = req.file.path;
-    }
-
-    banner.title = req.body.title || banner.title;
-    banner.description = req.body.description || banner.description;
-
-    const updatedBanner = await banner.save();
-    res.json(updatedBanner);
-  } else {
-    res.status(404);
-    throw new Error('Banner not found');
-  }
-});
-
-
-const deleteBanner = asyncHandler(async (req, res) => {
-  const banner = await Banner.findById(req.params.id);
-
-  if (banner) {
-    // Delete image from Cloudinary
-    const publicId = banner.img.split('/').pop().split('.')[0]; // Extract public ID
-    await cloudinary.uploader.destroy(`banners/${publicId}`);
-
-    await banner.remove();
-    res.json({ message: 'Banner removed' });
-  } else {
-    res.status(404);
-    throw new Error('Banner not found');
-  }
-});
-
 // Tagline operations
 const createTagline = asyncHandler(async (req, res) => {
   const { text } = req.body;
@@ -184,23 +112,13 @@ const deleteTagline = asyncHandler(async (req, res) => {
   }
 });
 
-//Category Section
-
 
 export {
   login,
   updateUserProfile,
   getUsers,
-  createBanner,
-  getBanners,
-  updateBanner,
-  deleteBanner,
   createTagline,
   getTaglines,
   updateTagline,
-  deleteTagline,
-  // getCategories,
-  // createCategory,
-  // updateCategory,
-  // deleteCategory,
+  deleteTagline
 };

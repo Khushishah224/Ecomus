@@ -5,8 +5,6 @@ import api, { setAuthToken } from '../../api';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 import '../styles/login.css';
 
-
-
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({

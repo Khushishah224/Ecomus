@@ -6,6 +6,7 @@ import cors from 'cors';
 
 import Category from './models/categoryModel.js';  // Make sure to import the Category model
 import Banner from './models/bannerModel.js';
+import ShopTheLook from './models/shoplookModel.js';
 
 
 const app = express();
@@ -81,6 +82,34 @@ const insertDefaultBanners = async () => {
   }
 };
 insertDefaultBanners();
+
+const insertDefaultShopthelook = async () => {
+  try {
+    const existingShopLooks = await ShopTheLook.find();
+    if (existingShopLooks.length === 0) {
+      const defaultShopLook = {
+        images: {
+          image1: {
+            imagePath: "/uploads/lookbook-3.jpg",
+            dots: [],
+          },
+          image2: {
+            imagePath: "/uploads/lookbook-4.jpg",
+            dots: [],
+          },
+        },
+      };
+
+      await ShopTheLook.create(defaultShopLook);
+      console.log('Default ShopLook inserted');
+    } else {
+      console.log('ShopLooks already exist in the database');
+    }
+  } catch (error) {
+    console.error('Error inserting default ShopLook:', error);
+  }
+};
+insertDefaultShopthelook();
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
