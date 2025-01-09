@@ -6,6 +6,11 @@ const taglineSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    // hexCode: {
+    //   type: String,
+    //   required: true,
+    //   unique: true, 
+    // },
   },
   {
     timestamps: true,
