@@ -73,6 +73,7 @@ function Header() {
                 {currentIndex === 0 && ( // Only show for the first header
                   <a href="/footer" className="text-danger fw-normal text-decoration-none">
                     Shop now
+                    <MdArrowOutward/>
                   </a>
                 )}
               </p>

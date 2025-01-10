@@ -25,11 +25,17 @@ import {
   addSize,
   updateSize,
   deleteSize,
-} from '../controllers/sizeController.js';  // Import size controller
-
-import { admin, protect } from '../middlewares/authMiddleware.js';
+} from '../controllers/sizeController.js'; // Import size controller
 import { getShopTheLook, updateShopTheLook } from "../controllers/shopthelookController.js";
 import upload from '../middlewares/uploadMiddleware.js';
+import {
+  createShopGram,
+  getShopGrams,
+  updateShopGram,
+  deleteShopGram
+} from '../controllers/shopgramController.js'; // Import ShopGram controller
+
+import { admin, protect } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
@@ -44,16 +50,15 @@ router.put('/update_taglines/:id', protect, admin, updateTagline);
 router.delete('/delete_taglines/:id', protect, admin, deleteTagline);
 
 // Shop the Look Routes
-
-router.get("/get_shopthelook",getShopTheLook);
-router.put("/update_shopthelook",upload.fields([{ name: "image1" }, { name: "image2" }]), updateShopTheLook);
-
+router.get("/get_shopthelook", getShopTheLook);
+router.put("/update_shopthelook", upload.fields([{ name: "image1" }, { name: "image2" }]), updateShopTheLook);
 
 // Header Management Routes
 router.post('/create_header', protect, admin, createHeader);
 router.get('/get_headers', protect, admin, getHeaders);
 router.put('/update_header/:id', protect, admin, updateHeader);
 router.delete('/delete_header/:id', protect, admin, deleteHeader);
+
 // Color Management Routes
 router.get('/get_colors', protect, admin, getColors); // Fetch all colors
 router.post('/add_color', protect, admin, addColor); // Add a new color
@@ -65,5 +70,11 @@ router.get('/get_sizes', protect, admin, getSizes); // Fetch all sizes
 router.post('/add_size', protect, admin, addSize); // Add a new size
 router.put('/update_size/:id', protect, admin, updateSize); // Update a size
 router.delete('/delete_size/:id', protect, admin, deleteSize); // Delete a size
+
+// ShopGram Management Routes
+router.post('/create_shopgram', protect, admin, upload.single('image'), createShopGram); // Create ShopGram entry
+router.get('/get_shopgrams', protect, admin, getShopGrams); // Fetch all ShopGram entries
+router.put('/update_shopgram/:id', protect, admin, upload.single('image'), updateShopGram); // Update ShopGram entry
+router.delete('/delete_shopgram/:id', protect, admin, deleteShopGram); // Delete ShopGram entry
 
 export default router;
