@@ -7,6 +7,7 @@ const ComparisonPopup = ({ product, onClose }) => {
   const handleRemoveImage = () => {
     setIsImageVisible(false);
   };
+
   return (
     <div className="comparison-popup-overlay" onClick={onClose}>
       <div className="comparison-popup" onClick={(e) => e.stopPropagation()}>
@@ -15,7 +16,7 @@ const ComparisonPopup = ({ product, onClose }) => {
         </button>
         <h3>Compare Products</h3>
         <div className="product-details">
-        {isImageVisible && ( // Render the image and close button only if isImageVisible is true
+          {isImageVisible && (
             <div className="image-container">
               <img src={product.image} alt={product.name} />
               <button className="image-close-btn" onClick={handleRemoveImage}>
@@ -24,9 +25,9 @@ const ComparisonPopup = ({ product, onClose }) => {
             </div>
           )}
           <div style={{ textAlign: "center", marginTop: "20px" }}>
-          <button className="compare-btn">Compare</button>
-          <div className="clear-btn">Clear All</div>
-        </div>
+            <button className="compare-btn">Compare</button>
+            <div className="clear-btn">Clear All</div>
+          </div>
         </div>
       </div>
     </div>
