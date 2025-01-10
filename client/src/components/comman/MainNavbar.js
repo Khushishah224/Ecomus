@@ -16,7 +16,7 @@ import { Pagination } from 'swiper/modules';
 import { IoSearch } from 'react-icons/io5';
 import HomeSection from './HomeSection.js';
 import ShopSection from './ShopSection.js';
-
+import ShoppingBagPopup from '../modals/ShoppingBagPopup.js';
 
 import img1 from '../../assets/IMAGES/white-1.jpg';
 import img2 from '../../assets/IMAGES/white-2.jpg';
