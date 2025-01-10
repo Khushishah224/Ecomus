@@ -1,170 +1,214 @@
-import React, { useState } from 'react';
-import { Edit, Save, X, Upload } from 'lucide-react';
-import Sidebar from './Sidebar';
-import img1 from '../../assets/IMAGES/gallery-7.jpg';
-import img2 from '../../assets/IMAGES/gallery-3.jpg';
-import img3 from '../../assets/IMAGES/gallery-5.jpg';
-import img4 from '../../assets/IMAGES/gallery-8.jpg';
-import img5 from '../../assets/IMAGES/gallery-6.jpg';
+import React, { useState } from "react";
+import "../styles/shopgram.css";
+import Sidebar from "./Sidebar.js";
+import { FaImage, FaUpload } from 'react-icons/fa';
+import { toast, Toaster } from 'react-hot-toast';
+// Import images directly
+import gallery7 from '../../assets/IMAGES/gallery-7.jpg';
+import gallery3 from '../../assets/IMAGES/gallery-3.jpg';
+import gallery5 from '../../assets/IMAGES/gallery-5.jpg';
+import gallery8 from '../../assets/IMAGES/gallery-8.jpg';
+import gallery6 from '../../assets/IMAGES/gallery-6.jpg';
 
-const ShopGramAdmin = () => {
-  const [products, setProducts] = useState([
-    { id: 1, image: img1, name: "Sunglasses", price: "99.99", category: "Accessories", isEditing: false },
-    { id: 2, image: img2, name: "Tote Bag", price: "149.99", category: "Bags", isEditing: false },
-    { id: 3, image: img3, name: "Summer Hat", price: "45.99", category: "Accessories", isEditing: false },
-    { id: 4, image: img4, name: "Casual Boots", price: "129.99", category: "Footwear", isEditing: false },
-    { id: 5, image: img5, name: "Casual Boots", price: "129.99", category: "Footwear", isEditing: false },
-  ]);
-
-  const categories = ["Accessories", "Bags", "Footwear", "Clothing"];
-
-  const toggleEdit = (index) => {
-    const newProducts = products.map((product, i) => ({
-      ...product,
-      isEditing: i === index ? !product.isEditing : false
-    }));
-    setProducts(newProducts);
+const ShopGram = () => {
+  const productsByCategory = {
+    Accessories: [
+      { id: 1, name: "Sunglasses", price: "$149", category: "Accessories" },
+      { id: 3, name: "Summer Hat", price: "$89", category: "Accessories" },
+      { id: 6, name: "Elegant Watch", price: "$299", category: "Accessories" }
+    ],
+    Bags: [
+      { id: 2, name: "Tote Bag", price: "$299", category: "Bags" },
+      { id: 7, name: "Leather Handbag", price: "$399", category: "Bags" },
+      { id: 8, name: "Crossbody Bag", price: "$249", category: "Bags" }
+    ],
+    Shoes: [
+      { id: 4, name: "Ankle Boots", price: "$199", category: "Shoes" },
+      { id: 5, name: "Platform Sneakers", price: "$159", category: "Shoes" },
+      { id: 9, name: "High Heels", price: "$179", category: "Shoes" }
+    ],
+    Clothing: [
+      { id: 10, name: "Summer Dress", price: "$129", category: "Clothing" },
+      { id: 11, name: "Denim Jacket", price: "$189", category: "Clothing" },
+      { id: 12, name: "Silk Blouse", price: "$149", category: "Clothing" }
+    ]
   };
 
-  const handleImageChange = (index, e) => {
+  const initialProductData = [
+    { id: 1, name: "Sunglasses", price: "$149", category: "Accessories" },
+    { id: 2, name: "Tote Bag", price: "$299", category: "Bags" },
+    { id: 3, name: "Summer Hat", price: "$89", category: "Accessories" },
+    { id: 4, name: "Ankle Boots", price: "$199", category: "Shoes" },
+    { id: 5, name: "Platform Sneakers", price: "$159", category: "Shoes" }
+  ];
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [products, setProducts] = useState(initialProductData);
+  const [images, setImages] = useState([gallery7, gallery3, gallery5, gallery8, gallery6]);
+  const [editedProducts, setEditedProducts] = useState(initialProductData);
+  const [selectedFiles, setSelectedFiles] = useState(Array(5).fill(null));
+
+  const handleImageChange = (e, index) => {
     const file = e.target.files[0];
     if (file) {
+      const newSelectedFiles = [...selectedFiles];
+      newSelectedFiles[index] = file.name;
+      setSelectedFiles(newSelectedFiles);
+
       const reader = new FileReader();
       reader.onload = (event) => {
-        const newProducts = [...products];
-        newProducts[index] = {
-          ...newProducts[index],
-          image: event.target.result
-        };
-        setProducts(newProducts);
+        const newImages = [...images];
+        newImages[index] = event.target.result;
+        setImages(newImages);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleProductChange = (index, field, value) => {
-    const newProducts = [...products];
-    newProducts[index] = {
-      ...newProducts[index],
-      [field]: value
-    };
-    setProducts(newProducts);
+  const handleCategoryChange = (index, newCategory) => {
+    if (newCategory && productsByCategory[newCategory]) {
+      const categoryProducts = productsByCategory[newCategory];
+      const selectedProduct = categoryProducts[0];
+      
+      const updatedProducts = [...editedProducts];
+      updatedProducts[index] = selectedProduct;
+      setEditedProducts(updatedProducts);
+    }
   };
 
-  const handleSave = (index) => {
-    console.log('Saving product:', products[index]);
-    toggleEdit(index);
+  const handleProductChange = (index, productId) => {
+    const selectedProduct = productsByCategory[editedProducts[index].category].find(
+      p => p.id === parseInt(productId)
+    );
+    if (selectedProduct) {
+      const updatedProducts = [...editedProducts];
+      updatedProducts[index] = selectedProduct;
+      setEditedProducts(updatedProducts);
+    }
+  };
+
+  const handleSave = () => {
+    setProducts(editedProducts);
+    toast.success("Changes saved successfully!");
+    setIsEditing(false);
+    setSelectedFiles(Array(5).fill(null));
+  };
+
+  const handleEdit = () => {
+    setEditedProducts([...products]);
+    setIsEditing(true);
+  };
+
+  const handleCancel = () => {
+    setEditedProducts([...products]);
+    setIsEditing(false);
+    setSelectedFiles(Array(5).fill(null));
   };
 
   return (
-    <div className="shopgram-container flex min-h-screen">
+    <div className="admin-shoplook-container">
       <Sidebar />
-      <div className="flex-1 p-8 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Shop Gram Admin</h1>
-          <p className="text-gray-600 mb-8">Manage your product catalog</p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {products.map((product, index) => (
-              <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                <div className="relative aspect-square">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="p-4">
-                  {!product.isEditing ? (
-                    <div className="space-y-4">
-                      <div>
-                        <h3 className="font-semibold text-lg">{product.name}</h3>
-                        <p className="text-gray-600">${product.price}</p>
-                        <p className="text-sm text-gray-500">{product.category}</p>
-                      </div>
-                      <button 
-                        onClick={() => toggleEdit(index)}
-                        className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                      >
-                        <Edit className="w-4 h-4 mr-2" />
-                        Edit Product
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <label className="block">
-                          <button
-                            className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                            onClick={() => document.getElementById(`file-${index}`).click()}
-                          >
-                            <Upload className="w-4 h-4 mr-2" />
-                            Change Image
-                          </button>
-                          <input
-                            id={`file-${index}`}
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => handleImageChange(index, e)}
-                            className="hidden"
-                          />
-                        </label>
-
-                        <input
-                          type="text"
-                          value={product.name}
-                          onChange={(e) => handleProductChange(index, "name", e.target.value)}
-                          placeholder="Product Name"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                        
-                        <input
-                          type="number"
-                          value={product.price}
-                          onChange={(e) => handleProductChange(index, "price", e.target.value)}
-                          placeholder="Price"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                        />
-                        
-                        <select
-                          value={product.category}
-                          onChange={(e) => handleProductChange(index, "category", e.target.value)}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-                        >
-                          {categories.map((category) => (
-                            <option key={category} value={category}>
-                              {category}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => handleSave(index)}
-                          className="flex-1 flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                        >
-                          <Save className="w-4 h-4 mr-2" />
-                          Save
-                        </button>
-                        <button
-                          onClick={() => toggleEdit(index)}
-                          className="flex-1 flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                        >
-                          <X className="w-4 h-4 mr-2" />
-                          Cancel
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+      <div className="admin-shoplook-content">
+        <Toaster />
+        <div className="admin-shoplook-header">
+          <h2 className="admin-shoplook-title">Shop Gram</h2>
+          <button 
+            className="admin-shoplook-edit-btn" 
+            onClick={isEditing ? handleCancel : handleEdit}
+          >
+            {isEditing ? "Cancel Edit" : "Edit Shop Gram"}
+          </button>
         </div>
+        
+        <p className="admin-shoplook-instruction">
+          Inspire and let yourself be inspired, from one unique fashion to another.
+        </p>
+
+        <div className="admin-shoplook-images-container shop-gram-grid">
+          {products.map((product, index) => (
+            <div key={product.id} className="admin-shoplook-card">
+              {isEditing && (
+                <div className="image-upload-container">
+                  <label className="image-upload-label">
+                    <div className="upload-content">
+                      <FaUpload className="upload-icon" />
+                      <span className="upload-text">
+                        {selectedFiles[index] ? selectedFiles[index] : "Choose Image"}
+                      </span>
+                    </div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleImageChange(e, index)}
+                      className="admin-shoplook-input"
+                    />
+                  </label>
+                </div>
+              )}
+              
+              <div className="admin-shoplook-image-wrapper">
+                <img
+                  src={images[index]}
+                  alt={`Shop gram ${index + 1}`}
+                  className="admin-shoplook-image"
+                />
+                {!isEditing && (
+                  <div className="shop-gram-details">
+                    <h3>{product.name}</h3>
+                    <p className="price">{product.price}</p>
+                    <p className="category">{product.category}</p>
+                  </div>
+                )}
+              </div>
+              
+              {isEditing && (
+                <div className="shop-gram-edit-controls">
+                  <select 
+                    value={editedProducts[index].category}
+                    onChange={(e) => handleCategoryChange(index, e.target.value)}
+                    className="shop-gram-select"
+                  >
+                    <option value="">Select Category</option>
+                    {Object.keys(productsByCategory).map(category => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                  
+                  {editedProducts[index].category && (
+                    <select
+                      value={editedProducts[index].id}
+                      onChange={(e) => handleProductChange(index, e.target.value)}
+                      className="shop-gram-select product-select"
+                    >
+                      {productsByCategory[editedProducts[index].category].map(p => (
+                        <option key={p.id} value={p.id}>
+                          {p.name} - {p.price}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                  
+                  <div className="shop-gram-product-info">
+                    <h3>{editedProducts[index].name}</h3>
+                    <p className="price">{editedProducts[index].price}</p>
+                    <p className="category">{editedProducts[index].category}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {isEditing && (
+          <button className="admin-shoplook-save-btn" onClick={handleSave}>
+            Save Changes
+          </button>
+        )}
       </div>
     </div>
   );
 };
 
-export default ShopGramAdmin;
+export default ShopGram;

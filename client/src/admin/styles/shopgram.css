@@ -1,113 +1,218 @@
-/* Updated ShopGram CSS */
-.admin-shopgram-container {
-    display: flex;
-    min-height: 100vh;
-    background-color: #f5f5f5;
+.admin-shoplook-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8f9fa;
 }
 
-.admin-shopgram-content {
-    flex: 1;
-    padding: 2rem;
-    margin-left: 250px;
+.admin-shoplook-content {
+  flex: 1;
+  padding: 2rem;
+  margin-left: 280px;
 }
 
-.admin-shopgram-title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    color: #333;
+.admin-shoplook-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
 }
 
-.admin-shopgram-instruction {
-    color: #666;
-    margin-bottom: 2rem;
+.admin-shoplook-title {
+  color: #333;
+  font-size: 35px;
+  margin: 0;
 }
 
-.shop-gram-slider {
-    position: relative;
-    margin: 0 auto;
+.admin-shoplook-instruction {
+  color: #666;
+  margin-bottom: 2rem;
 }
 
-.shop-image-icon {
-    position: relative;
-    width: 100%;
-    padding-bottom: 100%;
-    overflow: hidden;
-    border-radius: 8px;
+.admin-shoplook-edit-btn,
+.admin-shoplook-save-btn {
+  background-color: #ffd5c2;
+  color: #000;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
 }
 
-.gallery-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
+.admin-shoplook-edit-btn:hover,
+.admin-shoplook-save-btn:hover {
+  background-color: #ffb599;
+  transform: translateY(-1px);
 }
 
-.edit-actions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 1rem;
+.shop-gram-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
-.edit-btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    margin-bottom: 1rem;
+.admin-shoplook-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
-.edit-btn:hover {
-    background-color: #45a049;
+.image-upload-container {
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #eee;
 }
 
-.edit-form {
-    display: flex;
+.image-upload-label {
+  display: block;
+  cursor: pointer;
+  width: 100%;
+}
+
+.upload-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background-color: white;
+  border: 2px dashed #ddd;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.upload-content:hover {
+  border-color: #ffd5c2;
+  background-color: #fff8f5;
+}
+
+.upload-icon {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.upload-text {
+  font-size: 0.9rem;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.admin-shoplook-input {
+  display: none;
+}
+
+.admin-shoplook-image-wrapper {
+  position: relative;
+  padding-top: 100%;
+}
+
+.admin-shoplook-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.shop-gram-details {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.admin-shoplook-image-wrapper:hover .shop-gram-details {
+  opacity: 1;
+}
+
+.shop-gram-edit-controls {
+  padding: 1rem;
+  background-color: white;
+  border-top: 1px solid #eee;
+}
+
+.shop-gram-select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.shop-gram-select:hover {
+  border-color: #999;
+}
+
+.shop-gram-select:focus {
+  outline: none;
+  border-color: #ffd5c2;
+  box-shadow: 0 0 0 2px rgba(255, 213, 194, 0.2);
+}
+
+.shop-gram-product-info {
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.shop-gram-product-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.price {
+  color: #e67e22;
+  font-weight: 600;
+  margin: 0.25rem 0;
+}
+
+.category {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0.25rem 0;
+}
+
+@media (max-width: 1200px) {
+  .shop-gram-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-shoplook-content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+  
+  .shop-gram-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .shop-gram-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .admin-shoplook-header {
     flex-direction: column;
     gap: 1rem;
-}
-
-.edit-form input,
-.edit-form select {
-    padding: 0.5rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-.file-input-label {
-    color: #333;
-    font-size: 0.9rem;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.file-input {
-    display: none;
-}
-
-.edit-actions button {
-    background-color: #007BFF;
-    color: white;
-    padding: 0.5rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 0.5rem;
-}
-
-.edit-actions button:hover {
-    background-color: #0056b3;
-}
-
-.edit-actions button:focus {
-    outline: none;
+    text-align: center;
+  }
 }
