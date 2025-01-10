@@ -8,6 +8,7 @@ import Banner from './admin/components/Banner.js';
 import Marquee from './admin/components/Marquee.js';
 import ShopCategories from './admin/components/ShopCategories.js';
 import BestSeller from './admin/components/BestSeller.js';
+import ManageProducts from './admin/components/ManageProducts.js';
 
 function App() {
     return (
@@ -31,10 +32,11 @@ function App() {
                     <ProtectedRoute>
                         <ShopCategories />
                     </ProtectedRoute>} /> 
-                <Route path="/admin/bestseller" element={
+                <Route path="/admin/manageproducts" element={
                     <ProtectedRoute>
-                        <BestSeller />
-                    </ProtectedRoute>} />        
+                        <ManageProducts />
+                    </ProtectedRoute>} /> 
+                              
                 <Route path="/admin" element={<Login />} />
                 <Route path="*" element={<h1>Not Found</h1>} />
             </Routes>

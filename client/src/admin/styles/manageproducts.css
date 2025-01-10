@@ -1,0 +1,59 @@
+/* Sidebar styles */
+.sidebar {
+   position: fixed;
+   left: 0;
+   top: 0;
+   width: 240px; /* Adjust based on your sidebar width */
+   height: 100%;
+   background-color: #f9ece5; /* Sidebar background */
+   z-index: 10; /* Keep it above content */
+   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+.bg-light{
+   --bs-bg-opacity: 1;
+    background-color: #f5f5f5;
+}
+.mycontainer{
+   background-color: white;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.admin-products-container {
+   display: flex;
+   min-height: 100vh;
+   background-color: #f5f5f5;
+}
+.products-content {
+   flex: 1;
+   padding: 2rem;
+   margin-left: 280px;
+}
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+   --bs-gutter-x: 1.5rem;
+   --bs-gutter-y: 0;
+   width: 100%;
+   padding-right: calc(var(--bs-gutter-x)* .5);
+   padding-left: calc(var(--bs-gutter-x)* .5);
+   margin-right: auto;
+   margin-left: auto;
+   border-radius: 8px;
+}
+.shadow-sm {
+   box-shadow:none;
+}
+/* Main content styles */
+.main-content {
+   margin-left: 270px; /* Same as sidebar width */
+   padding: 20px; /* Adjust padding for spacing */
+   background-color: #fff; /* Content background */
+   overflow: auto; /* Prevent content overlap */
+   min-height: 100vh; /* Ensure it spans the viewport height */
+}
+
+/* Header styles */
+.adminheader {
+   position: relative;
+   margin-left: 240px;
+   padding: 20px;
+   background-color: #fff; 
+   z-index: 5;
+}
