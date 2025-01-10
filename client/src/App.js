@@ -10,6 +10,10 @@ import ShopCategories from './admin/components/ShopCategories.js';
 import BestSeller from './admin/components/BestSeller.js';
 import ManageProducts from './admin/components/ManageProducts.js';
 
+import SizePicker from './admin/components/SizePicker.js';
+import ColorPicker from './admin/components/ColorPicker.js';
+import Header from './admin/components/Header.js';
+import ShopGramAdmin from './admin/components/ShopGram.js';
 function App() {
     return (
 
@@ -23,6 +27,10 @@ function App() {
                 <Route path="/admin/banner" element={
                     <ProtectedRoute>
                         <Banner />
+                    </ProtectedRoute>} />
+                    <Route path="/admin/Header" element={
+                    <ProtectedRoute>
+                        <Header/>
                     </ProtectedRoute>} />
                 <Route path="/admin/marquee" element={
                     <ProtectedRoute>

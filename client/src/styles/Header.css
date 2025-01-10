@@ -15,7 +15,30 @@
     background-color: #e0e0e0;
     color:darkslategrey;
   }
-  
+  /* Scrolling Text Animation */
+.scrolling-text {
+  display: inline-block; /* Allow scrolling of inline content */
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  animation: scroll 5s linear infinite; /* Apply animation */
+}
+
+/* Animation Keyframes */
+@keyframes scroll {
+  0% {
+    transform: translateX(100%); /* Start outside on the right */
+  }
+  100% {
+    transform: translateX(-100%); /* End outside on the left */
+  }
+}
+
+/* Additional Styling for Container */
+.header-center {
+  position: relative;
+  overflow: hidden; /* Ensures text stays within bounds */
+  width: 100%; /* Full width of the container */
+}
   .icons{
     font-size: 1.75rem;
   }
@@ -70,7 +93,7 @@
 }
 
 /* Tablet and Mobile - Center Content */
-@media (max-width: 768px) {
+@media (max-width: 298px) {
   .desktop-text {
     display: none;
   }

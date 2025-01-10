@@ -5,11 +5,13 @@ import { MdArrowOutward } from 'react-icons/md';
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { useState, useEffect } from 'react';
 import '../../styles/Header.css';
+import api from "../../api.js";
 
 function Header() {
 
-   const [isScrolled, setIsScrolled] = useState(false);
-
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [headerData, setHeaderData] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const handleScroll = () => {
     if (window.scrollY > 100) {
       setIsScrolled(true);
@@ -17,18 +19,33 @@ function Header() {
       setIsScrolled(false);
     }
   };
-
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
+    const fetchHeaders = async () => {
+      try {
+        const response = await api.get("/api/admin/get_headers");
+        setHeaderData(response.data);
+      } catch (error) {
+        console.error("Failed to fetch headers:", error);
+      }
     };
+
+    fetchHeaders();
   }, []);
 
+  useEffect(() => {
+    // Cycle through headers every 5 seconds (adjust timing as needed)
+    const interval = setInterval(() => {
+      if (headerData && headerData.length > 0) {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % headerData.length);
+      }
+    }, 5000);
+
+    return () => clearInterval(interval); // Clean up interval on component unmount
+  }, [headerData]);
 
   return (
-    <section id="header" className={`header ${isScrolled ? 'scrolled' : 'bg-white'} py-1`}>
-      <nav className="navbar bg-white py-1 ">
+    <section id="header" className={`header ${isScrolled ? 'scrolled' : 'bg-white'}`}>
+      <nav className="navbar bg-white py-2">
         <div className="header-left container-fluid d-flex flex-wrap justify-content-between align-items-center px-3 px-md-5">
 
           {/* Social Media Icons */}
@@ -49,34 +66,35 @@ function Header() {
               <FaPinterest />
             </a>
           </div>
-
-          {/* Center Message */}
-          <div className="header-center fw-bold text-center mx-auto mb-2 mb-lg-0">
-            <p className="desktop-text fw-bold text-center mx-auto mb-2 mb-lg-0">
-            Spring Fashion Sale.{' '}
-            <a href="/footer" className="text-danger fw-normal text-decoration-none">
-              Shop now <MdArrowOutward />
-            </a>
-            </p>
-            <p className="tablet-text fw-bold text-center mx-auto mb-2 mb-lg-0">
-            Summer Sale Discount Off $70
-          </p>
-          <p className="mobile-text fw-bold text-center mx-auto mb-2 mb-lg-0">
-            Time to refresh your wardrobe
-          </p>
+          <div className="scrolling-text">
+            {headerData ? (
+              <p className="desktop-text fw-bold text-center mx-auto mb-2 mb-lg-0">
+                {headerData[currentIndex]?.text || "Default Header Text"}{" "}
+                {currentIndex === 0 && ( // Only show for the first header
+                  <a href="/footer" className="text-danger fw-normal text-decoration-none">
+                    Shop now
+                  </a>
+                )}
+              </p>
+            ) : (
+              <p>Loading...</p>
+            )}
           </div>
 
+
+
+
           {/* Country and Language Dropdown */}
-          <div className=" d-flex gap-4 justify-content-end align-items-center mb-2 mb-lg-0">
+          <div className=" d-flex gap-1 justify-content-end align-items-center mb-2 mb-lg-0">
 
             {/* Country Dropdown */}
             <Dropdown className='header-right'>
               <Dropdown.Toggle variant="white" className="fw-bold p-0 border-0 d-flex align-items-center">
                 <img src="https://flagcdn.com/w40/us.png" alt="US Flag" width="20" className="me-1" />
-                USD 
+                USD
                 <span className="ms-2">
-                  {/* <RiArrowDropDownLine className='icons'/> */}
-                  </span> {/* Custom down arrow icon */}
+                  <RiArrowDropDownLine className='icons' />
+                </span> {/* Custom down arrow icon */}
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
@@ -103,8 +121,8 @@ function Header() {
             <Dropdown className='header-right'>
               <Dropdown.Toggle variant="white" className="fw-bold p-3 border-0 ">
                 English <span className="ms-2">
-                  {/* <RiArrowDropDownLine className='icons' /> */}
-                  </span> 
+                  <RiArrowDropDownLine className='icons' />
+                </span>
               </Dropdown.Toggle>
 
               <Dropdown.Menu>

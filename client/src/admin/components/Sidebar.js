@@ -5,6 +5,7 @@ import {
   FaSignOutAlt, FaUserCircle, FaGlobe, FaChevronDown, FaBars 
 } from 'react-icons/fa';
 import '../styles/sidebar.css';
+import ShopGram from '../../components/shopping/ShopGram.js';
 import { logout } from '../../api.js';
 
 const Sidebar = () => {
@@ -63,11 +64,14 @@ const Sidebar = () => {
           
           {dropdowns.frontend && (
             <div className="admin-dropdown-menu">
+               <Link to="/admin/Header" className="admin-dropdown-item">Header</Link>
               <Link to="/admin/banner" className="admin-dropdown-item">Hero Section</Link>
               <Link to="/admin/marquee" className="admin-dropdown-item">Marquee</Link>
+              <Link to="/admin/color-master" className="admin-dropdown-item">Color Master</Link>
+              <Link to="/admin/size-master" className="admin-dropdown-item">size Master</Link>
               <Link to="/admin/shopcategories" className="admin-dropdown-item">Shop by Categories</Link>
               {/* <Link to="/admin/bestseller" className="admin-dropdown-item">Best Seller</Link> */}
-              <Link to="/admin/shop-look" className="admin-dropdown-item">Shop the Look</Link>
+              <Link to="/admin/shopthelook" className="admin-dropdown-item">Shop the Look</Link>
               <Link to="/admin/shopgram" className="admin-dropdown-item">Shop Gram</Link>
             </div>
           )}
@@ -79,8 +83,8 @@ const Sidebar = () => {
           <span className="admin-sidebar-text">Orders</span>
         </Link>
 
-        {/* Products Dropdown */}
-        <div className="admin-sidebar-dropdown">
+            {/* Products Dropdown */}
+            <div className="admin-sidebar-dropdown">
           <button 
             className="admin-sidebar-link"
             onClick={() => toggleDropdown("products")}
@@ -99,6 +103,7 @@ const Sidebar = () => {
             </div>
           )}
         </div>
+
 
         {/* Other Links */}
         <Link to="/admin/sales" className="admin-sidebar-link">

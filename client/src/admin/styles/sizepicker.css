@@ -1,0 +1,133 @@
+.size-picker-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    margin-left: 280px; /* Matching marquee sidebar offset */
+    padding: 2rem;
+  }
+  
+  .size-picker-header {
+    color: #2c3e50;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+  }
+  
+  .size-input-container {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .size-input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #2c3e50;
+    transition: all 0.3s ease;
+  }
+  
+  .size-input:focus {
+    outline: none;
+    border-color: #ffd5c2;
+    box-shadow: 0 0 0 3px rgba(255, 213, 194, 0.2);
+  }
+  
+  .add-size-button {
+    padding: 0 1.5rem;
+    background: linear-gradient(45deg, #ffd5c2, #ffb599);
+    border: none;
+    border-radius: 8px;
+    color: #2c3e50;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .add-size-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 213, 194, 0.3);
+  }
+  
+  .add-size-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  .available-sizes-header {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .sizes-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .size-item {
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1rem;
+    color: #2c3e50;
+  }
+  
+  .delete-size-button {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  
+  .delete-size-button:hover {
+    transform: translateY(-1px);
+    color: #c0392b;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .size-picker-container {
+      margin-left: 0;
+      padding: 1rem;
+    }
+  
+    .size-input-container {
+      flex-direction: column;
+    }
+  
+    .add-size-button {
+      width: 100%;
+      justify-content: center;
+    }
+  
+    .sizes-list {
+      flex-direction: column;
+    }
+  
+    .size-item {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
