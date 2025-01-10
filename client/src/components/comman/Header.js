@@ -12,13 +12,7 @@ function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [headerData, setHeaderData] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const handleScroll = () => {
-    if (window.scrollY > 100) {
-      setIsScrolled(true);
-    } else {
-      setIsScrolled(false);
-    }
-  };
+  
   useEffect(() => {
     const fetchHeaders = async () => {
       try {
@@ -42,6 +36,20 @@ function Header() {
 
     return () => clearInterval(interval); // Clean up interval on component unmount
   }, [headerData]);
+
+  //This behavior can be used to dynamically adjust the header's style,
+  //  such as adding a shadow or changing its background color when scrolling.
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+  
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <section id="header" className={`header ${isScrolled ? 'scrolled' : 'bg-white'}`}>
