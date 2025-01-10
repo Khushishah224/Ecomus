@@ -172,6 +172,7 @@ const BestSeller = () => {
           onClose={closeAllPopups}
         />
       )}
+      
        <Whishlist show={showWhishlist} onClose={() => setShowWhishlist(false)} />
     </section>
   );
