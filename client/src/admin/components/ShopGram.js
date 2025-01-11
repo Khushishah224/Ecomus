@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../styles/shopgram.css";
 import Sidebar from "./Sidebar.js";
-import { FaImage, FaUpload } from 'react-icons/fa';
+import {  FaUpload } from 'react-icons/fa';
 import { toast, Toaster } from 'react-hot-toast';
 // Import images directly
 import gallery7 from '../../assets/IMAGES/gallery-7.jpg';

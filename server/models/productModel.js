@@ -24,7 +24,7 @@ const variantSchema = new mongoose.Schema({
   ],
   status: {
     type: String,
-    enum: ["instock", "outofstock"],
+    enum: ["instock","lowstock", "outofstock"],
     default: "instock",
   },
   stock: {

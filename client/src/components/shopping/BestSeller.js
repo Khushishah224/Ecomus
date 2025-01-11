@@ -16,7 +16,7 @@ import img8 from "../../assets/IMAGES/white-8.jpg";
 
 import ComparisonPopup from "../modals/ComparisonPopup";
 import ShoppingBagPopup from "../modals/ShoppingBagPopup";
-import ShowProductPopup from "../modals/ShowProductPopup"; // Import the new popup
+import ShowProductPopup from "../modals/ShowProductPopup"; 
 import { Whishlist } from "../comman/MainNavbar.js";
 import { RiShoppingBag2Line } from "react-icons/ri";
 import { FaRegHeart } from "react-icons/fa";
@@ -70,8 +70,6 @@ const BestSeller = () => {
       [productId]: color,
     }));
   };
-
-  // console.log("in bestseller",selectedProduct.index);
 
 
   return (
@@ -164,7 +162,7 @@ const BestSeller = () => {
         <ShoppingBagPopup product={selectedProduct} onClose={closeAllPopups} />
       )}
       {isShowProductPopupVisible && selectedProduct && (
-        <ShowProductPopup products={products} initialProductIndex={selectedProduct.id} onClose={closeAllPopups} />
+        <ShowProductPopup product={selectedProduct} onClose={closeAllPopups} />
       )}
       {isComparisonPopupVisible && selectedProduct && (
         <ComparisonPopup
