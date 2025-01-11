@@ -497,11 +497,12 @@ const Popup = ({ show, onClose }) => {
                 onChange={handleChange}
               />
               {errorMessage && <p className="error-message">{errorMessage}</p>}
-              <div className="form-content d-flex justify-content-between">
+              <div className='d-flex justify-content-between'>
+             
                 <button type="submit" className="popup-submit-button">Register</button>
-              </div>
-              <div className="text-div text-decoration-underline fw-semibold mt-3 pt-1">
-                <p>
+              
+         
+                <p className="text-div text-decoration-underline fw-semibold mt-3 pt-1">
                   Already have an account?{' '}
                   <a href="#login" className="text-black" onClick={() => setCurrentForm('login')}>
                     Login here
