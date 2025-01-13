@@ -34,27 +34,27 @@ const ProductCard = ({ product }) => {
           <span className="stock-badge">Low Stock</span>
         )}
       </div>
-      <div className="product-icons-clothing">
-                        <button className="icon-btn-clothing" >
+      <div className="product-icons">
+                        <button className="icon-btn" >
                           <RiShoppingBag2Line />
                         </button>
                         {/* Add to Wishlist */}
                         <button
-                          className="icon-btn-clothing"
+                          className="icon-btn"
                           
                           type="button"
                         >
                           <FaRegHeart /> 
                         </button>
-                        <button className="icon-btn-clothing icon-hide-clothing" >
+                        <button className="icon-btn icon-hide" >
                           <TbArrowsCross />
                         </button>
-                        <button className="icon-btn-clothing" >
+                        <button className="icon-btn" >
                           <IoEyeOutline />
                         </button>
                       </div>
                       {variant.sizes && (
-                  <div className="product-size-overlay-clothing d-flex justify-content-center gap-2">
+                  <div className="product-size-overlay d-flex justify-content-center gap-2">
                     {variant.sizes.map(size => (
               <span key={size.size} className="product_size text-white d-flex justify-content-center align-items-center">
                 {size.size}

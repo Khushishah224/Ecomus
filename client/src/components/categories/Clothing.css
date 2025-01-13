@@ -269,7 +269,7 @@
   .grid-3, .grid-4, .grid-5, .grid-6 {
     grid-template-columns: repeat(2, 1fr);
   }
-  .icon-hide-clothing{
+  .icon-hide{
     display: none;
   }
 }
@@ -296,7 +296,7 @@
 
 
 
-.icon-btn-clothing {
+.icon-btn {
   background: white;
   border: none;
   border-radius: 5%;
@@ -310,13 +310,13 @@
 }
 
 
-.product-size-overlay-clothing {
+.product-size-overlay {
   flex-direction: row;
   gap: 10px;
 }
 
-.product-size-overlay-clothing,
-.product-icons-clothing {
+.product-size-overlay,
+.product-icons {
   position: absolute;
   top: 65%;
   left: 50%;

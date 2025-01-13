@@ -1,199 +1,281 @@
-import React, { useState } from 'react';
-import { FaPlus, FaEdit, FaTimes } from 'react-icons/fa';
-import "../styles/bestseller.css";
-import Sidebar from "../components/Sidebar.js";
-
+import React, { useState, useEffect } from 'react';
+import { FaSearch, FaTrash, FaEdit, FaPlus, FaStar } from 'react-icons/fa';
+import Sidebar from '../components/Sidebar.js';
+import '../styles/bestseller.css'
 const BestSeller = () => {
-  const [product, setProduct] = useState({
-    name: '',
-    colors: [],
-    sizes: [],
-    price: '',
-    active: true
+  const [products, setProducts] = useState([]);
+  const [categories] = useState(['All', 'Clothing', 'Sunglasses', 'Bags', 'Shoes', 'Accessories']);
+  const [subCategories] = useState({
+    Clothing: ['Denim', 'Dress', 'Ethnic Wear', 'Formal Wear', 'Casual Wear', 'Western Wear', 'Sports Wear', 'Winter Wear'],
+    Sunglasses: ['Aviator', 'Wayfarer', 'Round', 'Square', 'Oversized', 'Cat Eye', 'Sports', 'Luxury'],
+    Bags: ['Handbags', 'Backpacks', 'Crossbody', 'Totes', 'Laptop Bags', 'Travel Bags', 'Clutches', 'Messenger'],
+    Shoes: ['Sneakers', 'Boots', 'Flats', 'Heels', 'Sports', 'Formal', 'Casual', 'Sandals'],
+    Accessories: ['Watches', 'Jewelry', 'Belts', 'Scarves', 'Wallets', 'Hats', 'Hair Accessories', 'Ties']
   });
 
-  const [newColor, setNewColor] = useState('#000000');
-  const [newSize, setNewSize] = useState('');
-  const [error, setError] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedSubCategory, setSelectedSubCategory] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
-  // Standard sizes for clothing
-  const commonSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+  useEffect(() => {
+    // Simulated initial best seller products
+    setProducts([
+      {
+        id: 1,
+        name: "Premium Denim Jeans",
+        category: "Clothing",
+        subCategory: "Denim",
+        price: "1899",
+        sales: "1.2k",
+        rating: 4.8
+      },
+      {
+        id: 2,
+        name: "Classic Aviator Sunglasses",
+        category: "Sunglasses",
+        subCategory: "Aviator",
+        price: "1299",
+        sales: "950",
+        rating: 4.7
+      },
+      {
+        id: 3,
+        name: "Designer Tote Bag",
+        category: "Bags",
+        subCategory: "Totes",
+        price: "1999",
+        sales: "850",
+        rating: 4.9
+      },
+      {
+        id: 4,
+        name: "Running Shoes Pro",
+        category: "Shoes",
+        subCategory: "Sports",
+        price: "2499",
+        sales: "750",
+        rating: 4.6
+      },
+      {
+        id: 5,
+        name: "Designer Watch Collection",
+        category: "Accessories",
+        subCategory: "Watches",
+        price: "3999",
+        sales: "500",
+        rating: 4.8
+      },
+      {
+        id: 6,
+        name: "Evening Dress Special",
+        category: "Clothing",
+        subCategory: "Dress",
+        price: "1599",
+        sales: "680",
+        rating: 4.7
+      }
+    ]);
+  }, []);
 
-  const handleAddColor = () => {
-    if (!product.colors.includes(newColor)) {
-      setProduct({
-        ...product,
-        colors: [...product.colors, newColor]
-      });
-      setError('');
+  const handleCategoryChange = (e) => {
+    const category = e.target.value;
+    setSelectedCategory(category);
+    setSelectedSubCategory('');
+  };
+
+  useEffect(() => {
+    if (searchQuery) {
+      const results = products.filter(product =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setSearchResults(results);
     } else {
-      setError('This color has already been added');
+      setSearchResults([]);
     }
-  };
+  }, [searchQuery, products]);
 
-  const handleRemoveColor = (colorToRemove) => {
-    setProduct({
-      ...product,
-      colors: product.colors.filter(color => color !== colorToRemove)
-    });
-  };
-
-  const handleAddSize = () => {
-    if (newSize && !product.sizes.includes(newSize)) {
-      setProduct({
-        ...product,
-        sizes: [...product.sizes, newSize]
+  const filteredProducts = searchQuery 
+    ? searchResults
+    : products.filter(product => {
+        const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
+        const matchesSubCategory = !selectedSubCategory || product.subCategory === selectedSubCategory;
+        return matchesCategory && matchesSubCategory;
       });
-      setNewSize('');
-      setError('');
-    } else {
-      setError('Please enter a valid size that hasn\'t been added yet');
-    }
-  };
-
-  const handleRemoveSize = (sizeToRemove) => {
-    setProduct({
-      ...product,
-      sizes: product.sizes.filter(size => size !== sizeToRemove)
-    });
-  };
-
-  const handleQuickAddSize = (size) => {
-    if (!product.sizes.includes(size)) {
-      setProduct({
-        ...product,
-        sizes: [...product.sizes, size]
-      });
-    }
-  };
 
   return (
+    <div className="admin-products-container">
+      <Sidebar />
+      <div className="products-content">
+        <h1 className="mb-4">Best Sellers</h1>
+        <p className="text-muted mb-4">Manage and showcase your top-performing products</p>
 
-    <div className="add-category-form">
-        <Sidebar />
-      <h3>Add Best Seller Product</h3>
-      {error && <div className="error-message">{error}</div>}
+        <div className="container-fluid mycontainer">
+          <div className="container adminheader">
+            <div className="card border-0 shadow-sm">
+              <div className="card-header bg-white border-bottom-0 pb-4">
+                <h2 className="card-title h4 fw-bold">Best Sellers Management</h2>
+              </div>
+              <div className="card-body">
+                {/* Search Bar - Moved to top and made wider */}
+                <div className="mb-4">
+                  <div className="input-group input-group-lg shadow-sm" style={{ transition: 'all 0.3s ease',height:'47px',gap:'0px' }}>
+                    <input
+                      type="text"
+                      className="form-control form-control-lg"
+                      placeholder="Search products by name..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      style={{ 
+                        cursor: 'text',
+                        fontSize: '1rem',
+                        backgroundColor: '#fff',
+                        caretColor: '#000', // Makes cursor visible
+                        width: '80%',
+                      }}
+                     
+                    />
+                    <button 
+                      className="btn input-group-text"
+                      style={{ 
+                        backgroundColor: '#ffd5c2', 
+                        cursor: 'pointer',
+                        // padding: '0.5rem 1.5rem',
+                        width:'20%',
+                      }}
+                    >
+                      <FaSearch size={18} />
+                    </button>
+                  </div>
+                  {searchResults.length > 0 && searchQuery && (
+                    <div className="mt-2 text-muted">
+                      Found {searchResults.length} matching products
+                    </div>
+                  )}
+                </div>
 
-      <div className="form-group">
-      
-        <label>Product Name</label>
-        <input
-          type="text"
-          placeholder="Enter product name"
-          value={product.name}
-          onChange={(e) => setProduct({ ...product, name: e.target.value })}
-        />
-      </div>
+                <div className="row g-4 mb-4">
+                  <div className="col-md-6">
+                    <label className="form-label fw-semibold">Category</label>
+                    <select 
+                      className="form-select shadow-sm"
+                      value={selectedCategory}
+                      onChange={handleCategoryChange}
+                      style={{ transition: 'all 0.3s ease' }}
+                    >
+                      {categories.map(category => (
+                        <option key={category} value={category}>{category}</option>
+                      ))}
+                    </select>
+                  </div>
+                  {selectedCategory !== 'All' && (
+                    <div className="col-md-6">
+                      <label className="form-label fw-semibold">Sub Category</label>
+                      <select 
+                        className="form-select shadow-sm"
+                        value={selectedSubCategory}
+                        onChange={(e) => setSelectedSubCategory(e.target.value)}
+                        style={{ transition: 'all 0.3s ease' }}
+                      >
+                        <option value="">All Sub Categories</option>
+                        {subCategories[selectedCategory]?.map(sub => (
+                          <option key={sub} value={sub}>{sub}</option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+                </div>
 
-      <div className="form-group">
-        <label>Colors</label>
-        <div className="color-picker-container">
-          <input
-            type="color"
-            value={newColor}
-            onChange={(e) => setNewColor(e.target.value)}
-            className="color-input"
-          />
-          <button
-            className="primary-button"
-            onClick={handleAddColor}
-            type="button"
-          >
-            <FaPlus /> Add Color
-          </button>
-        </div>
-        <div className="selected-colors">
-          {product.colors.map((color, index) => (
-            <div
-              key={index}
-              className="color-pill"
-              style={{ backgroundColor: color }}
-            >
-              <span className="color-hex">{color}</span>
-              <button
-                onClick={() => handleRemoveColor(color)}
-                className="remove-color"
-              >
-                <FaTimes />
-              </button>
+                {/* Rest of the component remains the same */}
+                <div className="text-end mb-4">
+                  <button
+                    className="btn d-inline-flex align-items-center gap-2 px-4 shadow-sm"
+                    style={{ 
+                      backgroundColor: "#ffa68d", 
+                      color: "#000",
+                      transition: 'all 0.3s ease'
+                    }}
+                    onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+                    onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
+                  >
+                    <FaPlus /> Add to Best Sellers
+                  </button>
+                </div>
+
+                <div>
+                  <h3 className="h4 fw-bold mb-4">Best Sellers Preview</h3>
+                  <div className="row g-4">
+                    {filteredProducts.map((product) => (
+                      <div key={product.id} className="col-md-6 col-lg-4">
+                        <div 
+                          className="card h-100 shadow-sm"
+                          style={{ transition: 'all 0.3s ease' }}
+                          onMouseOver={e => e.currentTarget.style.transform = 'translateY(-5px)'}
+                          onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
+                        >
+                          <div style={{ aspectRatio: "1", overflow: 'hidden' }}>
+                            <img
+                              src="/api/placeholder/400/400"
+                              alt={product.name}
+                              className="card-img-top h-100 w-100 object-fit-cover"
+                              style={{ transition: 'transform 0.3s ease' }}
+                              onMouseOver={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                              onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}
+                            />
+                          </div>
+                          <div className="card-body d-flex flex-column">
+                            <div className="flex-grow-1">
+                              <div className="d-flex justify-content-between align-items-start mb-2">
+                                <h4 className="card-title h5 fw-bold mb-0">{product.name}</h4>
+                                <span className="badge" style={{ backgroundColor: "#ffd5c2", color: "#000" }}>
+                                  <FaStar className="me-1" />
+                                  {product.rating}
+                                </span>
+                              </div>
+                              <p className="text-muted small mb-1">
+                                {product.category} • {product.subCategory}
+                              </p>
+                              <div className="d-flex justify-content-between align-items-center mb-3">
+                                <p className="fw-bold mb-0">₹{product.price}</p>
+                                <p className="text-success small mb-0">{product.sales} sales</p>
+                              </div>
+                            </div>
+                            <div className="d-flex gap-2 mt-auto">
+                              <button
+                                className="btn flex-grow-1 d-flex align-items-center justify-content-center gap-2"
+                                style={{ 
+                                  backgroundColor: "#ffd5c2", 
+                                  color: "#000",
+                                  transition: 'all 0.3s ease'
+                                }}
+                                onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+                                onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
+                              >
+                                <FaEdit /> Edit
+                              </button>
+                              <button
+                                className="btn flex-grow-1 d-flex align-items-center justify-content-center gap-2"
+                                style={{ 
+                                  backgroundColor: "#ffe6e6", 
+                                  color: "#dc3545",
+                                  transition: 'all 0.3s ease'
+                                }}
+                                onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+                                onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
+                              >
+                                <FaTrash /> Remove
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
-          ))}
+          </div>
         </div>
-      </div>
-
-      <div className="form-group">
-        <label>Sizes</label>
-        <div className="quick-size-buttons">
-          {commonSizes.map((size) => (
-            <button
-              key={size}
-              className={`size-button ${product.sizes.includes(size) ? 'selected' : ''}`}
-              onClick={() => handleQuickAddSize(size)}
-              type="button"
-            >
-              {size}
-            </button>
-          ))}
-        </div>
-        <div className="custom-size-input">
-          <input
-            type="text"
-            placeholder="Enter custom size"
-            value={newSize}
-            onChange={(e) => setNewSize(e.target.value.toUpperCase())}
-          />
-          <button
-            className="primary-button"
-            onClick={handleAddSize}
-            type="button"
-          >
-            <FaPlus /> Add Size
-          </button>
-        </div>
-        <div className="selected-sizes">
-          {product.sizes.map((size, index) => (
-            <div key={index} className="size-pill">
-              {size}
-              <button
-                onClick={() => handleRemoveSize(size)}
-                className="remove-size"
-              >
-                <FaTimes />
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="form-group">
-        <label>Price</label>
-        <input
-          type="number"
-          placeholder="Enter price"
-          value={product.price}
-          onChange={(e) => setProduct({ ...product, price: e.target.value })}
-        />
-      </div>
-
-      <div className="form-actions">
-        <button
-          className="secondary-button"
-          onClick={() => {
-            setProduct({ name: '', colors: [], sizes: [], price: '', active: true });
-            setNewColor('#000000');
-            setNewSize('');
-            setError('');
-          }}
-          type="button"
-        >
-          Cancel
-        </button>
-        <button
-          className="primary-button"
-          type="button"
-        >
-          <FaPlus /> Add Product
-        </button>
       </div>
     </div>
   );
