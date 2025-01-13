@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     //   if (category.image) {
     //     category.image = `http://localhost:5000${category.image}`;  // Add full URL
     //   }
-    //   return category;
+    //   return category; 
     // });
     res.json(categories); // Send all categories to frontend
   } catch (error) {

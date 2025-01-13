@@ -344,6 +344,9 @@
   .taglines-list {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }
+  .marquee-header{
+    margin-top: 70px;
+  }
 }
 
 @media (max-width: 768px) {

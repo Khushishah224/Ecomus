@@ -153,6 +153,9 @@
   
   /* Responsive Styles */
   @media (max-width: 768px) {
+    .admin-shoplook-container{
+      margin-top: 75px;
+    }
     .admin-shoplook-content {
       margin-left: 0;
       padding: 1rem;

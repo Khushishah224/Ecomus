@@ -255,6 +255,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .categories-content {
+        margin-top:75px;
         margin-left: 0;
         padding: 1rem;
     }
