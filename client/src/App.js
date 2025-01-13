@@ -12,7 +12,9 @@ import ShopCategories from './admin/components/ShopCategories.js';
 // import BestSeller from './admin/components/BestSeller.js';
 import ManageProducts from './admin/components/ManageProducts.js';
 
-import ShopTheLook from './admin/components/ShopTheLook.js'
+// import ShopTheLook from './admin/components/ShopTheLook.js'
+import BestSeller from './admin/components/BestSeller.js';
+import ShopTheLook from './admin/components/ShopTheLook.js';
 import SizePicker from './admin/components/SizePicker.js';
 import ColorPicker from './admin/components/colorpicker.js';
 import Header from './admin/components/Header.js';
