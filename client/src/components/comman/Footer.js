@@ -14,13 +14,12 @@ import { IoSearch } from "react-icons/io5";
 import { FiUser } from "react-icons/fi";
 import { FaRegHeart } from "react-icons/fa";
 import { CgShoppingBag } from "react-icons/cg";
-import { SearchSidebar } from "./MainNavbar.js";
-import { Sidebar } from "./MainNavbar.js";
-import { Popup } from "./MainNavbar.js";
+import Sidebar from "./ShopingCartSidebar.jsx";
+import Popup from "./Popup.js";
 import { ShopSideBar } from "../modals/ShopSideBar.js";
-
+import SearchSidebar from "./SearchSidebar.jsx";
 import "../../styles/Footer.css";
-
+import Whishlist from "./Whishlist.js";
 const Footer = () => {
     const [isHelpOpen, setIsHelpOpen] = useState(false);
     const [isAboutOpen, setIsAboutOpen] = useState(false);
@@ -40,6 +39,7 @@ const Footer = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [showSidebar, setShowSidebar] = useState(false);
     const [showShopSideBar, setShowShopSideBar] = useState(false);
+  const [showWhishlist, setShowWhishlist] = useState(false);
 
 
     return (
@@ -204,7 +204,7 @@ const Footer = () => {
                         <span className="footer-bar-label mt-1">Account</span>
                     </div>
 
-                    <div className="footer-bar-icon h-100 d-flex flex-column justify-content-center align-items-center fs-3">
+                    <div className="footer-bar-icon h-100 d-flex flex-column justify-content-center align-items-center fs-3" onClick={()=>setShowWhishlist(true)}>
                         <FaRegHeart />
                         <span className="footer-bar-label mt-1" >Wishlist</span>
                         <span className='footer-bar-badge'>0</span>
@@ -218,6 +218,7 @@ const Footer = () => {
                 </div>
                 <SearchSidebar show={showSearchSidebar} onClose={() => setShowSearchSidebar(false)} />
                     {/* shopping cart */}
+                    <Whishlist show={showWhishlist} onClose={() => setShowWhishlist(false)} />
                 <Sidebar show={showSidebar} onClose={() => setShowSidebar(false)} />
                 <Popup show={showPopup} onClose={() => setShowPopup(false)} />
                 <ShopSideBar show={showShopSideBar} onClose={() => setShowShopSideBar(false)} />

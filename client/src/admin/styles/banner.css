@@ -277,6 +277,7 @@
     .banner-content {
         margin-left: 200px;
         padding: 1.5rem;
+        margin-top: 70px
     }
 }
 
@@ -284,6 +285,7 @@
     .banner-content {
         margin-left: 0;
         padding: 1rem;
+        margin-top: 70px
     }
 
 }

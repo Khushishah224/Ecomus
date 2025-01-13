@@ -79,7 +79,7 @@ function Header() {
               <p className="desktop-text fw-bold text-center mx-auto mb-2 mb-lg-0">
                 {headerData[currentIndex]?.text || "Default Header Text"}{" "}
                 {currentIndex === 0 && ( // Only show for the first header
-                  <a href="/footer" className="text-danger fw-normal text-decoration-none">
+                  <a href="/footer" className="text-danger fw-normal text-decoration-none border-bottom-header">
                     Shop now
                     <MdArrowOutward/>
                   </a>

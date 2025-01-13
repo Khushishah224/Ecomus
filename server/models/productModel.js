@@ -9,8 +9,10 @@ const variantSchema = new mongoose.Schema({
     },
   ],
   stock: { type: Number, required: true },
-  stockStatus: { type: String, enum: ["In Stock", "Low Stock", "Out of Stock"],
-     required: true },
+  stockStatus: {
+    type: String, enum: ["In Stock", "Low Stock", "Out of Stock"],
+    required: true
+  },
   images: {
     front: { type: String, required: true },
     back: { type: String, required: true },
@@ -19,7 +21,7 @@ const variantSchema = new mongoose.Schema({
   
   status: {
     type: String,
-    enum: ["instock","lowstock", "outofstock"],
+    enum: ["instock", "lowstock", "outofstock"],
     default: "instock",
   },
   stock: {
