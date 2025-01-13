@@ -1,142 +1,151 @@
+/* Prefixing classes with 'new-arrival-' */
+
 .new-arrival {
-    background: linear-gradient(400deg, #FDFCFA 0%, #FEF3F2 50%, #F3FAFA 100%);  
-    padding: 1rem 1rem;
-    height: 194px;
-  } 
-  
-   .new-arrival-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: center;
-  } 
-  
-   .new-arrival-header h1 {
-    font-size: 2.5rem; 
-    color: #000;
-    margin-bottom: 0.5rem;
-    margin-top:35px;
-  } 
-  
-   .new-arrival-header p {
-    font-size: 1rem;
-    color: #555;
-  } 
-  
-   .new-arrival-controls {
-    background: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 2rem;
-  } 
-  
-   .filter-btn {
-    display: flex;
-    align-items: center;
-    font-size: 1rem;
-    font-weight: 500;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  } 
-  
-   .filter-btn:hover {
-    background-color: #f7f7f7;
-  }
-   
-   .icon-filter {
-    margin-right: 0rem;
-  } 
-  
-  
-   .grid-options {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-} 
- .grid-btn {
-    background: none;
-    border: none;
-    color: #aaa;
-    cursor: pointer;
-    transition: color 0.2s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.5rem;
+  background: linear-gradient(400deg, #FDFCFA 0%, #FEF3F2 50%, #F3FAFA 100%);  
+  padding: 1rem 1rem;
+  height: 194px;
 } 
 
- .grid-btn.active,
-.grid-btn:hover {
-    color: black;
+.new-arrival-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
 } 
 
- .dot-pair {
-    display: flex;
-    gap: 0.3rem;
+.new-arrival-header h1 {
+  font-size: 2.5rem; 
+  color: #000;
+  margin-bottom: 0.5rem;
+  margin-top:35px;
 } 
 
- .dot-column {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    align-items: center;
+.new-arrival-header p {
+  font-size: 1rem;
+  color: #555;
 } 
 
- .myownclothing{
+.new-arrival-controls {
+  background: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+} 
+
+.new-arrival-filter-btn {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+} 
+
+.new-arrival-filter-btn:hover {
+  background-color: #f7f7f7;
+}
+
+.new-arrival-icon-filter {
+  margin-right: 0rem;
+} 
+
+.new-arrival-grid-options {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+} 
+
+.new-arrival-grid-btn {
+  background: none;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+} 
+
+.new-arrival-grid-btn.active,
+.new-arrival-grid-btn:hover {
+  color: black;
+} 
+
+.new-arrival-dot-pair {
+  display: flex;
+  gap: 0.3rem;
+} 
+
+.new-arrival-dot-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  align-items: center;
+} 
+
+.new-arrival-myownclothing {
   padding-left:3rem;
   padding-right:3rem;
-
 }
-.products-grid {
+
+.new-arrival-products-grid {
   display: grid;
   gap: 2rem;
   padding: 2rem 0;
 }
 
-.grid-1 {
+.new-arrival-grid-1 {
   grid-template-columns: 1fr;
 }
 
-.grid-2 {
+.new-arrival-grid-2 {
   grid-template-columns: repeat(2, 1fr);
 }
 
-.grid-3 {
+.new-arrival-grid-3 {
   grid-template-columns: repeat(3, 1fr);
 }
 
-.grid-4 {
+.new-arrival-grid-4 {
   grid-template-columns: repeat(4, 1fr);
 }
 
-.grid-5 {
+.new-arrival-grid-5 {
   grid-template-columns: repeat(5, 1fr);
 }
 
-.grid-6 {
+.new-arrival-grid-6 {
   grid-template-columns: repeat(6, 1fr);
 }
 
-/* Product Card Styles */
-.product-card {
-  background: white;
-  border:none;
-  overflow: hidden;
-  /* transition: transform 0.2s ease, box-shadow 0.2s ease; */
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-  height:560px;
+/* Sort Dropdown Styles */
+.new-arrival-sort-dropdown {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
 }
 
-/* .product-card:hover {
-   transform: translateY(-4px); 
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); 
-} */
+.new-arrival-sort-dropdown:focus {
+  outline: none;
+  border-color: #999;
+}
 
-.product-image {
+/* Product Card Styles */
+.new-arrival-product-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.new-arrival-product-image {
   position: relative;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -144,15 +153,14 @@
   height: 450px;
 }
 
-.product-image img {
+.new-arrival-product-image img {
   border-radius: 8px;
-
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.stock-badge {
+.new-arrival-stock-badge {
   position: absolute;
   top: 12px;
   right: 12px;
@@ -164,87 +172,88 @@
   font-weight: 500;
 }
 
-.product-info {
+.new-arrival-product-info {
   padding-top: 0.8rem;
 }
 
-.product-name {
+.new-arrival-product-name {
   font-size: 1.1rem;
   font-weight: 450;
   margin-bottom: 0.5rem;
   color: black;
 }
 
-.product-category {
+.new-arrival-product-category {
   font-size: 0.9rem;
   color: #666;
   margin-bottom: 1rem;
 }
-.product-colors {
+
+.new-arrival-product-colors {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.color-options {
+.new-arrival-color-options {
   display: flex;
   gap: 0.5rem;
   margin-top: 0.5rem;
 }
 
-.color-radio {
+.new-arrival-color-radio {
   display: flex;
   align-items: center;
   cursor: pointer;
   position: relative;
 }
 
-.color-radio input {
+.new-arrival-color-radio input {
   display: none;
 }
 
-.color-box {
-  width: 22px; /* Outer size */
+.new-arrival-color-box {
+  width: 22px;
   height: 22px;
-  border-radius: 50%; /* Makes it a circle */
-  background-color: white; /* White space between the border and color */
+  border-radius: 50%;
+  background-color: white;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #ddd; /* Outer border */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
-  /* transition: border-color 0.2s ease; */
+  border: 1px solid #ddd;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
-.color-box::after {
+
+.new-arrival-color-box::after {
   content: "";
-  width: 14px; /* Inner circle size */
+  width: 14px;
   height: 14px;
   border-radius: 50%;
-  background-color: var(--color); /* Dynamically set the color */
+  background-color: var(--color);
   display: block;
 }
-.color-radio input:checked + .color-box {
+
+.new-arrival-color-radio input:checked + .new-arrival-color-box {
   border-color: #000;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); 
 }
-.product-details {
 
-  /* display: flex; */
+.new-arrival-product-details {
   justify-content: space-between;
   align-items: center;
 }
 
-.product-price {
+.new-arrival-product-price {
   font-weight: 600;
   color: #222;
 }
 
-.size-options {
+.new-arrival-size-options {
   display: flex;
   gap: 0.5rem;
 }
 
-.size-badge {
+.new-arrival-size-badge {
   background: #f5f5f5;
   padding: 2px 6px;
   border-radius: 4px;
@@ -252,51 +261,10 @@
   color: #555;
 }
 
-/* Responsive Grid */
-@media (max-width: 1200px) {
-  .grid-5, .grid-6 {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (max-width: 992px) {
-  .grid-4, .grid-5, .grid-6 {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .grid-3, .grid-4, .grid-5, .grid-6 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .icon-hide-clothing{
-    display: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .products-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Sort Dropdown Styles */
-.sort-dropdown {
-  padding: 0.5rem 1rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: white;
-  cursor: pointer;
-}
-
-.sort-dropdown:focus {
-  outline: none;
-  border-color: #999;
-}
 
 
 
-.icon-btn-clothing {
+.new-arrival-icon-btn-clothing {
   background: white;
   border: none;
   border-radius: 5%;
@@ -309,16 +277,16 @@
   cursor: pointer;
 }
 
-
-.product-size-overlay-clothing {
+.new-arrival-product-size-overlay-clothing {
   flex-direction: row;
   gap: 10px;
 }
 
-.product-size-overlay-clothing,
-.product-icons-clothing {
+
+.new-arrival-product-size-overlay-clothing,
+.new-arrival-product-icons-clothing {
   position: absolute;
-  top: 65%;
+  top: 94%;
   left: 50%;
   transform: translate(-50%, -50%);
   visibility: hidden; /* Initially hidden */
@@ -329,8 +297,65 @@
   z-index: 2;
 }
 
-.product_size{
-  /* margin-top:138px; */
-  /* margin-bottom:100px; */
+.new-arrival-product-card:hover .new-arrival-product-icons-clothing,
+.new-arrival-product-card:hover .new-arrival-product-size-overlay-clothing {
+  opacity: 1;
+  visibility: visible;
+  display:flex;
+}
+
+.new-arrival-product-card:hover .new-arrival-product-size-overlay-clothing{
+  width:100%;
+  border-radius: 2px;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.new-arrival-product-icons-clothing {
+  top: 80%;
+}
+
+
+/* Responsive Grid */
+@media (max-width: 1200px) {
+  .new-arrival-grid-5, .new-arrival-grid-6 {
+      grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .new-arrival-grid-4, .new-arrival-grid-5, .new-arrival-grid-6 {
+      grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .new-arrival-grid-3, .new-arrival-grid-4, .new-arrival-grid-5, .new-arrival-grid-6 {
+      grid-template-columns: repeat(2, 1fr);
+  }
+
+  .new-arrival-product-size-overlay-clothing {
+    top: -80%;
+  }
   
+  .new-arrival-icon-hide-clothing {
+      display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .new-arrival-products-grid {
+      grid-template-columns: 1fr;
+  }
+  .new-arrival-product-size-overlay-clothing{
+    font-size: x-small;
+  }
+  .new-arrival-product-card:hover .new-arrival-product-size-overlay-clothing{
+    padding: 0.5rem;
+  }
+
+  .new-arrival-icon-btn-clothing {
+    width: 25px;
+    height: 25px;
+  }
 }

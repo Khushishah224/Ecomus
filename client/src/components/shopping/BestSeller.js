@@ -119,6 +119,7 @@ const BestSeller = () => {
                   </button>
                 </div>
                 {product.size && (
+                  
                   <div className="product-size-overlay d-flex justify-content-center gap-2">
                     {product.size.map((size, index) => (
                       <span className="product_size text-white d-flex justify-content-center align-items-center" key={index} style={{ width: "30px" }}>{size}</span>

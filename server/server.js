@@ -271,7 +271,11 @@ const insertDefaultProducts = async () => {
           variants: [
             {
               color: "Black",
-              sizes: [],
+              sizes: [
+                { size: "S", price: 35.99 },
+                { size: "M", price: 37.99 },
+                { size: "L", price: 39.99 },
+              ],
               stock: 100,
               stockStatus: "In Stock",
               images: {
@@ -289,7 +293,11 @@ const insertDefaultProducts = async () => {
           variants: [
             {
               color: "Black",
-              sizes: [],
+              sizes: [
+                { size: "S", price: 35.99 },
+                { size: "M", price: 37.99 },
+                { size: "L", price: 39.99 },
+              ],
               stock: 100,
               stockStatus: "In Stock",
               images: {
@@ -307,7 +315,11 @@ const insertDefaultProducts = async () => {
           variants: [
             {
               color: "Black",
-              sizes: [],
+              sizes: [
+                { size: "S", price: 35.99 },
+                { size: "M", price: 37.99 },
+                { size: "L", price: 39.99 },
+              ],
               stock: 100,
               stockStatus: "In Stock",
               images: {
@@ -324,8 +336,12 @@ const insertDefaultProducts = async () => {
           description: "Breathable running cap for sunny runs.",
           variants: [
             {
-              color: "Black",
-              sizes: [],
+              color: "Brown",
+              sizes: [
+                { size: "S", price: 35.99 },
+                { size: "M", price: 37.99 },
+                { size: "L", price: 39.99 },
+              ],
               stock: 100,
               stockStatus: "In Stock",
               images: {
@@ -343,7 +359,11 @@ const insertDefaultProducts = async () => {
           variants: [
             {
               color: "Black",
-              sizes: [],
+              sizes: [
+                { size: "S", price: 35.99 },
+                { size: "M", price: 37.99 },
+                { size: "L", price: 39.99 },
+              ],
               stock: 100,
               stockStatus: "In Stock",
               images: {
@@ -360,8 +380,12 @@ const insertDefaultProducts = async () => {
           description: "Breathable running cap for sunny runs.",
           variants: [
             {
-              color: "Black",
-              sizes: [],
+              color: "Brown",
+              sizes: [
+                { size: "S", price: 35.99 },
+                { size: "M", price: 37.99 },
+                { size: "L", price: 39.99 },
+              ],
               stock: 100,
               stockStatus: "In Stock",
               images: {
@@ -378,8 +402,12 @@ const insertDefaultProducts = async () => {
           description: "Breathable running cap for sunny runs.",
           variants: [
             {
-              color: "Black",
-              sizes: [],
+              color: "Orange",
+              sizes: [
+                { size: "S", price: 35.99 },
+                { size: "M", price: 37.99 },
+                { size: "L", price: 39.99 },
+              ],
               stock: 100,
               stockStatus: "In Stock",
               images: {
