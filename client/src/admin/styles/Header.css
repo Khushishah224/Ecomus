@@ -213,3 +213,68 @@
     cursor: pointer;
     color: #007bff;
 }
+/* Frontend Preview Section */
+.header-preview {
+    background: #ffffff;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden; /* Prevent text overflow */
+    position: relative;
+}
+
+.header-preview h3 {
+    font-size: 1.25rem;
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #e1e1e1;
+    padding-bottom: 0.5rem;
+}
+
+.preview-box {
+    height: 60px; /* Adjust height as needed */
+    display: flex;
+    align-items: center;
+    overflow: hidden; /* Ensures text doesn't overflow the container */
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    background: linear-gradient(45deg, #ffd5c2, #ffb599);
+    position: relative;
+}
+
+.preview-text {
+    white-space: nowrap; /* Prevent wrapping */
+    display: inline-block;
+    font-size: 1rem;
+    color: #2c3e50;
+    font-weight: 500;
+    animation: scroll-left 15s linear infinite; /* Scrolling animation */
+    position: absolute;
+}
+
+/* Animation */
+@keyframes scroll-left {
+    0% { transform: translateX(2000px); } /* Start from the right edge */
+    100% { transform: translateX(-100%); } /* End outside the left edge */
+}
+
+/* Responsive Styling for Frontend Preview */
+@media (max-width: 768px) {
+    .header-preview {
+        padding: 1rem;
+    }
+
+    .header-preview h3 {
+        font-size: 1.1rem;
+    }
+
+    .preview-box {
+        height: 50px; /* Reduce height for smaller screens */
+    }
+
+    .preview-text {
+        font-size: 0.9rem;
+    }
+}

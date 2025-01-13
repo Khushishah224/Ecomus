@@ -16,6 +16,22 @@ const variantSchema = new mongoose.Schema({
     back: { type: String, required: true },
     side: { type: String, required: true },
   },
+  sizes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Size",
+    },
+  ],
+  status: {
+    type: String,
+    enum: ["instock","lowstock", "outofstock"],
+    default: "instock",
+  },
+  stock: {
+    type: Number,
+    required: true,
+    min: 0,
+  },
 });
 
 const productSchema = new mongoose.Schema({

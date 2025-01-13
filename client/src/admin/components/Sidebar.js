@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { 
   FaHome, FaShoppingCart, FaBox, FaChartLine, FaUsers, FaCog, 
   FaSignOutAlt, FaUserCircle, FaGlobe, FaChevronDown, FaBars 
 } from 'react-icons/fa';
 import '../styles/sidebar.css';
-import ShopGram from '../../components/shopping/ShopGram.js';
 import { logout } from '../../api.js';
 
 const Sidebar = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
 
   // Load dropdown states from localStorage or default to closed
   const [dropdowns, setDropdowns] = useState(() => {
@@ -67,7 +64,6 @@ const Sidebar = () => {
                <Link to="/admin/Header" className="admin-dropdown-item">Header</Link>
               <Link to="/admin/banner" className="admin-dropdown-item">Hero Section</Link>
               <Link to="/admin/marquee" className="admin-dropdown-item">Marquee</Link>
-             
               <Link to="/admin/shopcategories" className="admin-dropdown-item">Shop by Categories</Link>
               {/* <Link to="/admin/bestseller" className="admin-dropdown-item">Best Seller</Link> */}
               <Link to="/admin/shopthelook" className="admin-dropdown-item">Shop the Look</Link>

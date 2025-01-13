@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { toast ,Toaster} from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import Sidebar from "../components/Sidebar.js";
 import api from "../../api";
@@ -13,6 +13,9 @@ const Header = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
 
+  const [headerData, setHeaderData] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   useEffect(() => {
     fetchHeaders();
   }, []);
@@ -22,6 +25,7 @@ const Header = () => {
     try {
       const response = await api.get("/api/admin/get_headers");
       setHeaders(response.data);
+      setHeaderData(response.data); // Set the same header data for preview
     } catch (error) {
       toast.error("Failed to fetch headers. Please try again later.");
     } finally {
@@ -29,18 +33,25 @@ const Header = () => {
     }
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (headerData.length > 0) {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % headerData.length);
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [headerData]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!newHeader.trim()) {
       toast.error("Please enter a header");
       return;
     }
-  
+
     setIsLoading(true);
     try {
-      const response = await api.post("/api/admin/create_header", {
-        text: newHeader,
-      });
+      await api.post("/api/admin/create_header", { text: newHeader });
       toast.success("Header added successfully");
       setNewHeader(""); // Reset input field
       fetchHeaders(); // Fetch updated headers
@@ -63,9 +74,7 @@ const Header = () => {
     }
 
     try {
-      const response = await api.put(`/api/admin/update_header/${id}`, {
-        text: editText,
-      });
+      await api.put(`/api/admin/update_header/${id}`, { text: editText });
       setHeaders(headers.map((h) => (h._id === id ? { ...h, text: editText } : h)));
       setEditingId(null);
       setEditText("");
@@ -94,7 +103,7 @@ const Header = () => {
       <Sidebar />
 
       <div className="header-content">
-        <Toaster/>
+        <Toaster />
         <div className="header-header">
           <h1>Manage Headers</h1>
           <p>Create and manage headers for your site</p>
@@ -120,6 +129,19 @@ const Header = () => {
             </button>
           </div>
         </form>
+
+        <div className="header-preview">
+          <h3>Frontend Preview</h3>
+          <div className="preview-box">
+            {headerData.length > 0 ? (
+              <p className="preview-text">
+                {headerData[currentIndex]?.text || "Default Header Text"}
+              </p>
+            ) : (
+              <p>Loading preview...</p>
+            )}
+          </div>
+        </div>
 
         {isFetching ? (
           <p>Loading headers...</p>
