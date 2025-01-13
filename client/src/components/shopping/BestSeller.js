@@ -31,6 +31,7 @@ const BestSeller = () => {
   const [selectedColors, setSelectedColors] = useState({});
   const [hoveredProduct, setHoveredProduct] = useState(null);
   const [showWhishlist, setShowWhishlist] = useState(false);
+  
   const products = [
     { id: 1, name: "Ribbed Tank Top", price: "$16.95", image: img1, subimage: "", size: ['S', 'L', 'XL'], colors: ["orange", "white"], colorImages: [img1, img1w] },
     { id: 2, name: "Ribbed modal T-shirt", price: "$18.95", image: img2, subimage: "", size: ['S', 'L', 'XL'], colors: ["white", "pink", "green"], saleTime: "11d : 15h : 50m : 02s" },

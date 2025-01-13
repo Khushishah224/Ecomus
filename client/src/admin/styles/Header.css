@@ -181,6 +181,7 @@
 /* Responsive Styles */
 @media (max-width: 768px) {
     .header-content {
+        margin-top:65px;
         margin-left: 0;
         padding: 1rem;
     }

@@ -45,6 +45,10 @@ function App() {
                     <ProtectedRoute>
                         <ShopCategories />
                     </ProtectedRoute>} /> 
+                    <Route path="/admin/bestseller" element={
+                    <ProtectedRoute>
+                        <BestSeller />
+                    </ProtectedRoute>} /> 
                     <Route path="/admin/color-picker" element={
                     <ProtectedRoute>
                         <ColorPicker />
