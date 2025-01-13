@@ -6,55 +6,43 @@ import "swiper/css/navigation";
 import { CgArrowTopRightO } from "react-icons/cg";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import MediaQuery from 'react-responsive';
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import api from "../../api.js";
 import { toast } from "react-hot-toast";
-
 
 const ShopCard = () => {
   const swiperRef = useRef(null);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     const fetchCategories = async () => {
-    try {
-      const response = await api.get("/categories");
-      setCategories(response.data);
-  } catch (error) {
-      console.error("Error fetching categories:", error);
-      toast.error("Failed to fetch categories");
-  }};
-  fetchCategories();
-   
-  }, []);
-useEffect(() => {
-        fetchCategories();
-    }, []);
-
-    const fetchCategories = async () => {
-        try {
-            const response = await api.get("/categories");
-            setCategories(response.data);
-        } catch (error) {
-            console.error("Error fetching categories:", error);
-            toast.error("Failed to fetch categories");
-        }
+      try {
+        const response = await api.get("/categories");
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        toast.error("Failed to fetch categories");
+      }
     };
-    
+    fetchCategories();
+  }, []);
+
   useEffect(() => {
     const swiper = swiperRef.current?.swiper;
     if (swiper) {
       swiper.update(); // Ensure Swiper updates after categories are set
       setIsBeginning(swiper.isBeginning);
       setIsEnd(swiper.isEnd);
-      
+
       swiper.on("slideChange", () => {
         setIsBeginning(swiper.isBeginning);
         setIsEnd(swiper.isEnd);
       });
     }
-  }, [categories]); // <- Re-run effect when categories change
+  }, [categories]);
 
   const handlePrev = () => {
     if (!isBeginning && swiperRef.current) {
@@ -68,10 +56,13 @@ useEffect(() => {
     }
   };
 
+  const handleCardClick = (categoryName) => {
+    navigate(`/category/${categoryName}`); // Navigate to the new page
+  };
+
   return (
     <section id="shop-by-look">
       <div className="shop-container px-4 py-4">
-
         {/* prev,next button */}
         <div className="d-flex gap-3 align-items-center mb-4">
           <button
@@ -81,7 +72,7 @@ useEffect(() => {
               borderRadius: "50%",
               backgroundColor: isBeginning ? "#fff" : "white",
               pointerEvents: isBeginning ? "none" : "auto",
-              color: isBeginning ? "#ccc" : "#000"
+              color: isBeginning ? "#ccc" : "#000",
             }}
             onClick={handlePrev}
             aria-label="Previous"
@@ -95,7 +86,7 @@ useEffect(() => {
               borderRadius: "50%",
               backgroundColor: isEnd ? "#fff" : "white",
               pointerEvents: isEnd ? "none" : "auto",
-              color: isEnd ? "#ccc" : "#000"
+              color: isEnd ? "#ccc" : "#000",
             }}
             onClick={handleNext}
             aria-label="Next"
@@ -123,32 +114,37 @@ useEffect(() => {
               loop={false}
               className="flex-grow-1"
             >
-              {categories.filter(category => category.active).map((category) => (
-                <SwiperSlide key={category._id}>
-                  <div className="card-container">
-                    <div className="position-relative overflow-hidden shadow-sm rounded">
-                      <img
-                        src={`http://localhost:5000${category.image}`} // Ensure image is correct
-                        className="img-fluid w-100"
-                        alt={category.name}
-                      />
-                      <div
-                        className="position-absolute bg-white px-3 py-2"
-                        style={{
-                          bottom: "20px",
-                          left: "20px",
-                          borderTopRightRadius: "8px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {category.name}
+              {categories
+                .filter((category) => category.active)
+                .map((category) => (
+                  <SwiperSlide key={category._id}>
+                    <div
+                      className="card-container"
+                      onClick={() => handleCardClick(category.name)} // Add click event
+                      style={{ cursor: "pointer" }} // Add pointer cursor
+                    >
+                      <div className="position-relative overflow-hidden shadow-sm rounded">
+                        <img
+                          src={`http://localhost:5000${category.image}`}
+                          className="img-fluid w-100"
+                          alt={category.name}
+                        />
+                        <div
+                          className="position-absolute bg-white px-3 py-2"
+                          style={{
+                            bottom: "20px",
+                            left: "20px",
+                            borderTopRightRadius: "8px",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {category.name}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </SwiperSlide>
-              ))}
+                  </SwiperSlide>
+                ))}
             </Swiper>
-
             {/* Static Discover All Card */}
             <div
               className="card-container ms-3 d-flex justify-content-center align-items-center border rounded-3"
@@ -176,10 +172,14 @@ useEffect(() => {
               >
                 {categories.map((category) => (
                   <SwiperSlide key={category._id}>
-                    <div className="card-container">
+                    <div
+                      className="card-container"
+                      onClick={() => handleCardClick(category.name)} // Add click event
+                      style={{ cursor: "pointer" }} // Add pointer cursor
+                    >
                       <div className="position-relative overflow-hidden shadow-sm rounded-2">
                         <img
-                          src={`http://localhost:5000${category.image}`} // Ensure full image path
+                          src={`http://localhost:5000${category.image}`}
                           className="img-fluid w-100"
                           alt={category.name}
                         />
@@ -200,7 +200,6 @@ useEffect(() => {
                   </SwiperSlide>
                 ))}
               </Swiper>
-
               <div
                 className="discover_icon mt-3 d-flex border justify-content-between align-items-center rounded-3 text-center py-2"
                 style={{ width: "100%", height: "50px" }}

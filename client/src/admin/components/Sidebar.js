@@ -118,6 +118,10 @@ const Sidebar = () => {
             <div className="admin-dropdown-menu">
               <Link to="/admin/color-picker" className="admin-dropdown-item" onClick={() => (isMobile || isTablet) && setIsOpen(false)}>Color Picker</Link>
               <Link to="/admin/size-picker" className="admin-dropdown-item" onClick={() => (isMobile || isTablet) && setIsOpen(false)}>Size Picker</Link>
+              <Link to="/admin/color-picker" className="admin-dropdown-item">Color Picker</Link>
+              <Link to="/admin/size-picker" className="admin-dropdown-item">Size Picker</Link>
+              <Link to="/admin/manageproducts" className="admin-dropdown-item">Manage Products</Link>
+
             </div>
           )}
         </div>
