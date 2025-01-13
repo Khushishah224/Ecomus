@@ -6,12 +6,15 @@ import Admin from './admin/pages/Dashboard.js';
 import Login from './admin/pages/Login.js';
 import Banner from './admin/components/Banner.js';
 import Marquee from './admin/components/Marquee.js';
+import Clothing from './components/categories/Clothing.js'
+
 import ShopCategories from './admin/components/ShopCategories.js';
-import BestSeller from './admin/components/BestSeller.js';
+// import BestSeller from './admin/components/BestSeller.js';
 import ManageProducts from './admin/components/ManageProducts.js';
 
+import ShopTheLook from './admin/components/ShopTheLook.js'
 import SizePicker from './admin/components/SizePicker.js';
-import ColorPicker from './admin/components/ColorPicker.js';
+import ColorPicker from './admin/components/colorpicker.js';
 import Header from './admin/components/Header.js';
 import ShopGramAdmin from './admin/components/ShopGram.js';
 function App() {
@@ -40,11 +43,34 @@ function App() {
                     <ProtectedRoute>
                         <ShopCategories />
                     </ProtectedRoute>} /> 
+                    <Route path="/admin/color-picker" element={
+                    <ProtectedRoute>
+                        <ColorPicker />
+                    </ProtectedRoute>} /> 
+                    <Route path="/admin/size-picker" element={
+                    <ProtectedRoute>
+                        <SizePicker />
+                    </ProtectedRoute>} /> 
                 <Route path="/admin/manageproducts" element={
                     <ProtectedRoute>
                         <ManageProducts />
                     </ProtectedRoute>} /> 
+
+                    <Route path="/admin/shopgram" element={
+                    <ProtectedRoute>
+                        <ShopGramAdmin />
+                    </ProtectedRoute>} />    
+
+                    <Route path="/admin/shopthelook" element={
+                    <ProtectedRoute>
+                        <ShopTheLook />
+                    </ProtectedRoute>} />     
                               
+                    <Route path="/category/clothing" element={
+                    <ProtectedRoute>
+                        <Clothing />
+                    </ProtectedRoute>} />
+
                 <Route path="/admin" element={<Login />} />
                 <Route path="*" element={<h1>Not Found</h1>} />
             </Routes>
