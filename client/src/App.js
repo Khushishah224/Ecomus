@@ -9,7 +9,6 @@ import Marquee from './admin/components/Marquee.js';
 import ShopCategories from './admin/components/ShopCategories.js';
 import BestSeller from './admin/components/BestSeller.js';
 import ShopTheLook from './admin/components/ShopTheLook.js';
-
 import SizePicker from './admin/components/SizePicker.js';
 import ColorPicker from './admin/components/ColorPicker.js';
 import Header from './admin/components/Header.js';

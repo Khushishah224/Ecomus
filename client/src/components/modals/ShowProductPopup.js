@@ -8,17 +8,12 @@ import { FaRegHeart } from "react-icons/fa";
 import { TbArrowsCross } from "react-icons/tb";
 import paypal from "../../assets/IMAGES/paypal.png";
 
-function ShowProductPopup({ products = [], initialProductIndex = 0, onClose }) {
-  const [currentIndex, setCurrentIndex] = useState(initialProductIndex);
-  const product = products[currentIndex];
-
-  // Guard against accessing properties of an undefined product
+function ShowProductPopup({ product, onClose }) {
   const price = product.price ? product.price : 0;
   const [selectedColor, setSelectedColor] = useState(product?.colors?.[0]);
   const [selectedSize, setSelectedSize] = useState(product?.size?.[0]);
   const [quantity, setQuantity] = useState(1);
   const priceValue = parseFloat(product.price.replace(/[^0-9.-]+/g, ""));
-
 
   useEffect(() => {
     if (product) {
@@ -32,10 +27,6 @@ function ShowProductPopup({ products = [], initialProductIndex = 0, onClose }) {
   const handleIncrease = () => setQuantity(quantity + 1);
   const handleDecrease = () => {
     if (quantity > 1) setQuantity(quantity - 1);
-  };
-
-  const handleSlideChange = (swiper) => {
-    setCurrentIndex(swiper.activeIndex);
   };
 
   if (!product) {
@@ -55,13 +46,21 @@ function ShowProductPopup({ products = [], initialProductIndex = 0, onClose }) {
               navigation
               modules={[Navigation]}
               className="show-product-swiper-container"
-              onSlideChange={handleSlideChange} // Handle slide changes
             >
-              {products.map((product, index) => (
-                <SwiperSlide key={index}>
+              {product.subimage ? (
+                <>
+                <SwiperSlide>
+                <img src={product.image} alt={product.name} />
+              </SwiperSlide>
+                  <SwiperSlide>
+                    <img src={product.subimage} alt={`${product.name} `} />
+                  </SwiperSlide>
+                  </>
+              ) : (
+                <SwiperSlide>
                   <img src={product.image} alt={product.name} />
                 </SwiperSlide>
-              ))}
+              )}
             </Swiper>
           </div>
 
@@ -82,36 +81,42 @@ function ShowProductPopup({ products = [], initialProductIndex = 0, onClose }) {
 
             {/* Color Options */}
             <div className="show-product-color-options">
-              <p>Color: <span className='fw-semibold'> {String(selectedColor).charAt(0).toUpperCase() + String(selectedColor).slice(1)}</span></p>
+              <p>
+                Color: <span className="fw-semibold">{String(selectedColor).charAt(0).toUpperCase() + String(selectedColor).slice(1)}</span>
+              </p>
               {product.colors.length > 0 ? (
                 product.colors?.map((color, index) => (
                   <button
                     key={index}
-                    className={`show-product-color-btn ${selectedColor === color ? "selected" : ""
-                      }`}
+                    className={`show-product-color-btn ${selectedColor === color ? "selected" : ""}`}
                     style={{ backgroundColor: color }}
                     onClick={() => setSelectedColor(color)}
                     aria-label={`Select color ${color}`}
                   />
                 ))
-              ) : (<p>No colors available</p>)
-              }
+              ) : (
+                <p>No colors available</p>
+              )}
             </div>
 
             {/* Size Options */}
             <div className="show-product-size-options">
-              <p>Size: <span className='fw-semibold'> {selectedSize}</span></p>
+              <p>
+                Size: <span className="fw-semibold">{selectedSize}</span>
+              </p>
               {product.size.length > 0 ? (
                 product.size?.map((size, index) => (
                   <button
                     key={index}
-                    className={`show-product-size-btn ${selectedSize === size ? "selected" : ""
-                      }`}
+                    className={`show-product-size-btn ${selectedSize === size ? "selected" : ""}`}
                     onClick={() => setSelectedSize(size)}
                   >
                     {size}
                   </button>
-                ))) : (<p>No sizes available</p>)}
+                ))
+              ) : (
+                <p>No sizes available</p>
+              )}
             </div>
 
             {/* Quantity */}
@@ -119,8 +124,8 @@ function ShowProductPopup({ products = [], initialProductIndex = 0, onClose }) {
               <p className="fw-semibold mb-1">Quantity</p>
               <div className="show-product-quantity-selector-container">
                 <button className="show-product-quantity-btn" onClick={handleDecrease}>-</button>
-              <span className="show-product-quantity-btn">{quantity}</span>
-              <button className="show-product-quantity-btn" onClick={handleIncrease}>+</button>
+                <span className="show-product-quantity-btn">{quantity}</span>
+                <button className="show-product-quantity-btn" onClick={handleIncrease}>+</button>
               </div>
             </div>
 
@@ -129,11 +134,22 @@ function ShowProductPopup({ products = [], initialProductIndex = 0, onClose }) {
               <button className="show-product-add-to-cart-btn">
                 Add to cart - ${(priceValue * quantity).toFixed(2)}
               </button>
-              <button className="show-product-popup-wishlist-btn"><span><FaRegHeart /></span></button>
-              <button className="show-product-popup-compare-btn"><span><TbArrowsCross /></span></button>
+              <button className="show-product-popup-wishlist-btn">
+                <span>
+                  <FaRegHeart />
+                </span>
+              </button>
+              <button className="show-product-popup-compare-btn">
+                <span>
+                  <TbArrowsCross />
+                </span>
+              </button>
             </div>
             <button className="show-product-paypal-btn">
-              <span style={{ color: "#052c65", fontSize: "0.9rem" }}>Buy with </span><span><img src={paypal} alt="Paypal"></img></span>
+              <span style={{ color: "#052c65", fontSize: "0.9rem" }}>Buy with </span>
+              <span>
+                <img src={paypal} alt="Paypal"></img>
+              </span>
             </button>
             <p className="show-product-more-payment-options">More payment options</p>
           </div>

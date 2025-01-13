@@ -9,6 +9,7 @@ import product3Image from "../../assets/IMAGES/img-p3.png";
 import ShowProductPopup from "../modals/ShowProductPopup";
 
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+
 import Tooltip from "react-bootstrap/Tooltip";
 import { Swiper, SwiperSlide } from "swiper/react";
 // import "swiper/swiper-bundle.min.css"; // Import Swiper styles
@@ -20,6 +21,29 @@ function ShopTheLook() {
 
   const [isShowProductPopupVisible, setIsShowProductPopupVisible] = useState(false); // New state for ShowProductPopup
   const [selectedProduct, setSelectedProduct] = useState(null); // Store the selected product
+  const product_item=[
+    {
+      id: 1,
+      name: "Black Leather Jacket",
+      price: "$120",
+      image: product1Image,
+      position: { top: "60%", left: "45%" },
+    },
+    {
+      id: 2,
+      name: "Classic Blue Jeans",
+      price: "$80",
+      image: product2Image,
+      position: { top: "80%", left: "60%" },
+    },
+    {
+      id: 3,
+      name: "Elegant Red Heels",
+      price: "$100",
+      image: product3Image,
+      position: { top: "18%", left: "60%" },
+    }
+  ]
   const products = {
     look1: [
       {
@@ -73,11 +97,20 @@ function ShopTheLook() {
           <p className="tooltip-product-price">{product.price}</p>
         </div>
         <div>
-        <span className='show-product-detail-eye-icon'onClick={() => handleOpenShowProductPopup(product)} ><IoEyeOutline/></span>
-          </div>
+          <span
+            className="show-product-detail-eye-icon"
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent closing the tooltip on button click
+              handleOpenShowProductPopup(product);
+            }}
+          >
+            <IoEyeOutline />
+          </span>
+        </div>
       </div>
     </Tooltip>
   );
+  
 
   return (
     <section id="shop-the-look">
@@ -106,37 +139,40 @@ function ShopTheLook() {
               <img src={look1} alt="Look 1" className="look-image-content" />
               {products.look1.map((product) => (
                 <OverlayTrigger
-                  key={product.id}
-                  placement="top"
-                  overlay={renderTooltip(product)}
-                  
-                >
-                  <div
-                    className="dot"
-                    style={{
-                      top: product.position.top,
-                      left: product.position.left,
-                    }}
-                  ></div>
-                </OverlayTrigger>
+                key={product.id}
+                trigger="click" // Show tooltip on click
+                placement="top"
+                overlay={renderTooltip(product)}
+                rootClose // Close the tooltip when clicking outside
+              >
+                <div
+                  className="dot"
+                  style={{
+                    top: product.position.top,
+                    left: product.position.left,
+                  }}
+                ></div>
+              </OverlayTrigger>
               ))}
             </SwiperSlide>
             <SwiperSlide>
               <img src={look2} alt="Look 2" className="look-image-content" />
               {products.look2.map((product) => (
                 <OverlayTrigger
-                  key={product.id}
-                  placement="top"
-                  overlay={renderTooltip(product)}
-                >
-                  <div
-                    className="dot"
-                    style={{
-                      top: product.position.top,
-                      left: product.position.left,
-                    }}
-                  ></div>
-                </OverlayTrigger>
+                key={product.id}
+                trigger="click" // Show tooltip on click
+                placement="top"
+                overlay={renderTooltip(product)}
+                rootClose // Close the tooltip when clicking outside
+              >
+                <div
+                  className="dot"
+                  style={{
+                    top: product.position.top,
+                    left: product.position.left,
+                  }}
+                ></div>
+              </OverlayTrigger>
               ))}
             </SwiperSlide>
           </Swiper>
@@ -148,37 +184,42 @@ function ShopTheLook() {
             <img src={look1} alt="Look 1" className="look-image-content" />
             {products.look1.map((product) => (
               <OverlayTrigger
-                key={product.id}
-                placement="top"
-                overlay={renderTooltip(product)}
-              >
-                <div
-                  className="dot"
-                  style={{
-                    top: product.position.top,
-                    left: product.position.left,
-                  }}
-                ></div>
-              </OverlayTrigger>
+              key={product.id}
+              trigger="click" // Show tooltip on click
+              placement="top"
+              overlay={renderTooltip(product)}
+              rootClose // Close the tooltip when clicking outside
+            >
+              <div
+                className="dot"
+                style={{
+                  top: product.position.top,
+                  left: product.position.left,
+                }}
+              ></div>
+            </OverlayTrigger>
+            
             ))}
           </div>
 
           <div className="look-image col-6">
             <img src={look2} alt="Look 2" className="look-image-content" />
             {products.look2.map((product) => (
-              <OverlayTrigger
-                key={product.id}
-                placement="top"
-                overlay={renderTooltip(product)}
-              >
-                <div
-                  className="dot"
-                  style={{
-                    top: product.position.top,
-                    left: product.position.left,
-                  }}
-                ></div>
-              </OverlayTrigger>
+             <OverlayTrigger
+             key={product.id}
+             trigger="click" // Show tooltip on click
+             placement="top"
+             overlay={renderTooltip(product)}
+             rootClose // Close the tooltip when clicking outside
+           >
+             <div
+               className="dot"
+               style={{
+                 top: product.position.top,
+                 left: product.position.left,
+               }}
+             ></div>
+           </OverlayTrigger>
             ))}
           </div>
         </div>
